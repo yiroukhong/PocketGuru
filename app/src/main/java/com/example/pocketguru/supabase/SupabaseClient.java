@@ -3,6 +3,7 @@ package com.example.pocketguru.supabase;
 import io.github.jan.supabase.SupabaseClientBuilder;
 import io.github.jan.supabase.auth.Auth;
 import io.github.jan.supabase.postgrest.Postgrest;
+import kotlin.Unit;
 
 public class SupabaseClient {
     private static io.github.jan.supabase.SupabaseClient instance;
@@ -13,10 +14,10 @@ public class SupabaseClient {
 
     public static synchronized io.github.jan.supabase.SupabaseClient getInstance() {
         if (instance == null) {
-            instance = new SupabaseClientBuilder(SUPABASE_URL, SUPABASE_ANON_KEY)
-                    .install(Auth.Companion)
-                    .install(Postgrest.Companion)
-                    .build();
+            SupabaseClientBuilder builder = new SupabaseClientBuilder(SUPABASE_URL, SUPABASE_ANON_KEY);
+            builder.install(Auth.Companion, config -> Unit.INSTANCE);
+            builder.install(Postgrest.Companion, config -> Unit.INSTANCE);
+            instance = builder.build();
         }
         return instance;
     }

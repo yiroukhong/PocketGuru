@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
+import com.example.pocketguru.MainActivity;
 import com.example.pocketguru.R;
 
 public class SplashFragment extends Fragment {
@@ -19,9 +19,8 @@ public class SplashFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_splash, container, false);
         
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            if (isAdded()) {
-                // TODO: Replace with real session check
-                Navigation.findNavController(view).navigate(R.id.action_SplashFragment_to_WelcomeFragment);
+            if (isAdded() && getActivity() instanceof MainActivity) {
+                ((MainActivity) getActivity()).checkSessionAndNavigate();
             }
         }, 2000);
         

@@ -7,6 +7,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 import com.example.pocketguru.databinding.ActivityMainBinding;
+import com.example.pocketguru.utils.SessionManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -16,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private NavController navController;
+    private SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        sessionManager = new SessionManager(this);
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.nav_host_fragment);
@@ -46,6 +50,18 @@ public class MainActivity extends AppCompatActivity {
                     navView.setVisibility(View.VISIBLE);
                 }
             });
+        }
+    }
+
+    public void checkSessionAndNavigate() {
+        if (navController == null) return;
+
+        if (sessionManager.isLoggedIn()) {
+            // TODO: Attempt to restore Supabase session if needed
+            // For now, navigate directly to LevelMap
+            navController.navigate(R.id.action_SplashFragment_to_LevelMapFragment);
+        } else {
+            navController.navigate(R.id.action_SplashFragment_to_WelcomeFragment);
         }
     }
 }
