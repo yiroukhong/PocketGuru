@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/QuickVisualizationFragment"
+        android:icon="@android:drawable/ic_menu_view"
+        android:title="Visualize" />
+    <item
+        android:id="@+id/LevelMapFragment"
+        android:icon="@android:drawable/ic_menu_mylocation"
+        android:title="Home" />
+    <item
+        android:id="@+id/KeywordsListFragment"
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:title="Keywords" />
+</menu>
