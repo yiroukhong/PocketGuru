@@ -1,8 +1,6 @@
 package com.example.pocketguru.auth;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +15,10 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.example.pocketguru.R;
-import com.example.pocketguru.supabase.SupabaseClient;
+import com.example.pocketguru.supabase.SupabaseManager;
 import com.example.pocketguru.utils.SessionManager;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import kotlin.Unit;
 
 public class RegisterFragment extends Fragment {
 
@@ -29,8 +26,6 @@ public class RegisterFragment extends Fragment {
     private TextView textUsernameError;
     private ProgressBar progressBar;
     private View btnRegister;
-    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
-    private final Handler mainHandler = new Handler(Looper.getMainLooper());
     private SessionManager sessionManager;
 
     @Nullable
@@ -65,26 +60,41 @@ public class RegisterFragment extends Fragment {
         setLoading(true);
         textUsernameError.setVisibility(View.GONE);
 
-        executorService.execute(() -> {
-            // Note: Since io.github.jan-tennert.supabase is Kotlin-first 
-            // and heavily uses suspend functions and Kotlin DSLs, 
-            // full implementation in Java requires a Kotlin bridge.
-            // This scaffold demonstrates the intended flow.
-            
-            try {
-                // Mocking the Supabase process for now to allow for project flow testing
-                Thread.sleep(1500); 
-
-                mainHandler.post(() -> {
+        // 1. Check if username exists
+        SupabaseManager.INSTANCE.checkUsernameUnique(username, new SupabaseManager.SupabaseCallback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean isUnique) {
+                if (isUnique) {
+                    // 2. Perform Sign Up
+                    performSignUp(username, password);
+                } else {
                     setLoading(false);
-                    // Mock success
-                    sessionManager.saveSession("mock_token_for_" + username);
-                    Toast.makeText(getContext(), "Registration successful (Mock)", Toast.LENGTH_SHORT).show();
-                    Navigation.findNavController(btnRegister).navigate(R.id.LevelMapFragment);
-                });
+                    textUsernameError.setVisibility(View.VISIBLE);
+                }
+            }
 
-            } catch (InterruptedException e) {
-                mainHandler.post(() -> setLoading(false));
+            @Override
+            public void onError(String error) {
+                setLoading(false);
+                Toast.makeText(getContext(), "Error: " + error, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void performSignUp(String username, String password) {
+        SupabaseManager.INSTANCE.signUp(username, password, new SupabaseManager.SupabaseCallback<String>() {
+            @Override
+            public void onSuccess(String sessionToken) {
+                setLoading(false);
+                sessionManager.saveSession(sessionToken);
+                Toast.makeText(getContext(), "Registration successful!", Toast.LENGTH_SHORT).show();
+                Navigation.findNavController(btnRegister).navigate(R.id.LevelMapFragment);
+            }
+
+            @Override
+            public void onError(String error) {
+                setLoading(false);
+                Toast.makeText(getContext(), "Sign up failed: " + error, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -92,11 +102,5 @@ public class RegisterFragment extends Fragment {
     private void setLoading(boolean isLoading) {
         progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
         btnRegister.setEnabled(!isLoading);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        executorService.shutdown();
     }
 }

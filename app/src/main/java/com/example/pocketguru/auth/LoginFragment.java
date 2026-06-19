@@ -1,8 +1,6 @@
 package com.example.pocketguru.auth;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,18 +15,14 @@ import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
 import com.example.pocketguru.R;
+import com.example.pocketguru.supabase.SupabaseManager;
 import com.example.pocketguru.utils.SessionManager;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class LoginFragment extends Fragment {
 
     private EditText editUsername, editPassword;
     private ProgressBar progressBar;
     private View btnLogin;
-    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
-    private final Handler mainHandler = new Handler(Looper.getMainLooper());
     private SessionManager sessionManager;
 
     @Nullable
@@ -61,32 +55,25 @@ public class LoginFragment extends Fragment {
 
         setLoading(true);
 
-        executorService.execute(() -> {
-            try {
-                // Mocking Supabase Auth signInWithPassword
-                Thread.sleep(1500);
+        SupabaseManager.INSTANCE.signIn(username, password, new SupabaseManager.SupabaseCallback<String>() {
+            @Override
+            public void onSuccess(String sessionToken) {
+                setLoading(false);
+                sessionManager.saveSession(sessionToken);
 
-                mainHandler.post(() -> {
-                    setLoading(false);
-                    
-                    // Mock validation: simple check for demo purposes
-                    if (username.length() > 2 && password.length() > 5) {
-                        sessionManager.saveSession("mock_token_for_" + username);
-                        
-                        // Navigate to LevelMap and clear backstack
-                        NavOptions navOptions = new NavOptions.Builder()
-                                .setPopUpTo(R.id.nav_graph, true)
-                                .build();
-                        
-                        Navigation.findNavController(btnLogin).navigate(R.id.LevelMapFragment, null, navOptions);
-                        Toast.makeText(getContext(), "Login successful", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getContext(), "Incorrect username or password", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                // Navigate to LevelMap and clear backstack
+                NavOptions navOptions = new NavOptions.Builder()
+                        .setPopUpTo(R.id.nav_graph, true)
+                        .build();
 
-            } catch (InterruptedException e) {
-                mainHandler.post(() -> setLoading(false));
+                Navigation.findNavController(btnLogin).navigate(R.id.LevelMapFragment, null, navOptions);
+                Toast.makeText(getContext(), "Login successful", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(String error) {
+                setLoading(false);
+                Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -94,11 +81,5 @@ public class LoginFragment extends Fragment {
     private void setLoading(boolean isLoading) {
         progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
         btnLogin.setEnabled(!isLoading);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        executorService.shutdown();
     }
 }
