@@ -25,6 +25,7 @@ public class LevelMapFragment extends Fragment {
         view.findViewById(R.id.btn_level_4).setOnClickListener(v -> navigateToLevel(R.id.action_LevelMapFragment_to_LevelFourFragment));
         view.findViewById(R.id.btn_level_5).setOnClickListener(v -> navigateToLevel(R.id.action_LevelMapFragment_to_LevelFiveFragment));
         view.findViewById(R.id.btn_level_6).setOnClickListener(v -> navigateToLevel(R.id.action_LevelMapFragment_to_LevelSixFragment));
+        view.findViewById(R.id.btn_assessment).setOnClickListener(v -> navigateToLevel(R.id.AssessmentFragment));
 
         // Navigation for mini-games
         view.findViewById(R.id.btn_flashcards).setOnClickListener(v -> navigateToLevel(R.id.FlashcardsFragment));
