@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <include
+        android:id="@+id/progress_viewer"
+        layout="@layout/layout_level_progress_3"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_body_top"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:text="Oxygen is a very important by-product of photosynthesis, as its being released into the air for other living things to survive,"
+        android:textColor="@color/dark_text"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/progress_viewer" />
+
+    <ImageView
+        android:id="@+id/image_breathing"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_margin="24dp"
+        android:src="@drawable/human_breathing"
+        app:layout_constraintBottom_toTopOf="@id/text_body_bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_body_top" />
+
+    <TextView
+        android:id="@+id/text_body_bottom"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="24dp"
+        android:gravity="center"
+        android:text="so we have to be grateful and learn to take care of them"
+        android:textColor="@color/dark_text"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@id/btn_complete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btn_complete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="@color/yellow_primary"
+        android:text="Complete level"
+        android:textAllCaps="false"
+        android:textColor="@android:color/black"
+        app:cornerRadius="24dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
