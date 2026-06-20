@@ -2,7 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="app_background">#FFD93D</color>
-    <color name="dusty_pink">#C4A0A0</color>
-    <color name="dark_purple">#5C1A4A</color>
+    <color name="salmon_pink">#E8A598</color>
+    <color name="yellow_primary">#FFD93D</color>
+    <color name="progress_grey">#E0E0E0</color>
+    <color name="dark_text">#424242</color>
 </resources>
