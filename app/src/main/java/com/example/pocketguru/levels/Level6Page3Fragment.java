@@ -23,7 +23,10 @@ public class Level6Page3Fragment extends Fragment {
         view.findViewById(R.id.btn_complete).setOnClickListener(v -> {
             LevelProgressManager.completeLevel(requireContext(), 6, () -> {
                 if (isAdded()) {
-                    Navigation.findNavController(v).navigateUp();
+                    Bundle args = new Bundle();
+                    args.putString(LevelCompleteFragment.ARG_CHAPTER_NAME, "Photosynthesis");
+                    args.putString(LevelCompleteFragment.ARG_LEVEL_NAME, "Level 6: What's next?");
+                    Navigation.findNavController(v).navigate(R.id.LevelCompleteFragment, args);
                 }
             }, () -> {
                 // Handle error

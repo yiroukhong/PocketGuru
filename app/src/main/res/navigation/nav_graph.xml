@@ -103,4 +103,17 @@
     <fragment android:id="@+id/MixAndMatchFragment" android:name="com.example.pocketguru.minigames.MixAndMatchFragment" android:label="Mix and Match" tools:layout="@layout/fragment_mix_and_match" />
     <fragment android:id="@+id/AssessmentFragment" android:name="com.example.pocketguru.assessment.AssessmentFragment" android:label="Assessment" tools:layout="@layout/fragment_assessment" />
 
+    <fragment
+        android:id="@+id/LevelCompleteFragment"
+        android:name="com.example.pocketguru.levels.LevelCompleteFragment"
+        android:label="Level Complete"
+        tools:layout="@layout/fragment_level_complete">
+        <argument
+            android:name="chapterName"
+            app:argType="string" />
+        <argument
+            android:name="levelName"
+            app:argType="string" />
+    </fragment>
+
 </navigation>

@@ -64,9 +64,10 @@ public class LevelTwoFragment extends Fragment {
     private void handleLevelComplete() {
         LevelProgressManager.completeLevel(requireContext(), 2, () -> {
             if (isAdded()) {
-                // TODO: Navigate to LevelCompleteFragment instead of LevelMapFragment
-                // For now, navigating back to map as placeholder
-                Navigation.findNavController(requireView()).navigateUp();
+                Bundle args = new Bundle();
+                args.putString(LevelCompleteFragment.ARG_CHAPTER_NAME, "Photosynthesis");
+                args.putString(LevelCompleteFragment.ARG_LEVEL_NAME, "Level 2: Get the water");
+                Navigation.findNavController(requireView()).navigate(R.id.LevelCompleteFragment, args);
             }
         }, () -> {
             Toast.makeText(getContext(), "Failed to save progress", Toast.LENGTH_SHORT).show();

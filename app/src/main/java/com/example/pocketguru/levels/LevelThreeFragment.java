@@ -130,7 +130,10 @@ public class LevelThreeFragment extends Fragment {
     private void handleLevelComplete() {
         LevelProgressManager.completeLevel(requireContext(), 3, () -> {
             if (isAdded()) {
-                Navigation.findNavController(requireView()).navigateUp();
+                Bundle args = new Bundle();
+                args.putString(LevelCompleteFragment.ARG_CHAPTER_NAME, "Photosynthesis");
+                args.putString(LevelCompleteFragment.ARG_LEVEL_NAME, "Level 3: Get the CO2");
+                Navigation.findNavController(requireView()).navigate(R.id.LevelCompleteFragment, args);
             }
         }, () -> {
             Toast.makeText(getContext(), "Failed to save progress", Toast.LENGTH_SHORT).show();
