@@ -19,29 +19,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <FrameLayout
-        android:id="@+id/image_container"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottie_fruit"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
         android:layout_margin="24dp"
+        app:lottie_fileName="fruit_grow.json"
+        app:lottie_autoPlay="false"
+        app:lottie_loop="false"
         app:layout_constraintBottom_toTopOf="@id/btn_grow_fruit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_body_top">
-
-        <ImageView
-            android:id="@+id/img_tree_no_fruit"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/tree_no_fruit" />
-
-        <ImageView
-            android:id="@+id/img_tree_with_fruit"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alpha="0"
-            android:src="@drawable/tree_with_fruit" />
-    </FrameLayout>
+        app:layout_constraintTop_toBottomOf="@id/text_body_top" />
 
     <Button
         android:id="@+id/btn_grow_fruit"

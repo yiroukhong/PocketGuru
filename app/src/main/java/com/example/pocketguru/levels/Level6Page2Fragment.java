@@ -1,23 +1,23 @@
 package com.example.pocketguru.levels;
 
-import android.animation.ObjectAnimator;
+import android.animation.Animator;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.pocketguru.R;
 
 public class Level6Page2Fragment extends Fragment {
 
-    private ImageView imgNoFruit, imgWithFruit;
+    private LottieAnimationView lottieFruit;
     private Button btnNext;
 
     @Nullable
@@ -25,11 +25,28 @@ public class Level6Page2Fragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_level6_page2, container, false);
 
-        imgNoFruit = view.findViewById(R.id.img_tree_no_fruit);
-        imgWithFruit = view.findViewById(R.id.img_tree_with_fruit);
+        lottieFruit = view.findViewById(R.id.lottie_fruit);
         btnNext = view.findViewById(R.id.btn_next);
 
-        view.findViewById(R.id.btn_grow_fruit).setOnClickListener(v -> animateFruitGrowth());
+        // Freeze on first frame
+        lottieFruit.setProgress(0f);
+
+        view.findViewById(R.id.btn_grow_fruit).setOnClickListener(v -> {
+            lottieFruit.playAnimation();
+            v.setEnabled(false); // Disable button once animation starts
+        });
+
+        lottieFruit.addAnimatorListener(new Animator.AnimatorListener() {
+            @Override public void onAnimationStart(Animator animation) {}
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                if (isAdded()) {
+                    btnNext.setEnabled(true);
+                }
+            }
+            @Override public void onAnimationCancel(Animator animation) {}
+            @Override public void onAnimationRepeat(Animator animation) {}
+        });
 
         btnNext.setOnClickListener(v -> {
             if (getParentFragment() instanceof LevelSixFragment) {
@@ -44,17 +61,5 @@ public class Level6Page2Fragment extends Fragment {
         });
 
         return view;
-    }
-
-    private void animateFruitGrowth() {
-        ObjectAnimator.ofFloat(imgNoFruit, "alpha", 1f, 0f).setDuration(1000).start();
-        ObjectAnimator animator = ObjectAnimator.ofFloat(imgWithFruit, "alpha", 0f, 1f).setDuration(1000);
-        animator.addListener(new android.animation.AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(android.animation.Animator animation) {
-                btnNext.setEnabled(true);
-            }
-        });
-        animator.start();
     }
 }
