@@ -90,6 +90,12 @@
         android:label="Keywords"
         tools:layout="@layout/fragment_keywords_list" />
 
+    <fragment
+        android:id="@+id/VideoPlayerFragment"
+        android:name="com.example.pocketguru.hub.VideoPlayerFragment"
+        android:label="Video Player"
+        tools:layout="@layout/fragment_video_player" />
+
     <!-- Levels -->
     <fragment android:id="@+id/LevelOneHostFragment" android:name="com.example.pocketguru.levels.LevelOneFragment" android:label="Level One" tools:layout="@layout/fragment_level_one_host" />
     <fragment android:id="@+id/LevelTwoFragment" android:name="com.example.pocketguru.levels.LevelTwoFragment" android:label="Level Two" tools:layout="@layout/fragment_level_two" />
