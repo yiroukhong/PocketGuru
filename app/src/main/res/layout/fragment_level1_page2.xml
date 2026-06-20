@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:background="@color/white">
 
     <include
         android:id="@+id/progress_viewer"
@@ -40,6 +40,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_margin="8dp"
+            android:contentDescription="Baby stage"
             android:src="@drawable/baby" />
 
         <ImageView
@@ -48,6 +49,7 @@
             android:layout_height="80dp"
             android:layout_margin="8dp"
             android:alpha="0"
+            android:contentDescription="Kid stage"
             android:src="@drawable/kid" />
 
         <ImageView
@@ -56,6 +58,7 @@
             android:layout_height="80dp"
             android:layout_margin="8dp"
             android:alpha="0"
+            android:contentDescription="Adult stage"
             android:src="@drawable/adult" />
     </LinearLayout>
 

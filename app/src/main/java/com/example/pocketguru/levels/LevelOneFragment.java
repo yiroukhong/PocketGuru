@@ -15,16 +15,13 @@ import com.example.pocketguru.R;
 
 public class LevelOneFragment extends Fragment {
 
-    private ViewPager2 viewPager;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_level_one, container, false);
+        View view = inflater.inflate(R.layout.fragment_level_one_host, container, false);
 
-        viewPager = view.findViewById(R.id.viewPager);
+        ViewPager2 viewPager = view.findViewById(R.id.viewPager);
         viewPager.setAdapter(new LevelOnePagerAdapter(this));
-        // Disable swiping to force using the Next buttons
         viewPager.setUserInputEnabled(false);
 
         return view;

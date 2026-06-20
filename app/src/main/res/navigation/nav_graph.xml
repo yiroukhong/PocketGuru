@@ -67,7 +67,7 @@
         android:name="com.example.pocketguru.levels.LevelMapFragment"
         android:label="Level Map"
         tools:layout="@layout/fragment_level_map">
-        <action android:id="@+id/action_LevelMapFragment_to_LevelOneFragment" app:destination="@id/LevelOneFragment" />
+        <action android:id="@+id/action_LevelMapFragment_to_LevelOneFragment" app:destination="@id/LevelOneHostFragment" />
         <action android:id="@+id/action_LevelMapFragment_to_LevelTwoFragment" app:destination="@id/LevelTwoFragment" />
         <action android:id="@+id/action_LevelMapFragment_to_LevelThreeFragment" app:destination="@id/LevelThreeFragment" />
         <action android:id="@+id/action_LevelMapFragment_to_LevelFourFragment" app:destination="@id/LevelFourFragment" />
@@ -91,12 +91,12 @@
         tools:layout="@layout/fragment_keywords_list" />
 
     <!-- Levels -->
-    <fragment android:id="@+id/LevelOneFragment" android:name="com.example.pocketguru.levels.LevelOneFragment" android:label="Level One" tools:layout="@layout/fragment_level_one" />
+    <fragment android:id="@+id/LevelOneHostFragment" android:name="com.example.pocketguru.levels.LevelOneFragment" android:label="Level One" tools:layout="@layout/fragment_level_one_host" />
     <fragment android:id="@+id/LevelTwoFragment" android:name="com.example.pocketguru.levels.LevelTwoFragment" android:label="Level Two" tools:layout="@layout/fragment_level_two" />
     <fragment android:id="@+id/LevelThreeFragment" android:name="com.example.pocketguru.levels.LevelThreeFragment" android:label="Level Three" tools:layout="@layout/fragment_level_three" />
     <fragment android:id="@+id/LevelFourFragment" android:name="com.example.pocketguru.levels.LevelFourFragment" android:label="Level Four" tools:layout="@layout/fragment_level_four" />
     <fragment android:id="@+id/LevelFiveFragment" android:name="com.example.pocketguru.levels.LevelFiveFragment" android:label="Level Five" tools:layout="@layout/fragment_level_five" />
-    <fragment android:id="@+id/LevelSixFragment" android:name="com.example.pocketguru.levels.LevelSixFragment" android:label="Level Six" tools:layout="@layout/fragment_level_six" />
+    <fragment android:id="@+id/LevelSixFragment" android:name="com.example.pocketguru.levels.LevelSixFragment" android:label="Level Six" tools:layout="@layout/fragment_level_six_host" />
 
     <!-- Mini-games & Assessment -->
     <fragment android:id="@+id/FlashcardsFragment" android:name="com.example.pocketguru.minigames.FlashcardsFragment" android:label="Flashcards" tools:layout="@layout/fragment_flashcards" />

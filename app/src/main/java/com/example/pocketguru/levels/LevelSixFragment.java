@@ -18,7 +18,7 @@ public class LevelSixFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_level_six, container, false);
+        View view = inflater.inflate(R.layout.fragment_level_six_host, container, false);
 
         ViewPager2 viewPager = view.findViewById(R.id.viewPager);
         viewPager.setAdapter(new LevelSixPagerAdapter(this));

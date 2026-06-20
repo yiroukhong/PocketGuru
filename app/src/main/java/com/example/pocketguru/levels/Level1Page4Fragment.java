@@ -25,10 +25,14 @@ public class Level1Page4Fragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_level1_page4, container, false);
 
         // Update progress viewer
-        view.findViewById(R.id.indicator1).setBackgroundResource(R.color.salmon_pink);
-        view.findViewById(R.id.indicator2).setBackgroundResource(R.color.salmon_pink);
-        view.findViewById(R.id.indicator3).setBackgroundResource(R.color.salmon_pink);
-        view.findViewById(R.id.indicator4).setBackgroundResource(R.color.salmon_pink);
+        View i1 = view.findViewById(R.id.indicator1);
+        View i2 = view.findViewById(R.id.indicator2);
+        View i3 = view.findViewById(R.id.indicator3);
+        View i4 = view.findViewById(R.id.indicator4);
+        if (i1 != null) i1.setBackgroundResource(R.color.salmon_pink);
+        if (i2 != null) i2.setBackgroundResource(R.color.salmon_pink);
+        if (i3 != null) i3.setBackgroundResource(R.color.salmon_pink);
+        if (i4 != null) i4.setBackgroundResource(R.color.salmon_pink);
 
         TextView textBodyTop = view.findViewById(R.id.text_body_top);
         String topText = "But plants can, they obtain energy through a process called Photosynthesis";
@@ -46,7 +50,7 @@ public class Level1Page4Fragment extends Fragment {
                     Navigation.findNavController(v).navigateUp();
                 }
             }, () -> {
-                // Handle error
+                // error
             });
         });
 

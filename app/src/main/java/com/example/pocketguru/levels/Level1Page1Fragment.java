@@ -19,15 +19,20 @@ public class Level1Page1Fragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_level1_page1, container, false);
 
-        // Update progress viewer
-        view.findViewById(R.id.indicator1).setBackgroundResource(R.color.salmon_pink);
+        // Set current indicator
+        View indicator1 = view.findViewById(R.id.indicator1);
+        if (indicator1 != null) {
+            indicator1.setBackgroundResource(R.color.salmon_pink);
+        }
 
         view.findViewById(R.id.btn_next).setOnClickListener(v -> {
-            View parentView = requireParentFragment().getView();
-            if (parentView != null) {
-                ViewPager2 viewPager = parentView.findViewById(R.id.viewPager);
-                if (viewPager != null) {
-                    viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+            if (getParentFragment() instanceof LevelOneFragment) {
+                View parentView = getParentFragment().getView();
+                if (parentView != null) {
+                    ViewPager2 viewPager = parentView.findViewById(R.id.viewPager);
+                    if (viewPager != null) {
+                        viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+                    }
                 }
             }
         });
