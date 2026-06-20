@@ -73,7 +73,7 @@ public class AssessmentFragment extends Fragment implements QuestionFragment.OnA
 
         questions.add(new Question("Chloroplasts are...", Question.QuestionType.TEXT_OPTIONS, 
                 new String[]{"A type of pigment used for photosynthesis", "The location inside a plant cell where photosynthesis happens", "The location where gaseous exchange happens", "Gives the green colour of plants"}, 
-                new int[]{1}, R.drawable.assess_chloroplast));
+                new int[]{1}, R.drawable.chloroplast));
 
         questions.add(new Question("What do plants give off after photosynthesis?", Question.QuestionType.IMAGE_OPTIONS, 
                 new String[]{"CO2", "Oxygen", "Water", "Methane"}, 

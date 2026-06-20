@@ -51,6 +51,16 @@ public class MainActivity extends AppCompatActivity {
                     navView.setVisibility(View.VISIBLE);
                 }
             });
+
+            // Ensure the Home button always returns to LevelMapFragment and clears the backstack of levels
+            navView.setOnItemSelectedListener(item -> {
+                int itemId = item.getItemId();
+                if (itemId == R.id.LevelMapFragment) {
+                    navController.popBackStack(R.id.LevelMapFragment, false);
+                    return true;
+                }
+                return NavigationUI.onNavDestinationSelected(item, navController);
+            });
         }
     }
 
