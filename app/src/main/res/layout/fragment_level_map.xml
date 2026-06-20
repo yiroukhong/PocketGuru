@@ -133,6 +133,34 @@
                     app:tint="#757575" />
             </FrameLayout>
 
+            <!-- Flashcards Button (Right side) -->
+            <LinearLayout
+                android:id="@+id/container_flashcards"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@id/container_level_5"
+                app:layout_constraintStart_toEndOf="@id/container_level_5"
+                app:layout_constraintTop_toTopOf="@id/container_level_5">
+
+                <ImageButton
+                    android:id="@+id/btn_flashcards"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/flashcard_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Flashcards"
+                    android:textColor="@color/yellow_primary"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
             <!-- Level 4 (Locked) -->
             <FrameLayout
                 android:id="@+id/container_level_4"
@@ -158,6 +186,34 @@
                     android:src="@drawable/ic_sun"
                     app:tint="#757575" />
             </FrameLayout>
+
+            <!-- Mix-and-Match Button (Left side) -->
+            <LinearLayout
+                android:id="@+id/container_mix_match"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="60dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@id/container_level_3"
+                app:layout_constraintEnd_toStartOf="@id/container_level_3"
+                app:layout_constraintTop_toTopOf="@id/container_level_3">
+
+                <ImageButton
+                    android:id="@+id/btn_mix_match"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/mix_and_match_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mix-and-Match"
+                    android:textColor="@color/yellow_primary"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
             <!-- Level 5 (Locked) -->
             <FrameLayout
