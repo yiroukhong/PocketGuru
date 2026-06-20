@@ -21,13 +21,6 @@ public class Level6Page1Fragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_level6_page1, container, false);
 
-        ImageView imgGrowth = view.findViewById(R.id.image_growth);
-        
-        // Simple scale animation to simulate growth
-        imgGrowth.setScaleX(0.5f);
-        imgGrowth.setScaleY(0.5f);
-        imgGrowth.animate().scaleX(1.2f).scaleY(1.2f).setDuration(2000).start();
-
         view.findViewById(R.id.btn_next).setOnClickListener(v -> {
             if (getParentFragment() instanceof LevelSixFragment) {
                 View parentView = getParentFragment().getView();
