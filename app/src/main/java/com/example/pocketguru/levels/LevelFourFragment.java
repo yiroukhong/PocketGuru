@@ -88,12 +88,15 @@ public class LevelFourFragment extends Fragment {
     }
 
     private void setupSunDraggable(View sun) {
-        sun.setOnLongClickListener(v -> {
-            ClipData.Item item = new ClipData.Item("sun");
-            ClipData dragData = new ClipData("sun", new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
-            View.DragShadowBuilder shadow = new View.DragShadowBuilder(v);
-            v.startDragAndDrop(dragData, shadow, v, 0);
-            return true;
+        sun.setOnTouchListener((v, event) -> {
+            if (event.getAction() == android.view.MotionEvent.ACTION_DOWN) {
+                ClipData.Item item = new ClipData.Item("sun");
+                ClipData dragData = new ClipData("sun", new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
+                View.DragShadowBuilder shadow = new View.DragShadowBuilder(v);
+                v.startDragAndDrop(dragData, shadow, v, 0);
+                return true;
+            }
+            return false;
         });
     }
 

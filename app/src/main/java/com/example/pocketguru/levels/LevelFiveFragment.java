@@ -101,12 +101,15 @@ public class LevelFiveFragment extends Fragment {
 
     private void setupDraggable(View view, String name) {
         originalViews.put(name.hashCode(), view);
-        view.setOnLongClickListener(v -> {
-            ClipData.Item item = new ClipData.Item(name);
-            ClipData dragData = new ClipData(name, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
-            View.DragShadowBuilder shadow = new View.DragShadowBuilder(v);
-            v.startDragAndDrop(dragData, shadow, v, 0);
-            return true;
+        view.setOnTouchListener((v, event) -> {
+            if (event.getAction() == android.view.MotionEvent.ACTION_DOWN) {
+                ClipData.Item item = new ClipData.Item(name);
+                ClipData dragData = new ClipData(name, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
+                View.DragShadowBuilder shadow = new View.DragShadowBuilder(v);
+                v.startDragAndDrop(dragData, shadow, v, 0);
+                return true;
+            }
+            return false;
         });
     }
 
@@ -115,6 +118,15 @@ public class LevelFiveFragment extends Fragment {
             switch (event.getAction()) {
                 case DragEvent.ACTION_DRAG_STARTED:
                     return event.getClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN);
+
+                case DragEvent.ACTION_DRAG_ENTERED:
+                    v.setBackgroundResource(R.drawable.bg_equation_slot_active);
+                    return true;
+
+                case DragEvent.ACTION_DRAG_EXITED:
+                case DragEvent.ACTION_DRAG_ENDED:
+                    v.setBackgroundResource(R.drawable.bg_equation_slot);
+                    return true;
 
                 case DragEvent.ACTION_DROP:
                     String itemName = event.getClipData().getItemAt(0).getText().toString();
