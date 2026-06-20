@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -143,7 +144,19 @@ public class AssessmentFragment extends Fragment implements QuestionFragment.OnA
     }
 
     private void navigateToResults() {
-        // TODO: Implement AssessmentResultFragment navigation
+        int score = 0;
+        for (boolean correct : isCorrect) {
+            if (correct) score++;
+        }
+
+        Bundle args = new Bundle();
+        args.putInt(AssessmentResultFragment.ARG_SCORE, score);
+        
+        // We need to convert the 2D array to a flat array or Serializable for the bundle
+        // For simplicity in this scaffold, let's just pass the score and correctness
+        args.putBooleanArray(AssessmentResultFragment.ARG_IS_CORRECT, isCorrect);
+        
+        Navigation.findNavController(requireView()).navigate(R.id.action_AssessmentFragment_to_AssessmentResultFragment, args);
     }
 
     private class AssessmentPagerAdapter extends FragmentStateAdapter {

@@ -101,7 +101,19 @@
     <!-- Mini-games & Assessment -->
     <fragment android:id="@+id/FlashcardsFragment" android:name="com.example.pocketguru.minigames.FlashcardsFragment" android:label="Flashcards" tools:layout="@layout/fragment_flashcards" />
     <fragment android:id="@+id/MixAndMatchFragment" android:name="com.example.pocketguru.minigames.MixAndMatchFragment" android:label="Mix and Match" tools:layout="@layout/fragment_mix_and_match" />
-    <fragment android:id="@+id/AssessmentFragment" android:name="com.example.pocketguru.assessment.AssessmentFragment" android:label="Assessment" tools:layout="@layout/fragment_assessment" />
+
+    <fragment android:id="@+id/AssessmentFragment" android:name="com.example.pocketguru.minigames.AssessmentFragment" android:label="Assessment" tools:layout="@layout/fragment_assessment">
+        <argument android:name="isReview" app:argType="boolean" android:defaultValue="false" />
+        <argument android:name="userAnswers" app:argType="integer[]" app:nullable="true" android:defaultValue="@null" />
+        <argument android:name="isCorrect" app:argType="boolean[]" app:nullable="true" android:defaultValue="@null" />
+        <action android:id="@+id/action_AssessmentFragment_to_AssessmentResultFragment" app:destination="@id/AssessmentResultFragment" />
+    </fragment>
+
+    <fragment android:id="@+id/AssessmentResultFragment" android:name="com.example.pocketguru.minigames.AssessmentResultFragment" android:label="Assessment Result" tools:layout="@layout/fragment_assessment_result">
+        <argument android:name="score" app:argType="integer" />
+        <argument android:name="userAnswers" app:argType="integer[]" app:nullable="true" />
+        <argument android:name="isCorrect" app:argType="boolean[]" app:nullable="true" />
+    </fragment>
 
     <fragment
         android:id="@+id/LevelCompleteFragment"
