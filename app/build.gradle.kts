@@ -52,6 +52,9 @@ dependencies {
     // OpenCV
     implementation("org.opencv:opencv:4.9.0")
 
+    // Lottie
+    implementation("com.airbnb.android:lottie:6.4.0")
+
     // Glide
     implementation(libs.glide)
     annotationProcessor(libs.glide.compiler)
