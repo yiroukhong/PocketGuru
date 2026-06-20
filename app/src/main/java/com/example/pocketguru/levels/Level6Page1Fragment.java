@@ -31,9 +31,12 @@ public class Level6Page1Fragment extends Fragment {
         imgGrowth.animate().scaleX(1.2f).scaleY(1.2f).setDuration(2000).start();
 
         view.findViewById(R.id.btn_next).setOnClickListener(v -> {
-            ViewPager2 viewPager = requireActivity().findViewById(R.id.viewPager);
-            if (viewPager != null) {
-                viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+            View parentView = requireParentFragment().getView();
+            if (parentView != null) {
+                ViewPager2 viewPager = parentView.findViewById(R.id.viewPager);
+                if (viewPager != null) {
+                    viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+                }
             }
         });
 

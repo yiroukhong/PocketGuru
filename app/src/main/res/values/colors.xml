@@ -6,4 +6,7 @@
     <color name="yellow_primary">#FFD93D</color>
     <color name="progress_grey">#E0E0E0</color>
     <color name="dark_text">#424242</color>
+    <color name="app_background">#FDF6F0</color>
+    <color name="dark_purple">#612D55</color>
+    <color name="dusty_pink">#D49B91</color>
 </resources>

@@ -35,9 +35,12 @@ public class Level6Page2Fragment extends Fragment {
         view.findViewById(R.id.btn_grow_fruit).setOnClickListener(v -> animateFruitGrowth());
 
         btnNext.setOnClickListener(v -> {
-            ViewPager2 viewPager = requireActivity().findViewById(R.id.viewPager);
-            if (viewPager != null) {
-                viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+            View parentView = requireParentFragment().getView();
+            if (parentView != null) {
+                ViewPager2 viewPager = parentView.findViewById(R.id.viewPager);
+                if (viewPager != null) {
+                    viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+                }
             }
         });
 

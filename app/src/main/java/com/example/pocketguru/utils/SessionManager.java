@@ -14,9 +14,15 @@ public class SessionManager {
         editor = sharedPreferences.edit();
     }
 
+    public void saveSession(String sessionToken) {
+        saveSession(sessionToken, null);
+    }
+
     public void saveSession(String sessionToken, String userId) {
         editor.putString(KEY_SUPABASE_SESSION, sessionToken);
-        editor.putString("user_id", userId);
+        if (userId != null) {
+            editor.putString("user_id", userId);
+        }
         editor.apply();
     }
 
