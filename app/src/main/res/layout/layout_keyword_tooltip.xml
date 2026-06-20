@@ -38,6 +38,16 @@
                 android:src="@android:drawable/ic_lock_silent_mode_off"
                 app:tint="#FFD93D" />
 
+            <ImageView
+                android:id="@+id/btn_bookmark"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_toStartOf="@id/btn_speak"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="Save keyword"
+                android:src="@drawable/ic_bookmark" />
+
         </RelativeLayout>
 
         <TextView
