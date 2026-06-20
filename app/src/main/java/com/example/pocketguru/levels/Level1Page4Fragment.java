@@ -14,6 +14,7 @@ import androidx.navigation.Navigation;
 
 import com.example.pocketguru.R;
 import com.example.pocketguru.utils.KeywordTooltipHelper;
+import com.example.pocketguru.utils.LevelProgressManager;
 import com.example.pocketguru.utils.SpannableHelper;
 
 public class Level1Page4Fragment extends Fragment {
@@ -40,9 +41,13 @@ public class Level1Page4Fragment extends Fragment {
         textBodyTop.setMovementMethod(LinkMovementMethod.getInstance());
 
         view.findViewById(R.id.btn_complete).setOnClickListener(v -> {
-            // TODO: Use LevelProgressManager to save progress
-            // For now just navigate back
-            Navigation.findNavController(v).navigateUp();
+            LevelProgressManager.completeLevel(requireContext(), 1, () -> {
+                if (isAdded()) {
+                    Navigation.findNavController(v).navigateUp();
+                }
+            }, () -> {
+                // Handle error
+            });
         });
 
         return view;
