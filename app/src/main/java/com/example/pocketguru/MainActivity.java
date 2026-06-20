@@ -55,29 +55,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void checkSessionAndNavigate() {
-        if (navController == null) return;
-
-        String token = sessionManager.getSessionToken();
-        if (token != null) {
-            SupabaseManager.INSTANCE.restoreSession(token, new SupabaseManager.SupabaseCallback<Boolean>() {
-                @Override
-                public void onSuccess(Boolean success) {
-                    if (success) {
-                        navController.navigate(R.id.action_SplashFragment_to_LevelMapFragment);
-                    } else {
-                        sessionManager.clearSession();
-                        navController.navigate(R.id.action_SplashFragment_to_WelcomeFragment);
-                    }
-                }
-
-                @Override
-                public void onError(String error) {
-                    sessionManager.clearSession();
-                    navController.navigate(R.id.action_SplashFragment_to_WelcomeFragment);
-                }
-            });
-        } else {
-            navController.navigate(R.id.action_SplashFragment_to_WelcomeFragment);
+        // Bypassing auth for now
+        if (navController != null) {
+            navController.navigate(R.id.action_SplashFragment_to_LevelMapFragment);
         }
     }
 }
