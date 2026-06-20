@@ -21,8 +21,6 @@ public class Level6Page1Fragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_level6_page1, container, false);
 
-        view.findViewById(R.id.indicator1).setBackgroundResource(R.color.salmon_pink);
-
         ImageView imgGrowth = view.findViewById(R.id.image_growth);
         
         // Simple scale animation to simulate growth
@@ -31,11 +29,13 @@ public class Level6Page1Fragment extends Fragment {
         imgGrowth.animate().scaleX(1.2f).scaleY(1.2f).setDuration(2000).start();
 
         view.findViewById(R.id.btn_next).setOnClickListener(v -> {
-            View parentView = requireParentFragment().getView();
-            if (parentView != null) {
-                ViewPager2 viewPager = parentView.findViewById(R.id.viewPager);
-                if (viewPager != null) {
-                    viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+            if (getParentFragment() instanceof LevelSixFragment) {
+                View parentView = getParentFragment().getView();
+                if (parentView != null) {
+                    ViewPager2 viewPager = parentView.findViewById(R.id.viewPager);
+                    if (viewPager != null) {
+                        viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, true);
+                    }
                 }
             }
         });

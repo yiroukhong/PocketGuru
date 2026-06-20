@@ -25,9 +25,6 @@ public class Level6Page2Fragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_level6_page2, container, false);
 
-        view.findViewById(R.id.indicator1).setBackgroundResource(R.color.salmon_pink);
-        view.findViewById(R.id.indicator2).setBackgroundResource(R.color.salmon_pink);
-
         imgNoFruit = view.findViewById(R.id.img_tree_no_fruit);
         imgWithFruit = view.findViewById(R.id.img_tree_with_fruit);
         btnNext = view.findViewById(R.id.btn_next);
@@ -35,11 +32,13 @@ public class Level6Page2Fragment extends Fragment {
         view.findViewById(R.id.btn_grow_fruit).setOnClickListener(v -> animateFruitGrowth());
 
         btnNext.setOnClickListener(v -> {
-            View parentView = requireParentFragment().getView();
-            if (parentView != null) {
-                ViewPager2 viewPager = parentView.findViewById(R.id.viewPager);
-                if (viewPager != null) {
-                    viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+            if (getParentFragment() instanceof LevelSixFragment) {
+                View parentView = getParentFragment().getView();
+                if (parentView != null) {
+                    ViewPager2 viewPager = parentView.findViewById(R.id.viewPager);
+                    if (viewPager != null) {
+                        viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, true);
+                    }
                 }
             }
         });

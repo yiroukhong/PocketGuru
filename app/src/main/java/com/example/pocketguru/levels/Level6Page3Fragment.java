@@ -20,10 +20,6 @@ public class Level6Page3Fragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_level6_page3, container, false);
 
-        view.findViewById(R.id.indicator1).setBackgroundResource(R.color.salmon_pink);
-        view.findViewById(R.id.indicator2).setBackgroundResource(R.color.salmon_pink);
-        view.findViewById(R.id.indicator3).setBackgroundResource(R.color.salmon_pink);
-
         view.findViewById(R.id.btn_complete).setOnClickListener(v -> {
             LevelProgressManager.completeLevel(requireContext(), 6, () -> {
                 if (isAdded()) {
