@@ -83,7 +83,7 @@
             android:orientation="horizontal">
             <ImageView android:id="@+id/item_co2" android:layout_width="64dp" android:layout_height="64dp" android:layout_margin="8dp" android:src="@drawable/item_co2" tools:ignore="ContentDescription" />
             <ImageView android:id="@+id/item_water" android:layout_width="64dp" android:layout_height="64dp" android:layout_margin="8dp" android:src="@drawable/item_water" tools:ignore="ContentDescription" />
-            <ImageView android:id="@+id/item_sun" android:layout_width="64dp" android:layout_height="64dp" android:layout_margin="8dp" android:src="@drawable/item_sun" tools:ignore="ContentDescription" />
+            <ImageView android:id="@+id/item_sun" android:layout_width="64dp" android:layout_height="64dp" android:layout_margin="8dp" android:src="@drawable/sun_icon" tools:ignore="ContentDescription" />
         </LinearLayout>
 
         <LinearLayout

@@ -67,12 +67,12 @@ public class MixAndMatchFragment extends Fragment {
     }
 
     private void initPairs() {
-        pairs.add(new MatchPair("The place where photosynthesis takes place", R.drawable.match_chloroplast));
-        pairs.add(new MatchPair("The gas released from photosynthesis. Humans breathe this", R.drawable.match_oxygen));
-        pairs.add(new MatchPair("The process in which green plants make their own food", R.drawable.match_photosynthesis_diagram));
-        pairs.add(new MatchPair("Which gas is needed by plants to make food?", R.drawable.match_co2));
-        pairs.add(new MatchPair("The sugar made from photosynthesis", R.drawable.match_sugar));
-        pairs.add(new MatchPair("The green pigment that captures sunlight", R.drawable.match_chloroplast_image));
+        pairs.add(new MatchPair("The place where photosynthesis takes place", R.drawable.chloroplast));
+        pairs.add(new MatchPair("The gas released from photosynthesis. Humans breathe this", R.drawable.item_oxygen));
+        pairs.add(new MatchPair("The process in which green plants make their own food", R.drawable.level1_diagram));
+        pairs.add(new MatchPair("Which gas is needed by plants to make food?", R.drawable.item_co2));
+        pairs.add(new MatchPair("The sugar made from photosynthesis", R.drawable.item_sugar));
+        pairs.add(new MatchPair("The pore on leaves where gases can enter and leave", R.drawable.stomata_diagram));
 
         for (MatchPair pair : pairs) {
             correctMap.put(pair.definition, pair.imageResId);

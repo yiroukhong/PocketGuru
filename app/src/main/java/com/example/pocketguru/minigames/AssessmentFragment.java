@@ -101,7 +101,7 @@ public class AssessmentFragment extends Fragment implements QuestionFragment.OnA
 
         questions.add(new Question("The small holes in the plant's leaves that take in carbon dioxide are called the", Question.QuestionType.IMAGE_OPTIONS, 
                 new String[]{"Carbon Dioxide", "Stomata", "Chloroplasts", "Stem"}, 
-                new int[]{R.drawable.item_co2, R.drawable.match_co2, R.drawable.match_chloroplast, R.drawable.assess_stem}, 
+                new int[]{R.drawable.item_co2, R.drawable.match_co2, R.drawable.match_chloroplast, R.drawable.level2_plant},
                 new int[]{1}, R.drawable.stomata_diagram));
     }
 
