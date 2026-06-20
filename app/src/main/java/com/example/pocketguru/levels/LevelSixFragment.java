@@ -31,7 +31,8 @@ public class LevelSixFragment extends Fragment {
         segments = new View[]{
                 view.findViewById(R.id.seg1),
                 view.findViewById(R.id.seg2),
-                view.findViewById(R.id.seg3)
+                view.findViewById(R.id.seg3),
+                view.findViewById(R.id.seg4)
         };
 
         viewPager = view.findViewById(R.id.viewPager);
@@ -91,13 +92,14 @@ public class LevelSixFragment extends Fragment {
                 case 0: return new Level6Page1Fragment();
                 case 1: return new Level6Page2Fragment();
                 case 2: return new Level6Page3Fragment();
+                case 3: return new Level6Page4Fragment();
                 default: return new Level6Page1Fragment();
             }
         }
 
         @Override
         public int getItemCount() {
-            return 3;
+            return 4;
         }
     }
 }

@@ -6,7 +6,7 @@
     android:background="@color/white"
     android:fitsSystemWindows="true">
 
-    <!-- Progress Bar Container (3 segments for Level 6) -->
+    <!-- Progress Bar Container (4 segments for Level 6 now) -->
     <LinearLayout
         android:id="@+id/progress_container"
         android:layout_width="match_parent"
@@ -36,6 +36,14 @@
 
         <View
             android:id="@+id/seg3"
+            android:layout_width="0dp"
+            android:layout_height="6dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/bg_progress_segment" />
+
+        <View
+            android:id="@+id/seg4"
             android:layout_width="0dp"
             android:layout_height="6dp"
             android:layout_weight="1"
