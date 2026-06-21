@@ -6,26 +6,14 @@
     android:background="@color/white"
     android:padding="24dp">
 
-    <ImageView
-        android:id="@+id/image_logo"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:src="@drawable/logo_transparent_bg"
-        android:scaleType="fitCenter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginBottom="16dp" />
-
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottie_plant_growing"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_margin="24dp"
-        app:lottie_fileName="tree_growing.json"
+        app:lottie_fileName="confetti.json"
         app:lottie_autoPlay="true"
         app:lottie_loop="false"
-        app:layout_constraintBottom_toTopOf="@id/text_body_bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/image_logo" />

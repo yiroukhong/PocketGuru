@@ -10,18 +10,18 @@
         android:id="@+id/header_top"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="@color/app_background"
+        android:background="#FFD93D"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
+        <ImageView
+            android:id="@+id/image_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="POCKETGURU"
-            android:textColor="@color/white"
-            android:textSize="28sp"
-            android:textStyle="bold" />
-    </FrameLayout>
+            android:layout_margin="15dp"
+            android:src="@drawable/logo_transparent_bg"/>
+
+            </FrameLayout>
 
     <!-- Secondary Header -->
     <FrameLayout
