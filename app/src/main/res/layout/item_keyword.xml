@@ -34,7 +34,8 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Speak definition"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_speaker"
+            android:src="@android:drawable/ic_lock_silent_mode_off"
+            app:tint="#FFD93D"
             app:layout_constraintBottom_toBottomOf="@id/text_keyword_name"
             app:layout_constraintStart_toEndOf="@id/text_keyword_name"
             app:layout_constraintTop_toTopOf="@id/text_keyword_name" />
