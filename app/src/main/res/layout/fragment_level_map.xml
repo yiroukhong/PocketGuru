@@ -68,7 +68,8 @@
                     android:id="@+id/nodeBg1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/circle_node_bg" />
+                    android:src="@drawable/circle_node_bg"
+                    app:tint="#FFD93D" />
 
                 <ImageView
                     android:id="@+id/nodeIcon1"
@@ -93,7 +94,8 @@
                     android:id="@+id/nodeBg2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/circle_node_bg" />
+                    android:src="@drawable/circle_node_bg"
+                    app:tint="#CCCCCC" />
 
                 <ImageView
                     android:id="@+id/nodeIcon2"
@@ -118,7 +120,8 @@
                     android:id="@+id/nodeBg3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/circle_node_bg" />
+                    android:src="@drawable/circle_node_bg"
+                    app:tint="#CCCCCC" />
 
                 <ImageView
                     android:id="@+id/nodeIcon3"
@@ -170,7 +173,8 @@
                     android:id="@+id/nodeBg4"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/circle_node_bg" />
+                    android:src="@drawable/circle_node_bg"
+                    app:tint="#CCCCCC" />
 
                 <ImageView
                     android:id="@+id/nodeIcon4"
@@ -195,7 +199,8 @@
                     android:id="@+id/nodeBg5"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/circle_node_bg" />
+                    android:src="@drawable/circle_node_bg"
+                    app:tint="#CCCCCC" />
 
                 <ImageView
                     android:id="@+id/nodeIcon5"
@@ -248,7 +253,8 @@
                     android:id="@+id/nodeBg6"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/circle_node_bg" />
+                    android:src="@drawable/circle_node_bg"
+                    app:tint="#CCCCCC" />
 
                 <ImageView
                     android:id="@+id/nodeIcon6"
@@ -272,7 +278,8 @@
                     android:id="@+id/nodeBgAssessment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/circle_node_bg" />
+                    android:src="@drawable/circle_node_bg"
+                    app:tint="#CCCCCC" />
 
                 <ImageView
                     android:id="@+id/nodeIconAssessment"
