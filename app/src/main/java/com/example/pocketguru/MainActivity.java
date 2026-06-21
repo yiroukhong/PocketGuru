@@ -9,6 +9,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.pocketguru.databinding.ActivityMainBinding;
 import com.example.pocketguru.supabase.SupabaseManager;
 import com.example.pocketguru.utils.SessionManager;
+import com.example.pocketguru.utils.SoundManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -72,5 +73,11 @@ public class MainActivity extends AppCompatActivity {
                 navController.navigate(R.id.action_SplashFragment_to_WelcomeFragment);
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SoundManager.getInstance(this).release();
     }
 }
