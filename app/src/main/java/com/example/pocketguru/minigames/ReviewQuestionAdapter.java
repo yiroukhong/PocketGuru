@@ -71,8 +71,8 @@ public class ReviewQuestionAdapter extends RecyclerView.Adapter<ReviewQuestionAd
                 applyBorderStyle(optionTextViews[i], "#E57373"); // Red
                 optionTextViews[i].setTextColor(Color.parseColor("#E57373"));
             } else {
-                applyBorderStyle(optionTextViews[i], "#CCCCCC"); // Grey
-                optionTextViews[i].setTextColor(Color.parseColor("#999999"));
+                applyBorderStyle(optionTextViews[i], "#E0E0E0"); // Very Light Grey
+                optionTextViews[i].setTextColor(Color.parseColor("#AAAAAA"));
             }
         }
 

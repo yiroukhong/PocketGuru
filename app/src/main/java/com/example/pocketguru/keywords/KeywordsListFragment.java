@@ -53,8 +53,9 @@ public class KeywordsListFragment extends Fragment implements KeywordsAdapter.On
             Navigation.findNavController(v).popBackStack(R.id.LevelMapFragment, false)
         );
 
-        setupRecyclerView();
-        setupTTS();
+        setupRecyclerView(); // creates adapter and attaches it immediately
+        loadKeywords();      // fetches data immediately, doesn't wait for TTS
+        setupTTS();          // TTS initializes in background, updates adapter when ready
 
         return view;
     }
@@ -63,19 +64,21 @@ public class KeywordsListFragment extends Fragment implements KeywordsAdapter.On
         tts = new TextToSpeech(requireContext(), status -> {
             if (status == TextToSpeech.SUCCESS) {
                 tts.setLanguage(Locale.ENGLISH);
-                // Create adapter only after TTS is ready
-                adapter = new KeywordsAdapter(keywordList, tts, this);
-            } else {
-                // TTS failed — create adapter without TTS
-                adapter = new KeywordsAdapter(keywordList, null, this);
             }
-            recyclerKeywords.setAdapter(adapter);
-            loadKeywords();
+            // Update adapter with TTS regardless of success/fail
+            if (adapter != null) {
+                adapter.setTts(status == TextToSpeech.SUCCESS ? tts : null);
+            }
         });
     }
 
+
+
     private void setupRecyclerView() {
         recyclerKeywords.setLayoutManager(new LinearLayoutManager(requireContext()));
+        // Create adapter immediately with null TTS — attach it right away
+        adapter = new KeywordsAdapter(keywordList, null, this);
+        recyclerKeywords.setAdapter(adapter);
     }
 
     private void loadKeywords() {

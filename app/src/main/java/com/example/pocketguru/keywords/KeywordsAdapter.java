@@ -31,8 +31,13 @@ public class KeywordsAdapter extends RecyclerView.Adapter<KeywordsAdapter.Keywor
         this.keywordList = keywordList;
         this.tts = tts;
         this.deleteListener = deleteListener;
+
+
     }
 
+    public void setTts(TextToSpeech tts) {
+        notifyDataSetChanged();
+    }
     @NonNull
     @Override
     public KeywordViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

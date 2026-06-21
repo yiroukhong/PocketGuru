@@ -9,13 +9,13 @@
     <FrameLayout
         android:id="@+id/header_logo"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="90dp"
         android:background="#FFD93D"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
+            android:layout_width="258dp"
+            android:layout_height="145dp"
             android:layout_gravity="center"
             android:layout_margin="12dp"
             android:scaleType="fitCenter"
