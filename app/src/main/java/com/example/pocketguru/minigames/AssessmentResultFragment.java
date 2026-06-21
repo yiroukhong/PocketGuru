@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.pocketguru.R;
 import com.example.pocketguru.utils.LevelProgressManager;
 
@@ -49,7 +50,7 @@ public class AssessmentResultFragment extends Fragment {
     }
 
     private void setupUI(View view) {
-        ImageView imageResult = view.findViewById(R.id.image_result);
+        LottieAnimationView imageResult = view.findViewById(R.id.image_result);
         TextView textStatus = view.findViewById(R.id.text_status);
         TextView textScore = view.findViewById(R.id.text_score);
         Button btnContinue = view.findViewById(R.id.btn_continue);
@@ -58,12 +59,14 @@ public class AssessmentResultFragment extends Fragment {
         boolean passed = score >= 7;
 
         if (passed) {
-            imageResult.setImageResource(R.drawable.level_complete_icon);
+            imageResult.setAnimation("confetti.json");
+            imageResult.playAnimation();
             textStatus.setText("You rock!");
             btnContinue.setText("Continue");
             btnReview.setText("Review assessment");
         } else {
             imageResult.setImageResource(R.drawable.assess_try_again);
+            imageResult.setAnimation((String) null); // Clear animation if any
             textStatus.setText("So close!");
             btnContinue.setText("Try again");
             btnReview.setText("Review answers");
