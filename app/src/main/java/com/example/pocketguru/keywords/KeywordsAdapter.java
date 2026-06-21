@@ -24,7 +24,7 @@ public class KeywordsAdapter extends RecyclerView.Adapter<KeywordsAdapter.Keywor
     }
 
     private final List<KeywordItem> keywordList;
-    private final TextToSpeech tts;
+    private TextToSpeech tts;
     private final OnKeywordDeleteListener deleteListener;
 
     public KeywordsAdapter(List<KeywordItem> keywordList, TextToSpeech tts, OnKeywordDeleteListener deleteListener) {
@@ -36,6 +36,7 @@ public class KeywordsAdapter extends RecyclerView.Adapter<KeywordsAdapter.Keywor
     }
 
     public void setTts(TextToSpeech tts) {
+        this.tts = tts;
         notifyDataSetChanged();
     }
     @NonNull

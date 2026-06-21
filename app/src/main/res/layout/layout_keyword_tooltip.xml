@@ -35,8 +35,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:contentDescription="Speak definition"
-                android:src="@android:drawable/ic_lock_silent_mode_off"
-                app:tint="#FFD93D" />
+                android:src="@drawable/icon_speaker" />
 
             <ImageView
                 android:id="@+id/btn_bookmark"

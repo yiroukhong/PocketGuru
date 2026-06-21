@@ -12,5 +12,9 @@
         <!-- keep all existing theme attributes -->
     </style>
     <!-- Style requested in AndroidManifest.xml -->
-    <style name="Theme.PocketGuru.NoActionBar" parent="Theme.PocketGuru" />
+    <style name="Theme.PocketGuru.NoActionBar" parent="Theme.PocketGuru">
+        <item name="android:fontFamily">@font/josefin_sans</item>
+        <item name="fontFamily">@font/josefin_sans</item>
+        <!-- keep all existing theme attributes -->
+    </style>
 </resources>

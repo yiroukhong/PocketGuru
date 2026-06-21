@@ -28,14 +28,13 @@
 
         <ImageButton
             android:id="@+id/btn_speaker"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_marginStart="8dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Speak definition"
             android:scaleType="fitCenter"
-            android:src="@android:drawable/ic_lock_silent_mode_off"
-            app:tint="#FFD93D"
+            android:src="@drawable/icon_speaker"
             app:layout_constraintBottom_toBottomOf="@id/text_keyword_name"
             app:layout_constraintStart_toEndOf="@id/text_keyword_name"
             app:layout_constraintTop_toTopOf="@id/text_keyword_name" />

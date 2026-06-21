@@ -208,15 +208,18 @@ public class QuickVisualizationFragment extends Fragment {
 
             // Draw second annotation line from leaf to chlorophyll label
             layoutChlorophyllLabel.post(() -> {
-                int[] leafLocation = new int[2];
-                imageCapturedLeaf.getLocationInWindow(leafLocation);
                 int[] lineLocation = new int[2];
                 annotationLine.getLocationInWindow(lineLocation);
+
+                // Start: right edge of chloroplast image
+                int[] chloroplastImgLocation = new int[2];
+                imgChloroplast.getLocationInWindow(chloroplastImgLocation);
+                float startX = (chloroplastImgLocation[0] - lineLocation[0]) + imgChloroplast.getWidth();
+                float startY = (chloroplastImgLocation[1] - lineLocation[1]) + imgChloroplast.getHeight() * 0.5f;
+
+                // End: left edge of chlorophyll label, vertically centered
                 int[] chlorophyllLocation = new int[2];
                 layoutChlorophyllLabel.getLocationInWindow(chlorophyllLocation);
-
-                float startX = (leafLocation[0] - lineLocation[0]) + imageCapturedLeaf.getWidth() * 0.3f;
-                float startY = (leafLocation[1] - lineLocation[1]) + imageCapturedLeaf.getHeight() * 0.75f;
                 float endX = (chlorophyllLocation[0] - lineLocation[0]);
                 float endY = (chlorophyllLocation[1] - lineLocation[1]) + layoutChlorophyllLabel.getHeight() / 2f;
 

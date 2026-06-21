@@ -23,27 +23,30 @@ public class VideoPlayerFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_video_player, container, false);
 
         VideoView videoView = view.findViewById(R.id.video_view);
-        View placeholder = view.findViewById(R.id.text_placeholder);
 
-        // Check if video exists
-        int videoResId = getResources().getIdentifier("photosynthesis_video", "raw", requireContext().getPackageName());
-        
-        if (videoResId != 0) {
-            String videoPath = "android.resource://" + requireContext().getPackageName() + "/" + videoResId;
-            videoView.setVideoURI(Uri.parse(videoPath));
-            
-            MediaController mediaController = new MediaController(requireContext());
-            mediaController.setAnchorView(videoView);
-            videoView.setMediaController(mediaController);
-            
-            videoView.setOnPreparedListener(mp -> videoView.start());
-        } else {
-            videoView.setVisibility(View.GONE);
-            placeholder.setVisibility(View.VISIBLE);
-        }
+        // Load from res/raw
+        Uri videoUri = Uri.parse("android.resource://" + requireContext().getPackageName() + "/" + R.raw.photosynthesis_video);
+        videoView.setVideoURI(videoUri);
 
-        view.findViewById(R.id.btn_close).setOnClickListener(v -> Navigation.findNavController(v).navigateUp());
+        // Add playback controls (play, pause, seek bar)
+        MediaController mediaController = new MediaController(requireContext());
+        mediaController.setAnchorView(videoView);
+        videoView.setMediaController(mediaController);
+
+        // Auto play when ready
+        videoView.setOnPreparedListener(mp -> videoView.start());
+
+        // Close button
+        view.findViewById(R.id.btn_close_video).setOnClickListener(v -> {
+            videoView.stopPlayback();
+            Navigation.findNavController(v).navigateUp();
+        });
 
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
     }
 }

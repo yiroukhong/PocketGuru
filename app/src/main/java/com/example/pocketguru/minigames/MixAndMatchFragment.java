@@ -170,8 +170,8 @@ public class MixAndMatchFragment extends Fragment {
         });
 
         if (matchedCount == 6) {
-            Snackbar.make(getView(), "Well done!", Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Finish", v -> Navigation.findNavController(v).navigateUp())
+            Snackbar.make(requireView(), "Well done! 🎉", Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Finish", v -> Navigation.findNavController(requireView()).navigateUp())
                     .show();
         }
     }
