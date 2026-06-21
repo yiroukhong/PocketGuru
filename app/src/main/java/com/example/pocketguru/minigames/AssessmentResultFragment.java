@@ -59,7 +59,8 @@ public class AssessmentResultFragment extends Fragment {
     }
 
     private void setupUI(View view) {
-        LottieAnimationView imageResult = view.findViewById(R.id.image_result);
+        LottieAnimationView lottieResult = view.findViewById(R.id.image_result);
+        ImageView imageFail = view.findViewById(R.id.image_result_fail);
         TextView textStatus = view.findViewById(R.id.text_status);
         TextView textScore = view.findViewById(R.id.text_score);
         Button btnContinue = view.findViewById(R.id.btn_continue);
@@ -68,14 +69,17 @@ public class AssessmentResultFragment extends Fragment {
         boolean passed = score >= 7;
 
         if (passed) {
-            imageResult.setAnimation("confetti.json");
-            imageResult.playAnimation();
+            lottieResult.setVisibility(View.VISIBLE);
+            imageFail.setVisibility(View.GONE);
+            lottieResult.setAnimation("confetti.json");
+            lottieResult.playAnimation();
             textStatus.setText("You rock!");
             btnContinue.setText("Continue");
             btnReview.setText("Review assessment");
         } else {
-            imageResult.setImageResource(R.drawable.assess_try_again);
-            imageResult.setAnimation((String) null); // Clear animation if any
+            lottieResult.setVisibility(View.GONE);
+            imageFail.setVisibility(View.VISIBLE);
+            imageFail.setImageResource(R.drawable.level_complete_icon);
             textStatus.setText("So close!");
             btnContinue.setText("Try again");
             btnReview.setText("Review answers");

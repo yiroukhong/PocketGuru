@@ -23,17 +23,31 @@
             tools:ignore="ContentDescription" />
     </FrameLayout>
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/image_result"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+    <FrameLayout
+        android:id="@+id/result_image_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/header_logo"
-        app:lottie_autoPlay="true"
-        app:lottie_fileName="confetti.json"
-        app:lottie_loop="false" />
+        app:layout_constraintTop_toBottomOf="@id/header_logo">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/image_result"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="confetti.json"
+            app:lottie_loop="false" />
+
+        <ImageView
+            android:id="@+id/image_result_fail"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/level_complete_icon"
+            android:visibility="gone"
+            tools:ignore="ContentDescription" />
+    </FrameLayout>
 
     <TextView
         android:id="@+id/text_status"
@@ -46,7 +60,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/image_result" />
+        app:layout_constraintTop_toBottomOf="@id/result_image_container" />
 
     <TextView
         android:id="@+id/text_assessment_title"
