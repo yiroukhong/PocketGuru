@@ -33,14 +33,35 @@ public class DataPreloader {
     }
     
     public static void preload(Context context, PreloadCallback callback) {
-        String userId = new SessionManager(context).getUserId();
+        SessionManager sessionManager = new SessionManager(context);
+        String userId = sessionManager.getUserId();
         
         if (userId == null) {
-            // Not logged in, nothing to preload
-            callback.onPreloadComplete();
+            if (sessionManager.isLoggedIn()) {
+                // Try to recover userId from Supabase Auth
+                SupabaseManager.INSTANCE.getCurrentUserId(new SupabaseManager.SupabaseCallback<String>() {
+                    @Override
+                    public void onSuccess(String uid) {
+                        sessionManager.saveSession(sessionManager.getSessionToken(), uid);
+                        startPreload(context, uid, callback);
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        callback.onPreloadComplete();
+                    }
+                });
+            } else {
+                // Not logged in, nothing to preload
+                callback.onPreloadComplete();
+            }
             return;
         }
-        
+
+        startPreload(context, userId, callback);
+    }
+
+    private static void startPreload(Context context, String userId, PreloadCallback callback) {
         // Use a CountDownLatch-style counter for two parallel fetches
         AtomicInteger pendingCount = new AtomicInteger(2);
         Runnable checkDone = () -> {

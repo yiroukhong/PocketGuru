@@ -86,7 +86,12 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onSuccess(String sessionToken) {
                 setLoading(false);
-                sessionManager.saveSession(sessionToken);
+                
+                String[] parts = sessionToken.split("\\|");
+                String token = parts[0];
+                String userId = parts.length > 1 ? parts[1] : null;
+                sessionManager.saveSession(token, userId);
+
                 Toast.makeText(getContext(), "Registration successful!", Toast.LENGTH_SHORT).show();
                 Navigation.findNavController(btnRegister).navigate(R.id.LevelMapFragment);
             }

@@ -64,15 +64,23 @@ public class LevelMapFragment extends Fragment {
         };
 
         for (int i = 0; i < levelNodes.length; i++) {
-            if (i < currentLevel) {
-                // Completed or Current — yellow, clickable
+            int levelNumber = i + 1;
+            if (levelNumber < currentLevel) {
+                // Completed — Yellow, fully clickable
                 levelNodes[i].setColorFilter(
                         android.graphics.Color.parseColor("#FFD93D"),
                         android.graphics.PorterDuff.Mode.SRC_IN);
                 levelNodes[i].setAlpha(1.0f);
                 levelNodes[i].setEnabled(true);
+            } else if (levelNumber == currentLevel) {
+                // Current (to start/continue) — Light Yellow, clickable
+                levelNodes[i].setColorFilter(
+                        getResources().getColor(R.color.light_yellow, null),
+                        android.graphics.PorterDuff.Mode.SRC_IN);
+                levelNodes[i].setAlpha(1.0f);
+                levelNodes[i].setEnabled(true);
             } else {
-                // Locked — grey, not clickable
+                // Locked — Grey, not clickable
                 levelNodes[i].setColorFilter(
                         android.graphics.Color.parseColor("#AAAAAA"),
                         android.graphics.PorterDuff.Mode.SRC_IN);

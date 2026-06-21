@@ -67,7 +67,6 @@ public class QuickVisualizationFragment extends Fragment {
     private RelativeLayout containerHubContent;
     private AnnotationLineView annotationLine;
     private ImageView imageCapturedLeaf, imageStomataDiagram, gifGaseousExchange, imgChloroplast;
-    private LinearLayout layoutChlorophyll;
     private Button btnAction, btnScan;
     private ProgressBar progressScanning;
     private TextView textHint;
@@ -124,7 +123,6 @@ public class QuickVisualizationFragment extends Fragment {
         imageStomataDiagram = view.findViewById(R.id.image_stomata_diagram);
         gifGaseousExchange = view.findViewById(R.id.gif_gaseous_exchange);
         imgChloroplast = view.findViewById(R.id.img_chloroplast);
-        layoutChlorophyll = view.findViewById(R.id.layout_chlorophyll);
         btnAction = view.findViewById(R.id.btn_action);
         textHint = view.findViewById(R.id.text_hint);
         view.findViewById(R.id.btn_close_stage2).setOnClickListener(v -> Navigation.findNavController(v).navigateUp());
@@ -188,13 +186,12 @@ public class QuickVisualizationFragment extends Fragment {
         });
         
         imgChloroplast.setOnClickListener(v -> {
-            if (layoutChlorophyll.getVisibility() == View.GONE) {
-                layoutChlorophyll.setVisibility(View.VISIBLE);
-                ObjectAnimator.ofFloat(layoutChlorophyll, "alpha", 0f, 1f).setDuration(300).start();
-                
+            showChlorophyllPopup(v);
+
+            if (btnAction.getVisibility() == View.GONE) {
                 btnAction.setVisibility(View.VISIBLE);
                 ObjectAnimator.ofFloat(btnAction, "alpha", 0f, 1f).setDuration(300).start();
-                
+
                 textHint.setText("Watch photosynthesis in action");
             }
         });
@@ -298,12 +295,12 @@ public class QuickVisualizationFragment extends Fragment {
                 float startX = (stomataLocation[0] - lineLocation[0]) + imageStomataDiagram.getWidth() * 0.2f;
                 float startY = (stomataLocation[1] - lineLocation[1]) + imageStomataDiagram.getHeight() * 0.8f;
 
-                // End point: top center of chloroplast ImageView
+                // End point: middle center of chloroplast ImageView
                 int[] chloroplastLocation = new int[2];
                 imgChloroplast.getLocationInWindow(chloroplastLocation);
 
                 float endX = (chloroplastLocation[0] - lineLocation[0]) + imgChloroplast.getWidth() / 2f;
-                float endY = (chloroplastLocation[1] - lineLocation[1]);
+                float endY = (chloroplastLocation[1] - lineLocation[1]) + imgChloroplast.getHeight() / 2f;
 
                 annotationLine.setCoordinates(startX, startY, endX, endY);
             }
@@ -316,6 +313,10 @@ public class QuickVisualizationFragment extends Fragment {
 
     private void showStomataPopup(View anchor) {
         showPopup(anchor, "Stomata", "These tiny openings on the underside of leaves allow CO₂ to enter and O₂ to exit during photosynthesis.");
+    }
+
+    private void showChlorophyllPopup(View anchor) {
+        showPopup(anchor, "Chlorophyll", "Chlorophyll is a green pigment found inside chloroplasts. It captures energy from sunlight to power the process of photosynthesis.");
     }
 
     private void showPopup(View anchor, String title, String content) {

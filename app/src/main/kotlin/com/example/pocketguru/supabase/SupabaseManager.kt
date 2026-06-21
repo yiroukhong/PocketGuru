@@ -78,7 +78,13 @@ object SupabaseManager {
                     client.postgrest.from("level_progress").insert(LevelProgress(user.id, 1))
                     
                     val session = client.auth.currentSessionOrNull()?.accessToken
-                    withContext(Dispatchers.Main) { callback.onSuccess(session ?: "Success") }
+                    withContext(Dispatchers.Main) { 
+                        if (session != null) {
+                            callback.onSuccess("$session|${user.id}")
+                        } else {
+                            callback.onSuccess("Success|${user.id}")
+                        }
+                    }
                 } else {
                     withContext(Dispatchers.Main) { callback.onError("Failed to get user after signup") }
                 }

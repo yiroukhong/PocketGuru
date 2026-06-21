@@ -4,6 +4,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="salmon_pink">#E8A598</color>
     <color name="yellow_primary">#FFD93D</color>
+    <color name="light_yellow">#FFF1B2</color>
     <color name="progress_grey">#E0E0E0</color>
     <color name="dark_text">#424242</color>
     <color name="app_background">#FDF6F0</color>

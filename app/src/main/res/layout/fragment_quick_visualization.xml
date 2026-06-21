@@ -212,34 +212,6 @@
                         android:layout_marginHorizontal="32dp" />
                 </LinearLayout>
 
-                <!-- Animated Chlorophyll Label (Positioned relative to chloroplast in layout) -->
-                <LinearLayout
-                    android:id="@+id/layout_chlorophyll"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/layout_chloroplast_container"
-                    android:layout_alignTop="@id/layout_chloroplast_container"
-                    android:layout_alignBottom="@id/layout_chloroplast_container"
-                    android:layout_marginStart="8dp"
-                    android:orientation="vertical"
-                    android:gravity="center_vertical"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Chlorophyll"
-                        android:textColor="@color/salmon_pink"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:text="reflects green light"
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
                 <!-- Annotation line overlay spanning the full container -->
                 <com.example.pocketguru.views.AnnotationLineView
                     android:id="@+id/annotation_line"
