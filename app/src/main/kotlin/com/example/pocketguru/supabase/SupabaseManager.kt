@@ -1,5 +1,6 @@
 package com.example.pocketguru.supabase
 
+import android.util.Log
 import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.auth.Auth
 import io.github.jan.supabase.auth.auth
@@ -39,6 +40,9 @@ object SupabaseManager {
 
     @Serializable
     data class LevelProgress(val user_id: String, val current_level: Int)
+
+    @Serializable
+    data class LevelProgressResponse(val current_level: Int)
 
     @Serializable
     data class Keyword(val user_id: String, val word: String, val definition: String, val id: String? = null, val created_at: String? = null)
@@ -207,14 +211,23 @@ object SupabaseManager {
     fun getCurrentLevel(userId: String, callback: SupabaseCallback<Int>) {
         scope.launch {
             try {
-                val result = client.postgrest.from("level_progress")
+                val response = client.postgrest.from("level_progress")
                     .select {
                         filter { eq("user_id", userId) }
                     }
-                    .decodeSingle<LevelProgress>()
+                
+                if (response.data == "[]") {
+                    Log.d("SupabaseManager", "No level progress record found for user $userId, defaulting to 1")
+                    withContext(Dispatchers.Main) { callback.onSuccess(1) }
+                    return@launch
+                }
+
+                val result = response.decodeSingle<LevelProgressResponse>()
+                Log.d("SupabaseManager", "Fetched current level for user $userId: ${result.current_level}")
                 withContext(Dispatchers.Main) { callback.onSuccess(result.current_level) }
             } catch (e: Exception) {
-                withContext(Dispatchers.Main) { callback.onError(e.message ?: "Failed to load level") }
+                Log.e("SupabaseManager", "getCurrentLevel error: ${e.message}")
+                withContext(Dispatchers.Main) { callback.onError(e.message ?: "Failed to get level") }
             }
         }
     }
@@ -222,12 +235,15 @@ object SupabaseManager {
     fun updateLevel(userId: String, newLevel: Int, callback: SupabaseCallback<Boolean>) {
         scope.launch {
             try {
+                Log.d("SupabaseManager", "Updating level for user $userId to $newLevel")
                 client.postgrest.from("level_progress")
                     .update({ set("current_level", newLevel) }) {
                         filter { eq("user_id", userId) }
                     }
+                Log.d("SupabaseManager", "Level updated successfully to $newLevel")
                 withContext(Dispatchers.Main) { callback.onSuccess(true) }
             } catch (e: Exception) {
+                Log.e("SupabaseManager", "updateLevel error: ${e.message}")
                 withContext(Dispatchers.Main) { callback.onError(e.message ?: "Failed to update level") }
             }
         }

@@ -1,11 +1,11 @@
 package com.example.pocketguru.levels;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,7 +13,9 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.example.pocketguru.R;
+import com.example.pocketguru.supabase.SupabaseManager;
 import com.example.pocketguru.utils.DataPreloader;
+import com.example.pocketguru.utils.SessionManager;
 
 public class LevelMapFragment extends Fragment {
 
@@ -51,11 +53,30 @@ public class LevelMapFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        updateLevelNodes();
+        
+        // Use cache for instant UI update
+        updateLevelNodes(DataPreloader.getCachedCurrentLevel());
+
+        // Then verify against Supabase and update if different
+        String userId = new SessionManager(requireContext()).getUserId();
+        if (userId != null) {
+            SupabaseManager.INSTANCE.getCurrentLevel(userId, new SupabaseManager.SupabaseCallback<Integer>() {
+                @Override
+                public void onSuccess(Integer level) {
+                    Log.d("PocketGuru", "Live current level from Supabase: " + level);
+                    DataPreloader.setCachedCurrentLevel(level);
+                    updateLevelNodes(level);
+                }
+                @Override
+                public void onError(String error) {
+                    Log.e("PocketGuru", "Could not fetch live level: " + error);
+                }
+            });
+        }
     }
 
-    private void updateLevelNodes() {
-        int currentLevel = DataPreloader.getCachedCurrentLevel();
+    private void updateLevelNodes(int currentLevel) {
+        Log.d("PocketGuru", "Updating level nodes with level: " + currentLevel);
 
         // List of all level node ImageViews in order
         ImageButton[] levelNodes = {
@@ -64,7 +85,9 @@ public class LevelMapFragment extends Fragment {
         };
 
         for (int i = 0; i < levelNodes.length; i++) {
+            if (levelNodes[i] == null) continue;
             int levelNumber = i + 1;
+
             if (levelNumber < currentLevel) {
                 // Completed — Yellow, fully clickable
                 levelNodes[i].setColorFilter(

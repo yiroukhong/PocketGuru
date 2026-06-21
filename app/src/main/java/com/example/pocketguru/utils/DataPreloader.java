@@ -88,11 +88,13 @@ public class DataPreloader {
         SupabaseManager.INSTANCE.getCurrentLevel(userId, new SupabaseManager.SupabaseCallback<Integer>() {
             @Override
             public void onSuccess(Integer level) {
+                android.util.Log.d("PocketGuru", "Preloaded current level: " + level);
                 cachedCurrentLevel = level;
                 checkDone.run();
             }
             @Override
             public void onError(String error) {
+                android.util.Log.e("PocketGuru", "Failed to preload level: " + error);
                 cachedCurrentLevel = 1;
                 checkDone.run();
             }
