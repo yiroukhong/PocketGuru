@@ -138,6 +138,32 @@ public class LevelFiveFragment extends Fragment {
     }
 
     private void handleDrop(int slotIndex, String itemName) {
+        // Correct answers for each slot
+        // Slot 0: CO2, Slot 1: Water, Slot 2: Sugar, Slot 3: Oxygen
+        String correctAnswer = "";
+        switch (slotIndex) {
+            case 0: correctAnswer = "CO2"; break;
+            case 1: correctAnswer = "Water"; break;
+            case 2: correctAnswer = "Sugar"; break;
+            case 3: correctAnswer = "Oxygen"; break;
+        }
+
+        if (!itemName.equals(correctAnswer)) {
+            // Incorrect - show red and shake
+            View slotView = slots[slotIndex];
+            slotView.setBackgroundResource(R.drawable.assess_try_again); // Red background
+
+            ObjectAnimator shake = ObjectAnimator.ofFloat(slotView, "translationX", 0, 25, -25, 25, -25, 15, -15, 6, -6, 0);
+            shake.setDuration(500);
+            shake.start();
+
+            // Reset after animation
+            slotView.postDelayed(() -> slotView.setBackgroundResource(R.drawable.bg_equation_slot), 500);
+
+            Toast.makeText(getContext(), "Not quite! Try another item.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         // If slot already has an item, return previous to grid
         if (slotContents.containsKey(slotIndex)) {
             String previousItem = slotContents.get(slotIndex);

@@ -19,6 +19,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/dark_text" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Flashcards"
+        android:textColor="@color/dark_purple"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/btn_close"
+        app:layout_constraintEnd_toStartOf="@id/text_counter"
+        app:layout_constraintStart_toEndOf="@id/btn_close"
+        app:layout_constraintTop_toTopOf="@id/btn_close" />
+
     <!-- Counter -->
     <TextView
         android:id="@+id/text_counter"
