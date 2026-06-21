@@ -144,8 +144,6 @@ public class QuickVisualizationFragment extends Fragment {
         imageCapturedLeaf.setOnClickListener(v -> showLeafPopup(v));
         
         imageStomataDiagram.setOnClickListener(v -> {
-            showStomataPopup(v);
-            
             // Fade out stomata diagram and transition to GIF
             ObjectAnimator fadeOut = ObjectAnimator.ofFloat(imageStomataDiagram, "alpha", 1f, 0f);
             fadeOut.setDuration(300);
@@ -177,6 +175,9 @@ public class QuickVisualizationFragment extends Fragment {
                 public void onAnimationEnd(Animator animation) {
                     gifGaseousExchange.setVisibility(View.GONE);
                     
+                    imageStomataDiagram.setAlpha(0f);
+                    imageStomataDiagram.setVisibility(View.VISIBLE);
+
                     ObjectAnimator fadeIn = ObjectAnimator.ofFloat(imageStomataDiagram, "alpha", 0f, 1f);
                     fadeIn.setDuration(300);
                     fadeIn.start();

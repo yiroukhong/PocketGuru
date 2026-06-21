@@ -2,6 +2,8 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.PocketGuru" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
+        <item name="android:fontFamily">@font/josefin_sans</item>
+        <item name="fontFamily">@font/josefin_sans</item>
     </style>
 
     <style name="Theme.PocketGuru" parent="Theme.MaterialComponents.DayNight.NoActionBar">
