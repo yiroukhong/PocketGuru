@@ -138,6 +138,16 @@ object SupabaseManager {
         }
     }
 
+    fun getCurrentUserId(callback: SupabaseCallback<String>) {
+        scope.launch {
+            val uid = client.auth.currentUserOrNull()?.id
+            withContext(Dispatchers.Main) {
+                if (uid != null) callback.onSuccess(uid)
+                else callback.onError("No user logged in")
+            }
+        }
+    }
+
     fun saveKeyword(userId: String, word: String, definition: String, callback: SupabaseCallback<Boolean>) {
         scope.launch {
             try {
@@ -199,6 +209,20 @@ object SupabaseManager {
                 withContext(Dispatchers.Main) { callback.onSuccess(result.current_level) }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) { callback.onError(e.message ?: "Failed to load level") }
+            }
+        }
+    }
+
+    fun updateLevel(userId: String, newLevel: Int, callback: SupabaseCallback<Boolean>) {
+        scope.launch {
+            try {
+                client.postgrest.from("level_progress")
+                    .update({ set("current_level", newLevel) }) {
+                        filter { eq("user_id", userId) }
+                    }
+                withContext(Dispatchers.Main) { callback.onSuccess(true) }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) { callback.onError(e.message ?: "Failed to update level") }
             }
         }
     }
