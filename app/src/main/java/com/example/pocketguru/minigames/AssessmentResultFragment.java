@@ -17,6 +17,7 @@ import androidx.navigation.Navigation;
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.pocketguru.R;
 import com.example.pocketguru.utils.LevelProgressManager;
+import com.example.pocketguru.utils.SoundManager;
 
 import java.io.Serializable;
 
@@ -47,6 +48,14 @@ public class AssessmentResultFragment extends Fragment {
         setupUI(view);
 
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (score >= 7) {
+            SoundManager.getInstance(requireContext()).playLevelComplete();
+        }
     }
 
     private void setupUI(View view) {

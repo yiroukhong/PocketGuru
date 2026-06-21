@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.example.pocketguru.R;
+import com.example.pocketguru.utils.SoundManager;
 
 public class LevelCompleteFragment extends Fragment {
 
@@ -36,5 +37,11 @@ public class LevelCompleteFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        SoundManager.getInstance(requireContext()).playLevelComplete();
     }
 }
