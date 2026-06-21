@@ -21,6 +21,7 @@ import androidx.navigation.Navigation;
 import com.example.pocketguru.R;
 import com.example.pocketguru.utils.KeywordTooltipHelper;
 import com.example.pocketguru.utils.LevelProgressManager;
+import com.example.pocketguru.utils.SoundManager;
 import com.example.pocketguru.utils.SpannableHelper;
 
 public class LevelThreeFragment extends Fragment {
@@ -77,6 +78,7 @@ public class LevelThreeFragment extends Fragment {
 
     private void handleImageClick() {
         if (currentState == 0) {
+            SoundManager.getInstance(requireContext()).playSwoosh();
             animateLeafFlip();
         } else if (currentState == 1) {
             animateZoomToStomata();
