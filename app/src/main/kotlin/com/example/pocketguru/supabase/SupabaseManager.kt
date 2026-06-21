@@ -8,6 +8,8 @@ import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.postgrest.Postgrest
 import io.github.jan.supabase.postgrest.postgrest
 import io.github.jan.supabase.postgrest.query.Columns
+import io.github.jan.supabase.postgrest.query.Order
+import com.example.pocketguru.models.KeywordItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -39,7 +41,7 @@ object SupabaseManager {
     data class LevelProgress(val user_id: String, val current_level: Int)
 
     @Serializable
-    data class Keyword(val user_id: String, val word: String, val definition: String, val id: String? = null)
+    data class Keyword(val user_id: String, val word: String, val definition: String, val id: String? = null, val created_at: String? = null)
 
     fun checkUsernameUnique(username: String, callback: SupabaseCallback<Boolean>) {
         scope.launch {
@@ -167,19 +169,36 @@ object SupabaseManager {
         }
     }
 
-    fun getKeywords(userId: String, callback: SupabaseCallback<List<Keyword>>) {
+    fun getKeywords(userId: String, callback: SupabaseCallback<List<KeywordItem>>) {
         scope.launch {
             try {
-                val response = client.postgrest.from("keywords")
+                val result = client.postgrest.from("keywords")
                     .select {
-                        filter {
-                            eq("user_id", userId)
-                        }
+                        filter { eq("user_id", userId) }
+                        order("created_at", Order.DESCENDING)
                     }
-                val keywords = response.decodeList<Keyword>()
-                withContext(Dispatchers.Main) { callback.onSuccess(keywords) }
+                val keywords = result.decodeList<Keyword>()
+                val items = keywords.map {
+                    KeywordItem(it.id ?: "", it.word, it.definition, it.created_at ?: "")
+                }
+                withContext(Dispatchers.Main) { callback.onSuccess(items) }
             } catch (e: Exception) {
-                withContext(Dispatchers.Main) { callback.onError(e.message ?: "Failed to fetch keywords") }
+                withContext(Dispatchers.Main) { callback.onError(e.message ?: "Failed to load keywords") }
+            }
+        }
+    }
+
+    fun getCurrentLevel(userId: String, callback: SupabaseCallback<Int>) {
+        scope.launch {
+            try {
+                val result = client.postgrest.from("level_progress")
+                    .select {
+                        filter { eq("user_id", userId) }
+                    }
+                    .decodeSingle<LevelProgress>()
+                withContext(Dispatchers.Main) { callback.onSuccess(result.current_level) }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) { callback.onError(e.message ?: "Failed to load level") }
             }
         }
     }

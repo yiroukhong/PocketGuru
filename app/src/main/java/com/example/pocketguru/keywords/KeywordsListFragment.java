@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.pocketguru.R;
 import com.example.pocketguru.models.KeywordItem;
 import com.example.pocketguru.supabase.SupabaseManager;
+import com.example.pocketguru.utils.DataPreloader;
 import com.example.pocketguru.utils.SessionManager;
 
 import kotlin.Unit;
@@ -78,6 +79,21 @@ public class KeywordsListFragment extends Fragment implements KeywordsAdapter.On
     }
 
     private void loadKeywords() {
+        List<KeywordItem> cached = DataPreloader.getCachedKeywords();
+        if (cached != null) {
+            keywordList.clear();
+            keywordList.addAll(cached);
+            if (adapter != null) {
+                adapter.notifyDataSetChanged();
+            }
+            progressLoading.setVisibility(View.GONE);
+            updateUI();
+        } else {
+            fetchKeywordsFromSupabase();
+        }
+    }
+
+    private void fetchKeywordsFromSupabase() {
         progressLoading.setVisibility(View.VISIBLE);
         String userId = new SessionManager(requireContext()).getUserId();
 
@@ -87,14 +103,15 @@ public class KeywordsListFragment extends Fragment implements KeywordsAdapter.On
             return;
         }
 
-        SupabaseManager.INSTANCE.getKeywords(userId, new SupabaseManager.SupabaseCallback<List<SupabaseManager.Keyword>>() {
+        SupabaseManager.INSTANCE.getKeywords(userId, new SupabaseManager.SupabaseCallback<List<KeywordItem>>() {
             @Override
-            public void onSuccess(List<SupabaseManager.Keyword> result) {
+            public void onSuccess(List<KeywordItem> result) {
                 keywordList.clear();
-                for (SupabaseManager.Keyword k : result) {
-                    keywordList.add(new KeywordItem(k.getId(), k.getWord(), k.getDefinition(), ""));
+                keywordList.addAll(result);
+                DataPreloader.setCachedKeywords(result);
+                if (adapter != null) {
+                    adapter.notifyDataSetChanged();
                 }
-                adapter.notifyDataSetChanged();
                 progressLoading.setVisibility(View.GONE);
                 updateUI();
             }
@@ -129,6 +146,7 @@ public class KeywordsListFragment extends Fragment implements KeywordsAdapter.On
         SupabaseManager.INSTANCE.deleteKeyword(keywordId, new SupabaseManager.SupabaseCallback<Unit>() {
             @Override
             public void onSuccess(Unit result) {
+                DataPreloader.setCachedKeywords(null); // Invalidate cache
                 adapter.removeItem(position);
                 updateUI();
                 Toast.makeText(requireContext(), "Keyword deleted", Toast.LENGTH_SHORT).show();

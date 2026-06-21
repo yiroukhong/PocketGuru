@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentManager;
 import com.example.pocketguru.R;
 import com.example.pocketguru.keywords.KeywordsListFragment;
 import com.example.pocketguru.supabase.SupabaseManager;
+import com.example.pocketguru.utils.DataPreloader;
 
 import java.util.List;
 import java.util.Locale;
@@ -87,6 +88,7 @@ public class KeywordTooltipHelper {
             @Override
             public void onSuccess(Boolean inserted) {
                 if (inserted) {
+                    DataPreloader.setCachedKeywords(null); // Invalidate cache
                     btnBookmark.setImageResource(R.drawable.ic_bookmark_filled);
                     Toast.makeText(context, "Saved to Keywords List!", Toast.LENGTH_SHORT).show();
                     
