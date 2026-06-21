@@ -113,7 +113,7 @@ public class LevelFourFragment extends Fragment {
 
         if (collectedCount == 3) {
             btnComplete.setEnabled(true);
-            imageChloroplast.setImageResource(R.drawable.chloroplast_full);
+            imageChloroplast.setImageResource(R.drawable.chloroplast);
         }
     }
 
