@@ -129,107 +129,101 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:tint="@color/dark_text" />
 
-            <!-- Top Images Row -->
-            <FrameLayout
-                android:id="@+id/frame_leaf_hub"
+            <!-- Interactive Container with Annotation Line -->
+            <RelativeLayout
+                android:id="@+id/container_hub_content"
                 android:layout_width="match_parent"
-                android:layout_height="280dp"
+                android:layout_height="0dp"
                 android:layout_marginTop="16dp"
+                app:layout_constraintBottom_toTopOf="@id/text_hint"
                 app:layout_constraintTop_toBottomOf="@id/text_title_stage2">
 
-                <!-- Real leaf photo fills the frame -->
-                <ImageView
-                    android:id="@+id/image_captured_leaf"
+                <!-- Leaf + stomata overlapping frame -->
+                <FrameLayout
+                    android:id="@+id/frame_leaf_hub"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    tools:src="@drawable/ic_leaf" />
+                    android:layout_height="280dp"
+                    android:layout_alignParentTop="true">
 
-                <!-- Stomata diagram overlaid on top right portion of the leaf -->
-                <ImageView
-                    android:id="@+id/image_stomata_diagram"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:layout_gravity="end|center_vertical"
-                    android:layout_marginEnd="8dp"
-                    android:src="@drawable/stomata"
-                    android:background="@android:color/transparent" />
+                    <!-- Real leaf photo fills the frame -->
+                    <ImageView
+                        android:id="@+id/image_captured_leaf"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        tools:src="@drawable/ic_leaf" />
 
-                <!-- GIF overlay shown after stomata is tapped, same position as stomata diagram -->
-                <ImageView
-                    android:id="@+id/gif_gaseous_exchange"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:layout_gravity="end|center_vertical"
-                    android:layout_marginEnd="8dp"
-                    android:visibility="gone" />
+                    <!-- Stomata diagram overlaid on top right portion of the leaf -->
+                    <ImageView
+                        android:id="@+id/image_stomata_diagram"
+                        android:layout_width="200dp"
+                        android:layout_height="200dp"
+                        android:layout_gravity="end|center_vertical"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/stomata"
+                        android:background="@android:color/transparent" />
 
-            </FrameLayout>
+                    <!-- GIF overlay shown after stomata is tapped, same position as stomata diagram -->
+                    <ImageView
+                        android:id="@+id/gif_gaseous_exchange"
+                        android:layout_width="200dp"
+                        android:layout_height="200dp"
+                        android:layout_gravity="end|center_vertical"
+                        android:layout_marginEnd="8dp"
+                        android:visibility="gone" />
 
-            <!-- Chloroplast Section -->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/chloroplast_section"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                app:layout_constraintTop_toBottomOf="@id/frame_leaf_hub">
+                </FrameLayout>
 
-                <ImageView
-                    android:id="@+id/icon_arrow_zoom"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_arrow_down"
-                    app:layout_constraintBottom_toTopOf="@id/img_chloroplast"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:tint="#333333" />
-
-                <ImageView
-                    android:id="@+id/img_chloroplast"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:src="@drawable/chloroplast"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginTop="40dp"/>
-
-                <TextView
-                    android:id="@+id/text_chloroplast_label"
+                <!-- Chloroplast section -->
+                <LinearLayout
+                    android:id="@+id/layout_chloroplast_container"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Chloroplast"
-                    android:textColor="@color/dark_text"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="@id/img_chloroplast"
-                    app:layout_constraintStart_toStartOf="@id/img_chloroplast"
-                    app:layout_constraintTop_toBottomOf="@id/img_chloroplast" />
+                    android:layout_below="@id/frame_leaf_hub"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="48dp"
+                    android:orientation="vertical"
+                    android:gravity="center">
 
-                <TextView
-                    android:id="@+id/text_chloroplast_desc"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:gravity="center"
-                    android:text="The location inside a plant cell where photosynthesis happens"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="14sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/text_chloroplast_label" />
+                    <ImageView
+                        android:id="@+id/img_chloroplast"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/chloroplast" />
 
-                <!-- Animated Chlorophyll Label -->
+                    <TextView
+                        android:id="@+id/text_chloroplast_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Chloroplast"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:textColor="@color/dark_text" />
+
+                    <TextView
+                        android:id="@+id/text_chloroplast_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="The location inside a plant cell where photosynthesis happens"
+                        android:textSize="13sp"
+                        android:textColor="@android:color/darker_gray"
+                        android:gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginHorizontal="32dp" />
+                </LinearLayout>
+
+                <!-- Animated Chlorophyll Label (Positioned relative to chloroplast in layout) -->
                 <LinearLayout
                     android:id="@+id/layout_chlorophyll"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_toEndOf="@id/layout_chloroplast_container"
+                    android:layout_alignTop="@id/layout_chloroplast_container"
+                    android:layout_alignBottom="@id/layout_chloroplast_container"
+                    android:layout_marginStart="8dp"
                     android:orientation="vertical"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="@id/img_chloroplast"
-                    app:layout_constraintStart_toEndOf="@id/img_chloroplast"
-                    app:layout_constraintTop_toTopOf="@id/img_chloroplast">
+                    android:gravity="center_vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -239,14 +233,24 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:layout_width="120dp"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content"
-                        android:text="reflects green light to give the green colour of plants"
+                        android:text="reflects green light"
                         android:textColor="@android:color/darker_gray"
                         android:textSize="12sp" />
                 </LinearLayout>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                <!-- Annotation line overlay spanning the full container -->
+                <com.example.pocketguru.views.AnnotationLineView
+                    android:id="@+id/annotation_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignTop="@id/frame_leaf_hub"
+                    android:layout_alignBottom="@id/layout_chloroplast_container"
+                    android:clickable="false"
+                    android:focusable="false" />
+
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/text_hint"
