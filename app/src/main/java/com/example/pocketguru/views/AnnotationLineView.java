@@ -7,13 +7,14 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AnnotationLineView extends View {
 
     private Paint linePaint;
     private Paint dotPaint;
-    private float startX, startY, endX, endY;
-    private boolean coordinatesSet = false;
-    private boolean drawArrow = true;
+    private List<float[]> lines = new ArrayList<>(); // each float[]: {startX, startY, endX, endY}
 
     public AnnotationLineView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -28,27 +29,28 @@ public class AnnotationLineView extends View {
         dotPaint.setStyle(Paint.Style.FILL);
     }
 
-    public void setCoordinates(float startX, float startY, float endX, float endY) {
-        this.startX = startX;
-        this.startY = startY;
-        this.endX = endX;
-        this.endY = endY;
-        this.coordinatesSet = true;
+    public void addLine(float startX, float startY, float endX, float endY) {
+        lines.add(new float[]{startX, startY, endX, endY});
+        invalidate();
+    }
+
+    public void clearLines() {
+        lines.clear();
         invalidate();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if (!coordinatesSet) return;
-        
-        canvas.drawLine(startX, startY, endX, endY, linePaint);
-        canvas.drawCircle(startX, startY, 6f, dotPaint);
-
-        if (drawArrow) {
-            drawArrowhead(canvas, startX, startY, endX, endY);
-        } else {
-            canvas.drawCircle(endX, endY, 6f, dotPaint);
+        for (float[] line : lines) {
+            float sX = line[0];
+            float sY = line[1];
+            float eX = line[2];
+            float eY = line[3];
+            
+            canvas.drawLine(sX, sY, eX, eY, linePaint);
+            canvas.drawCircle(sX, sY, 6f, dotPaint);
+            drawArrowhead(canvas, sX, sY, eX, eY);
         }
     }
 

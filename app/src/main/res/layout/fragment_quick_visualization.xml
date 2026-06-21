@@ -217,8 +217,8 @@
                     android:id="@+id/annotation_line"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_alignTop="@id/frame_leaf_hub"
-                    android:layout_alignBottom="@id/layout_chloroplast_container"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true"
                     android:clickable="false"
                     android:focusable="false" />
 

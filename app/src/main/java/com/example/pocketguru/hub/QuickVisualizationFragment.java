@@ -188,6 +188,26 @@ public class QuickVisualizationFragment extends Fragment {
         imgChloroplast.setOnClickListener(v -> {
             showChlorophyllPopup(v);
 
+            // Draw second annotation line from leaf to chlorophyll label area
+            v.post(() -> {
+                int[] leafLocation = new int[2];
+                imageCapturedLeaf.getLocationInWindow(leafLocation);
+                int[] lineLocation = new int[2];
+                annotationLine.getLocationInWindow(lineLocation);
+                int[] chloroplastLocation = new int[2];
+                imgChloroplast.getLocationInWindow(chloroplastLocation);
+
+                // Start: bottom-left area of the leaf image
+                float startX = (leafLocation[0] - lineLocation[0]) + imageCapturedLeaf.getWidth() * 0.3f;
+                float startY = (leafLocation[1] - lineLocation[1]) + imageCapturedLeaf.getHeight() * 0.75f;
+
+                // End: middle of the chloroplast (pointing to where the popup/concept is)
+                float endX = (chloroplastLocation[0] - lineLocation[0]) + imgChloroplast.getWidth() / 2f;
+                float endY = (chloroplastLocation[1] - lineLocation[1]) + imgChloroplast.getHeight() / 2f;
+
+                annotationLine.addLine(startX, startY, endX, endY);
+            });
+
             if (btnAction.getVisibility() == View.GONE) {
                 btnAction.setVisibility(View.VISIBLE);
                 ObjectAnimator.ofFloat(btnAction, "alpha", 0f, 1f).setDuration(300).start();
@@ -302,7 +322,7 @@ public class QuickVisualizationFragment extends Fragment {
                 float endX = (chloroplastLocation[0] - lineLocation[0]) + imgChloroplast.getWidth() / 2f;
                 float endY = (chloroplastLocation[1] - lineLocation[1]) + imgChloroplast.getHeight() / 2f;
 
-                annotationLine.setCoordinates(startX, startY, endX, endY);
+                annotationLine.addLine(startX, startY, endX, endY);
             }
         });
     }
