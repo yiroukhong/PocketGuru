@@ -59,9 +59,12 @@ public class LoginFragment extends Fragment {
             @Override
             public void onSuccess(String sessionToken) {
                 setLoading(false);
-                sessionManager.saveSession(sessionToken);
 
-                // Navigate to LevelMap and clear backstack
+                String[] parts = sessionToken.split("\\|");
+                String token = parts[0];
+                String userId = parts.length > 1 ? parts[1] : null;
+                sessionManager.saveSession(token, userId);
+
                 NavOptions navOptions = new NavOptions.Builder()
                         .setPopUpTo(R.id.nav_graph, true)
                         .build();

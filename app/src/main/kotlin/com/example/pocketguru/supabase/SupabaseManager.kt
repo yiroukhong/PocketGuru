@@ -38,6 +38,9 @@ object SupabaseManager {
     @Serializable
     data class LevelProgress(val user_id: String, val current_level: Int)
 
+    @Serializable
+    data class Keyword(val user_id: String, val word: String, val definition: String)
+
     fun checkUsernameUnique(username: String, callback: SupabaseCallback<Boolean>) {
         scope.launch {
             try {
@@ -91,11 +94,17 @@ object SupabaseManager {
                     email = fakeEmail
                     this.password = password
                 }
-                
+
+                val user = client.auth.currentUserOrNull()
                 val session = client.auth.currentSessionOrNull()?.accessToken
-                withContext(Dispatchers.Main) { 
-                    if (session != null) callback.onSuccess(session)
-                    else callback.onError("Session not found")
+
+                withContext(Dispatchers.Main) {
+                    if (session != null && user != null) {
+                        // Return both token and userId separated by a delimiter
+                        callback.onSuccess("$session|${user.id}")
+                    } else {
+                        callback.onError("Session not found")
+                    }
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) { callback.onError("Incorrect username or password") }
@@ -123,6 +132,37 @@ object SupabaseManager {
                 withContext(Dispatchers.Main) { callback.onSuccess(Unit) }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) { callback.onError(e.message ?: "Signout error") }
+            }
+        }
+    }
+
+    fun saveKeyword(userId: String, word: String, definition: String, callback: SupabaseCallback<Boolean>) {
+        scope.launch {
+            try {
+                // Get userId directly from active session, ignore passed-in value
+                val currentUserId = client.auth.currentUserOrNull()?.id
+                    ?: run {
+                        withContext(Dispatchers.Main) { callback.onError("User not logged in") }
+                        return@launch
+                    }
+
+                val existing = client.postgrest.from("keywords")
+                    .select {
+                        filter {
+                            eq("user_id", currentUserId)
+                            eq("word", word)
+                        }
+                    }
+
+                if (existing.data != "[]") {
+                    withContext(Dispatchers.Main) { callback.onSuccess(false) }
+                    return@launch
+                }
+
+                client.postgrest.from("keywords").insert(Keyword(currentUserId, word, definition))
+                withContext(Dispatchers.Main) { callback.onSuccess(true) }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) { callback.onError(e.message ?: "Failed to save keyword") }
             }
         }
     }

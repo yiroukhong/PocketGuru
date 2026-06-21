@@ -65,9 +65,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void checkSessionAndNavigate() {
-        // Bypassing auth for now
         if (navController != null) {
-            navController.navigate(R.id.action_SplashFragment_to_LevelMapFragment);
+            if (sessionManager.isLoggedIn()) {
+                navController.navigate(R.id.action_SplashFragment_to_LevelMapFragment);
+            } else {
+                navController.navigate(R.id.action_SplashFragment_to_WelcomeFragment);
+            }
         }
     }
 }

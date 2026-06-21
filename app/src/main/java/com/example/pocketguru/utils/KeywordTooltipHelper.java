@@ -3,6 +3,7 @@ package com.example.pocketguru.utils;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +12,15 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.pocketguru.R;
-import com.example.pocketguru.supabase.SupabaseClient;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
+import com.example.pocketguru.R;
+import com.example.pocketguru.keywords.KeywordsListFragment;
+import com.example.pocketguru.supabase.SupabaseManager;
+
+import java.util.List;
 import java.util.Locale;
 
 public class KeywordTooltipHelper {
@@ -66,21 +73,50 @@ public class KeywordTooltipHelper {
     }
 
     private void saveKeyword(String keyword, String definition, ImageView btnBookmark) {
+        Log.d("PocketGuru", "Attempting to save keyword: " + keyword);
         String userId = new SessionManager(context).getUserId();
         
-        SupabaseClient.getInstance().getExecutor().execute(() -> {
-            // Real implementation: check if exists, then insert
-            // For now, simulate successful save
-            try {
-                Thread.sleep(300);
-                new android.os.Handler(android.os.Looper.getMainLooper()).post(() -> {
+        if (userId == null) {
+            Log.e("PocketGuru", "Save keyword failed: userId is null");
+            Toast.makeText(context, "Error: User not logged in", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        SupabaseManager.INSTANCE.saveKeyword(userId, keyword, definition, new SupabaseManager.SupabaseCallback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean inserted) {
+                if (inserted) {
                     btnBookmark.setImageResource(R.drawable.ic_bookmark_filled);
                     Toast.makeText(context, "Saved to Keywords List!", Toast.LENGTH_SHORT).show();
-                });
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                    
+                    // Notify KeywordsListFragment if visible
+                    notifyKeywordsFragment(keyword, definition);
+                } else {
+                    Toast.makeText(context, "Already in your Keywords List", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+                Log.e("PocketGuru", "Save keyword failed: " + error);
+                Toast.makeText(context, "Error: " + error, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void notifyKeywordsFragment(String word, String definition) {
+        if (context instanceof AppCompatActivity) {
+            FragmentManager fm = ((AppCompatActivity) context).getSupportFragmentManager();
+            Fragment navHostFragment = fm.findFragmentById(R.id.nav_host_fragment);
+            if (navHostFragment != null) {
+                List<Fragment> fragments = navHostFragment.getChildFragmentManager().getFragments();
+                for (Fragment f : fragments) {
+                    if (f instanceof KeywordsListFragment && f.isVisible()) {
+                        ((KeywordsListFragment) f).onKeywordAdded(word, definition);
+                    }
+                }
+            }
+        }
     }
 
     private void speak(String text) {
