@@ -92,7 +92,7 @@ public class AssessmentFragment extends Fragment implements QuestionFragment.OnA
 
         questions.add(new Question("The main source of energy for all life comes from", Question.QuestionType.IMAGE_OPTIONS, 
                 new String[]{"Earth", "Food", "Moon", "Sun"}, 
-                new int[]{R.drawable.assess_earth, R.drawable.assess_food, R.drawable.assess_moon, R.drawable.assess_sun}, 
+                new int[]{R.drawable.assess_earth, R.drawable.assess_food, R.drawable.assess_moon, R.drawable.sun_icon},
                 new int[]{3}, 0));
 
         questions.add(new Question("How does water reach the plant's leaves?", Question.QuestionType.TEXT_OPTIONS, 
@@ -101,7 +101,6 @@ public class AssessmentFragment extends Fragment implements QuestionFragment.OnA
 
         questions.add(new Question("The small holes in the plant's leaves that take in carbon dioxide are called the", Question.QuestionType.IMAGE_OPTIONS, 
                 new String[]{"Carbon Dioxide", "Stomata", "Chloroplasts", "Stem"}, 
-                new int[]{R.drawable.item_co2, R.drawable.match_co2, R.drawable.match_chloroplast, R.drawable.level2_plant},
                 new int[]{1}, R.drawable.stomata_diagram));
     }
 

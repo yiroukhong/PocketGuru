@@ -39,8 +39,8 @@ public class QuestionFragment extends Fragment {
     private int[] previousAnswers;
 
     private List<View> optionViews = new ArrayList<>();
-    private List<Integer> selectedIndices = new ArrayList<>();
-    private Button btnNext;
+    private List<Integer> selectedIndicesList = new ArrayList<>();
+    private Button btnNext, btnCheck;
     private TextView textFeedback;
 
     public static QuestionFragment newInstance(Question question, int index, boolean isReview, int[] userAnswers) {
@@ -100,6 +100,11 @@ public class QuestionFragment extends Fragment {
                 ((OnAnswerSelectedListener) getParentFragment()).onNextTapped();
             }
         });
+
+        btnCheck = view.findViewById(R.id.btn_check);
+        if (btnCheck != null) {
+            btnCheck.setOnClickListener(v -> handleCheckClick());
+        }
     }
 
     private void setupTextOptions(View view) {
@@ -136,23 +141,18 @@ public class QuestionFragment extends Fragment {
         boolean isMultiSelect = question.getCorrectIndexes().length > 1;
 
         if (isMultiSelect) {
-            if (selectedIndices.contains(index)) {
-                selectedIndices.remove((Integer) index);
+            if (selectedIndicesList.contains(index)) {
+                selectedIndicesList.remove((Integer) index);
                 setOptionColor(index, Color.parseColor("#E8A598")); // Reset to salmon
             } else {
-                selectedIndices.add(index);
+                selectedIndicesList.add(index);
                 setOptionColor(index, Color.parseColor("#FFD93D")); // Highlight selected
             }
-            btnNext.setVisibility(!selectedIndices.isEmpty() ? View.VISIBLE : View.GONE);
-            
-            // Check correctness only when next is clicked or if you want real-time for multi?
-            // User prompt says: "Next" appears after at least one option tapped.
-            // We validate when Next is tapped OR on every click? 
-            // "validation checks both correct indexes" -> let's do it on Next click in AssessmentFragment
+            btnCheck.setVisibility(!selectedIndicesList.isEmpty() ? View.VISIBLE : View.GONE);
         } else {
             // Single select - immediate feedback
-            selectedIndices.clear();
-            selectedIndices.add(index);
+            selectedIndicesList.clear();
+            selectedIndicesList.add(index);
             boolean correct = question.isCorrect(new int[]{index});
             
             showFeedback(index, correct);
@@ -160,6 +160,56 @@ public class QuestionFragment extends Fragment {
             if (getParentFragment() instanceof OnAnswerSelectedListener) {
                 ((OnAnswerSelectedListener) getParentFragment()).onAnswerSelected(questionIndex, new int[]{index}, correct);
             }
+        }
+    }
+
+    private void handleCheckClick() {
+        int[] selected = new int[selectedIndicesList.size()];
+        for (int i = 0; i < selectedIndicesList.size(); i++) {
+            selected[i] = selectedIndicesList.get(i);
+        }
+
+        boolean isFullyCorrect = question.isCorrect(selected);
+        showMultiFeedback(selected, isFullyCorrect);
+
+        if (getParentFragment() instanceof OnAnswerSelectedListener) {
+            ((OnAnswerSelectedListener) getParentFragment()).onAnswerSelected(questionIndex, selected, isFullyCorrect);
+        }
+    }
+
+    private void showMultiFeedback(int[] selected, boolean isFullyCorrect) {
+        btnCheck.setVisibility(View.GONE);
+        btnNext.setVisibility(View.VISIBLE);
+
+        int[] correctIndexes = question.getCorrectIndexes();
+        
+        for (int i = 0; i < optionViews.size(); i++) {
+            optionViews.get(i).setEnabled(false);
+            
+            boolean wasSelected = false;
+            for (int s : selected) if (s == i) wasSelected = true;
+            
+            boolean isCorrectIdx = false;
+            for (int c : correctIndexes) if (c == i) isCorrectIdx = true;
+
+            if (isCorrectIdx) {
+                setOptionColor(i, Color.parseColor("#81C784")); // Correct answer -> green
+            } else if (wasSelected) {
+                setOptionColor(i, Color.parseColor("#E57373")); // Wrong selection -> red
+            } else {
+                optionViews.get(i).setAlpha(0.5f);
+            }
+        }
+
+        textFeedback.setVisibility(View.VISIBLE);
+        if (isFullyCorrect) {
+            textFeedback.setText("Amazing!");
+            textFeedback.setTextColor(Color.parseColor("#81C784"));
+            textFeedback.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.checkbox_on_background, 0, 0, 0);
+        } else {
+            textFeedback.setText("Not quite! The correct answers are highlighted in green.");
+            textFeedback.setTextColor(Color.parseColor("#E57373"));
+            textFeedback.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         }
     }
 
