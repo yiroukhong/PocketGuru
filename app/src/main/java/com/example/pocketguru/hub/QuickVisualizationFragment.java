@@ -1,6 +1,8 @@
 package com.example.pocketguru.hub;
 
 import android.Manifest;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -32,6 +34,7 @@ import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.bumptech.glide.Glide;
 import com.example.pocketguru.R;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -57,7 +60,7 @@ public class QuickVisualizationFragment extends Fragment {
 
     private static final String TAG = "QuickVisHub";
     private ViewFlipper viewFlipper;
-    private ImageView imgRealLeaf, imgStomata, imgChloroplast;
+    private ImageView imageCapturedLeaf, imageStomataDiagram, gifGaseousExchange, imgChloroplast;
     private LinearLayout layoutChlorophyll;
     private Button btnAction, btnScan;
     private ProgressBar progressScanning;
@@ -109,8 +112,9 @@ public class QuickVisualizationFragment extends Fragment {
         view.findViewById(R.id.btn_close_stage1).setOnClickListener(v -> Navigation.findNavController(v).navigateUp());
 
         // Stage 2 views
-        imgRealLeaf = view.findViewById(R.id.img_real_leaf);
-        imgStomata = view.findViewById(R.id.img_stomata);
+        imageCapturedLeaf = view.findViewById(R.id.image_captured_leaf);
+        imageStomataDiagram = view.findViewById(R.id.image_stomata_diagram);
+        gifGaseousExchange = view.findViewById(R.id.gif_gaseous_exchange);
         imgChloroplast = view.findViewById(R.id.img_chloroplast);
         layoutChlorophyll = view.findViewById(R.id.layout_chlorophyll);
         btnAction = view.findViewById(R.id.btn_action);
@@ -131,8 +135,49 @@ public class QuickVisualizationFragment extends Fragment {
             }
         });
 
-        imgRealLeaf.setOnClickListener(v -> showLeafPopup(v));
-        imgStomata.setOnClickListener(v -> showStomataPopup(v));
+        imageCapturedLeaf.setOnClickListener(v -> showLeafPopup(v));
+        
+        imageStomataDiagram.setOnClickListener(v -> {
+            showStomataPopup(v);
+            
+            // Fade out stomata diagram and transition to GIF
+            ObjectAnimator fadeOut = ObjectAnimator.ofFloat(imageStomataDiagram, "alpha", 1f, 0f);
+            fadeOut.setDuration(300);
+            fadeOut.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    gifGaseousExchange.setVisibility(View.VISIBLE);
+                    gifGaseousExchange.setAlpha(0f);
+                    
+                    Glide.with(requireContext())
+                        .asGif()
+                        .load(R.drawable.gaseous_exchange)
+                        .into(gifGaseousExchange);
+                    
+                    ObjectAnimator fadeIn = ObjectAnimator.ofFloat(gifGaseousExchange, "alpha", 0f, 1f);
+                    fadeIn.setDuration(300);
+                    fadeIn.start();
+                }
+            });
+            fadeOut.start();
+        });
+
+        gifGaseousExchange.setOnClickListener(v -> {
+            // Fade out GIF and return to static diagram
+            ObjectAnimator fadeOut = ObjectAnimator.ofFloat(gifGaseousExchange, "alpha", 1f, 0f);
+            fadeOut.setDuration(300);
+            fadeOut.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    gifGaseousExchange.setVisibility(View.GONE);
+                    
+                    ObjectAnimator fadeIn = ObjectAnimator.ofFloat(imageStomataDiagram, "alpha", 0f, 1f);
+                    fadeIn.setDuration(300);
+                    fadeIn.start();
+                }
+            });
+            fadeOut.start();
+        });
         
         imgChloroplast.setOnClickListener(v -> {
             if (layoutChlorophyll.getVisibility() == View.GONE) {
@@ -221,7 +266,7 @@ public class QuickVisualizationFragment extends Fragment {
         progressScanning.setVisibility(View.GONE);
         if (success) {
             Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath);
-            imgRealLeaf.setImageBitmap(bitmap);
+            imageCapturedLeaf.setImageBitmap(bitmap);
             viewFlipper.setDisplayedChild(1); // Transition to Stage 2
         } else {
             btnScan.setEnabled(true);
