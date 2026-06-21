@@ -67,7 +67,8 @@ public class QuickVisualizationFragment extends Fragment {
     private RelativeLayout containerHubContent;
     private AnnotationLineView annotationLine;
     private ImageView imageCapturedLeaf, imageStomataDiagram, gifGaseousExchange, imgChloroplast;
-    private Button btnAction, btnScan;
+    private View layoutChlorophyllLabel;
+    private Button btnWatchVideo, btnScan;
     private ProgressBar progressScanning;
     private TextView textHint;
 
@@ -123,7 +124,8 @@ public class QuickVisualizationFragment extends Fragment {
         imageStomataDiagram = view.findViewById(R.id.image_stomata_diagram);
         gifGaseousExchange = view.findViewById(R.id.gif_gaseous_exchange);
         imgChloroplast = view.findViewById(R.id.img_chloroplast);
-        btnAction = view.findViewById(R.id.btn_action);
+        layoutChlorophyllLabel = view.findViewById(R.id.layout_chlorophyll_label);
+        btnWatchVideo = view.findViewById(R.id.btn_action);
         textHint = view.findViewById(R.id.text_hint);
         view.findViewById(R.id.btn_close_stage2).setOnClickListener(v -> Navigation.findNavController(v).navigateUp());
 
@@ -187,37 +189,42 @@ public class QuickVisualizationFragment extends Fragment {
         });
         
         imgChloroplast.setOnClickListener(v -> {
-            showChlorophyllPopup(v);
+            // Fade in chlorophyll label beside the chloroplast
+            layoutChlorophyllLabel.setVisibility(View.VISIBLE);
+            layoutChlorophyllLabel.setAlpha(0f);
+            ObjectAnimator fadeIn = ObjectAnimator.ofFloat(layoutChlorophyllLabel, "alpha", 0f, 1f);
+            fadeIn.setDuration(400);
+            fadeIn.start();
 
-            // Draw second annotation line from leaf to chlorophyll label area
-            v.post(() -> {
+            // Show "Watch photosynthesis in action" button
+            btnWatchVideo.setVisibility(View.VISIBLE);
+            btnWatchVideo.setAlpha(0f);
+            ObjectAnimator btnFadeIn = ObjectAnimator.ofFloat(btnWatchVideo, "alpha", 0f, 1f);
+            btnFadeIn.setDuration(400);
+            btnFadeIn.start();
+
+            // Update hint text
+            textHint.setText("Watch photosynthesis in action");
+
+            // Draw second annotation line from leaf to chlorophyll label
+            layoutChlorophyllLabel.post(() -> {
                 int[] leafLocation = new int[2];
                 imageCapturedLeaf.getLocationInWindow(leafLocation);
                 int[] lineLocation = new int[2];
                 annotationLine.getLocationInWindow(lineLocation);
-                int[] chloroplastLocation = new int[2];
-                imgChloroplast.getLocationInWindow(chloroplastLocation);
+                int[] chlorophyllLocation = new int[2];
+                layoutChlorophyllLabel.getLocationInWindow(chlorophyllLocation);
 
-                // Start: bottom-left area of the leaf image
                 float startX = (leafLocation[0] - lineLocation[0]) + imageCapturedLeaf.getWidth() * 0.3f;
                 float startY = (leafLocation[1] - lineLocation[1]) + imageCapturedLeaf.getHeight() * 0.75f;
-
-                // End: middle of the chloroplast (pointing to where the popup/concept is)
-                float endX = (chloroplastLocation[0] - lineLocation[0]) + imgChloroplast.getWidth() / 2f;
-                float endY = (chloroplastLocation[1] - lineLocation[1]) + imgChloroplast.getHeight() / 2f;
+                float endX = (chlorophyllLocation[0] - lineLocation[0]);
+                float endY = (chlorophyllLocation[1] - lineLocation[1]) + layoutChlorophyllLabel.getHeight() / 2f;
 
                 annotationLine.addLine(startX, startY, endX, endY);
             });
-
-            if (btnAction.getVisibility() == View.GONE) {
-                btnAction.setVisibility(View.VISIBLE);
-                ObjectAnimator.ofFloat(btnAction, "alpha", 0f, 1f).setDuration(300).start();
-
-                textHint.setText("Watch photosynthesis in action");
-            }
         });
 
-        btnAction.setOnClickListener(v -> {
+        btnWatchVideo.setOnClickListener(v -> {
             Navigation.findNavController(v).navigate(R.id.VideoPlayerFragment);
         });
     }
@@ -330,14 +337,6 @@ public class QuickVisualizationFragment extends Fragment {
 
     private void showLeafPopup(View anchor) {
         showPopup(anchor, "Your Leaf", "This is your real leaf! Leaves contain chlorophyll in their chloroplasts, which gives them their green colour and powers photosynthesis.");
-    }
-
-    private void showStomataPopup(View anchor) {
-        showPopup(anchor, "Stomata", "These tiny openings on the underside of leaves allow CO₂ to enter and O₂ to exit during photosynthesis.");
-    }
-
-    private void showChlorophyllPopup(View anchor) {
-        showPopup(anchor, "Chlorophyll", "Chlorophyll is a green pigment found inside chloroplasts. It captures energy from sunlight to power the process of photosynthesis.");
     }
 
     private void showPopup(View anchor, String title, String content) {

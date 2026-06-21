@@ -176,40 +176,78 @@
 
                 <!-- Chloroplast section -->
                 <LinearLayout
-                    android:id="@+id/layout_chloroplast_container"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/layout_chloroplast_row"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
                     android:layout_below="@id/frame_leaf_hub"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="48dp"
-                    android:orientation="vertical"
-                    android:gravity="center">
+                    android:layout_marginTop="16dp"
+                    android:paddingHorizontal="16dp">
 
-                    <ImageView
-                        android:id="@+id/img_chloroplast"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:src="@drawable/chloroplast" />
-
-                    <TextView
-                        android:id="@+id/text_chloroplast_label"
-                        android:layout_width="wrap_content"
+                    <!-- Left: chloroplast image + label stacked vertically -->
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Chloroplast"
-                        android:textStyle="bold"
-                        android:textSize="16sp"
-                        android:textColor="@color/dark_text" />
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal">
 
-                    <TextView
-                        android:id="@+id/text_chloroplast_desc"
-                        android:layout_width="wrap_content"
+                        <ImageView
+                            android:id="@+id/img_chloroplast"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:src="@drawable/chloroplast"
+                            android:scaleType="fitCenter"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Chloroplast"
+                            android:textStyle="bold"
+                            android:textSize="14sp"
+                            android:textColor="#1A1A1A"
+                            android:layout_marginTop="4dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="The location inside a plant cell where photosynthesis happens"
+                            android:textSize="11sp"
+                            android:textColor="#666666"
+                            android:gravity="center"
+                            android:layout_marginTop="2dp"/>
+                    </LinearLayout>
+
+                    <!-- Right: chlorophyll explanation — hidden until chloroplast tapped -->
+                    <LinearLayout
+                        android:id="@+id/layout_chlorophyll_label"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="The location inside a plant cell where photosynthesis happens"
-                        android:textSize="13sp"
-                        android:textColor="@android:color/darker_gray"
-                        android:gravity="center"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginHorizontal="32dp" />
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="start"
+                        android:paddingStart="12dp"
+                        android:visibility="invisible">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Chlorophyll"
+                            android:textStyle="bold"
+                            android:textSize="14sp"
+                            android:textColor="#1A1A1A"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="reflects green light to give the green colour of plants"
+                            android:textSize="11sp"
+                            android:textColor="#444444"
+                            android:layout_marginTop="2dp"/>
+
+                    </LinearLayout>
+
                 </LinearLayout>
 
                 <!-- Annotation line overlay spanning the full container -->
