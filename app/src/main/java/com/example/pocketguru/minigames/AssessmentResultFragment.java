@@ -22,10 +22,12 @@ import java.io.Serializable;
 public class AssessmentResultFragment extends Fragment {
 
     public static final String ARG_SCORE = "score";
+    public static final String ARG_QUESTIONS = "questions";
     public static final String ARG_USER_ANSWERS = "userAnswers";
     public static final String ARG_IS_CORRECT = "isCorrect";
 
     private int score;
+    private java.util.List<com.example.pocketguru.models.Question> questions;
     private int[][] userAnswers;
     private boolean[] isCorrect;
 
@@ -36,6 +38,7 @@ public class AssessmentResultFragment extends Fragment {
 
         if (getArguments() != null) {
             score = getArguments().getInt(ARG_SCORE);
+            questions = (java.util.List<com.example.pocketguru.models.Question>) getArguments().getSerializable(ARG_QUESTIONS);
             userAnswers = (int[][]) getArguments().getSerializable(ARG_USER_ANSWERS);
             isCorrect = getArguments().getBooleanArray(ARG_IS_CORRECT);
         }
@@ -78,10 +81,10 @@ public class AssessmentResultFragment extends Fragment {
 
         btnReview.setOnClickListener(v -> {
             Bundle args = new Bundle();
-            args.putBoolean("isReview", true);
-            args.putSerializable("userAnswers", userAnswers);
-            args.putBooleanArray("isCorrect", isCorrect);
-            Navigation.findNavController(v).navigate(R.id.AssessmentFragment, args);
+            args.putSerializable(ReviewAnswersFragment.ARG_QUESTIONS, (java.io.Serializable) questions);
+            args.putSerializable(ReviewAnswersFragment.ARG_USER_ANSWERS, userAnswers);
+            args.putBooleanArray(ReviewAnswersFragment.ARG_IS_CORRECT, isCorrect);
+            Navigation.findNavController(v).navigate(R.id.action_assessmentResult_to_reviewAnswers, args);
         });
     }
 

@@ -119,7 +119,18 @@
         <argument android:name="score" app:argType="integer" />
         <argument android:name="userAnswers" app:argType="integer[]" app:nullable="true" />
         <argument android:name="isCorrect" app:argType="boolean[]" app:nullable="true" />
+        <action
+            android:id="@+id/action_assessmentResult_to_reviewAnswers"
+            app:destination="@id/ReviewAnswersFragment"
+            app:popUpTo="@id/LevelMapFragment"
+            app:popUpToInclusive="false"/>
     </fragment>
+
+    <fragment
+        android:id="@+id/ReviewAnswersFragment"
+        android:name="com.example.pocketguru.minigames.ReviewAnswersFragment"
+        android:label="Review Answers"
+        tools:layout="@layout/fragment_review_answers" />
 
     <fragment
         android:id="@+id/LevelCompleteFragment"

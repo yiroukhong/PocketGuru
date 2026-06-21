@@ -150,9 +150,8 @@ public class AssessmentFragment extends Fragment implements QuestionFragment.OnA
 
         Bundle args = new Bundle();
         args.putInt(AssessmentResultFragment.ARG_SCORE, score);
-        
-        // We need to convert the 2D array to a flat array or Serializable for the bundle
-        // For simplicity in this scaffold, let's just pass the score and correctness
+        args.putSerializable(AssessmentResultFragment.ARG_QUESTIONS, (java.io.Serializable) questions);
+        args.putSerializable(AssessmentResultFragment.ARG_USER_ANSWERS, userAnswers);
         args.putBooleanArray(AssessmentResultFragment.ARG_IS_CORRECT, isCorrect);
         
         Navigation.findNavController(requireView()).navigate(R.id.action_AssessmentFragment_to_AssessmentResultFragment, args);
