@@ -3,6 +3,7 @@ package com.example.pocketguru.levels;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -17,6 +18,7 @@ import androidx.navigation.Navigation;
 import com.example.pocketguru.R;
 import com.example.pocketguru.utils.KeywordTooltipHelper;
 import com.example.pocketguru.utils.LevelProgressManager;
+import com.example.pocketguru.utils.SoundManager;
 import com.example.pocketguru.utils.SpannableHelper;
 import com.example.pocketguru.views.DrawingView;
 
@@ -35,6 +37,21 @@ public class LevelTwoFragment extends Fragment {
         drawingView = view.findViewById(R.id.drawing_view);
         btnAction = view.findViewById(R.id.btn_action);
 
+        SoundManager soundManager = SoundManager.getInstance(requireContext());
+
+        drawingView.setOnTouchListener((v, event) -> {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    soundManager.playSketchLoop();
+                    break;
+                case MotionEvent.ACTION_UP:
+                case MotionEvent.ACTION_CANCEL:
+                    soundManager.stopSketch();
+                    break;
+            }
+            return false; // let DrawingView handle the rest
+        });
+
         setupBodyText(view.findViewById(R.id.text_body));
 
         drawingView.setOnLineCompleteListener(() -> {
@@ -42,6 +59,7 @@ public class LevelTwoFragment extends Fragment {
             btnAction.setEnabled(true);
             Toast.makeText(getContext(), "Success! Water reached the leaves.", Toast.LENGTH_SHORT).show();
         });
+
 
         view.findViewById(R.id.btn_back).setOnClickListener(v -> requireActivity().onBackPressed());
 
