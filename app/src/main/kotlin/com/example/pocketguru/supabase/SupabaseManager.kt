@@ -227,6 +227,25 @@ object SupabaseManager {
         }
     }
 
+    fun checkKeywordExists(userId: String, word: String, callback: SupabaseCallback<Boolean>) {
+        scope.launch {
+            try {
+                val result = client.postgrest.from("keywords")
+                    .select {
+                        filter {
+                            eq("user_id", userId)
+                            eq("word", word)
+                        }
+                    }
+                withContext(Dispatchers.Main) {
+                    callback.onSuccess(result.data != "[]")
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) { callback.onError(e.message ?: "Check failed") }
+            }
+        }
+    }
+
     fun deleteKeyword(keywordId: String, callback: SupabaseCallback<Unit>) {
         scope.launch {
             try {

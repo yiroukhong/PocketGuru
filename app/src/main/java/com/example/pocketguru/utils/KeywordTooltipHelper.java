@@ -19,6 +19,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.pocketguru.R;
 import com.example.pocketguru.keywords.KeywordsListFragment;
+import com.example.pocketguru.models.KeywordItem;
 import com.example.pocketguru.supabase.SupabaseManager;
 import com.example.pocketguru.utils.DataPreloader;
 
@@ -49,6 +50,41 @@ public class KeywordTooltipHelper {
         btnSpeak.setOnClickListener(v -> speak(keyword, btnSpeak));
         
         btnBookmark.setOnClickListener(v -> saveKeyword(keyword, definition, btnBookmark));
+
+        // Check cache first for instant icon state
+        List<KeywordItem> cached = DataPreloader.getCachedKeywords();
+        boolean alreadySaved = false;
+        if (cached != null) {
+            for (KeywordItem item : cached) {
+                if (item.getWord().equalsIgnoreCase(keyword)) {
+                    alreadySaved = true;
+                    break;
+                }
+            }
+        }
+
+        // Set initial icon state immediately without network call
+        btnBookmark.setImageResource(alreadySaved ?
+                R.drawable.ic_bookmark_filled : R.drawable.ic_bookmark);
+
+        // If not in cache, verify against Supabase in background
+        if (!alreadySaved) {
+            String userId = new SessionManager(context).getUserId();
+            if (userId != null) {
+                SupabaseManager.INSTANCE.checkKeywordExists(userId, keyword,
+                        new SupabaseManager.SupabaseCallback<Boolean>() {
+                            @Override
+                            public void onSuccess(Boolean exists) {
+                                if (exists) {
+                                    btnBookmark.setImageResource(R.drawable.ic_bookmark_filled);
+                                }
+                            }
+
+                            @Override
+                            public void onError(String error) { /* keep outline icon */ }
+                        });
+            }
+        }
 
         popupWindow = new PopupWindow(
                 popupView,
@@ -88,9 +124,16 @@ public class KeywordTooltipHelper {
             @Override
             public void onSuccess(Boolean inserted) {
                 if (inserted) {
-                    DataPreloader.setCachedKeywords(null); // Invalidate cache
                     btnBookmark.setImageResource(R.drawable.ic_bookmark_filled);
                     Toast.makeText(context, "Saved to Keywords List!", Toast.LENGTH_SHORT).show();
+
+                    // Add to cache immediately
+                    List<KeywordItem> cached = DataPreloader.getCachedKeywords();
+                    if (cached != null) {
+                        cached.add(0, new KeywordItem("", keyword, definition, ""));
+                    }
+                    // Invalidate so list refreshes next open
+                    DataPreloader.setCachedKeywords(null);
                     
                     // Notify KeywordsListFragment if visible
                     notifyKeywordsFragment(keyword, definition);
