@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -89,26 +90,36 @@ public class LevelMapFragment extends Fragment {
     }
 
     @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Apply colors before first frame renders
+        view.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                view.getViewTreeObserver().removeOnPreDrawListener(this);
+                updateLevelNodes(DataPreloader.getCachedCurrentLevel());
+                return true;
+            }
+        });
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
-        
-        // Use cache for instant UI update
-        updateLevelNodes(DataPreloader.getCachedCurrentLevel());
 
-        // Then verify against Supabase and update if different
+        // Live refresh from Supabase in background
+        updateLevelNodes(DataPreloader.getCachedCurrentLevel()); // instant from cache
         String userId = new SessionManager(requireContext()).getUserId();
         if (userId != null) {
             SupabaseManager.INSTANCE.getCurrentLevel(userId, new SupabaseManager.SupabaseCallback<Integer>() {
                 @Override
                 public void onSuccess(Integer level) {
-                    Log.d("PocketGuru", "Live current level from Supabase: " + level);
                     DataPreloader.setCachedCurrentLevel(level);
                     updateLevelNodes(level);
                 }
                 @Override
-                public void onError(String error) {
-                    Log.e("PocketGuru", "Could not fetch live level: " + error);
-                }
+                public void onError(String error) {}
             });
         }
     }
