@@ -21,6 +21,7 @@ import com.example.pocketguru.R;
 import com.example.pocketguru.supabase.SupabaseManager;
 import com.example.pocketguru.utils.DataPreloader;
 import com.example.pocketguru.utils.SessionManager;
+import com.example.pocketguru.utils.SoundManager;
 
 public class LevelMapFragment extends Fragment {
 
@@ -74,17 +75,44 @@ public class LevelMapFragment extends Fragment {
         btnMixMatch = view.findViewById(R.id.btn_mix_match);
 
         // Navigation logic for levels
-        nodeFrame1.setOnClickListener(v -> navigateToLevel(R.id.action_LevelMapFragment_to_LevelOneFragment));
-        nodeFrame2.setOnClickListener(v -> navigateToLevel(R.id.action_LevelMapFragment_to_LevelTwoFragment));
-        nodeFrame3.setOnClickListener(v -> navigateToLevel(R.id.action_LevelMapFragment_to_LevelThreeFragment));
-        nodeFrame4.setOnClickListener(v -> navigateToLevel(R.id.action_LevelMapFragment_to_LevelFourFragment));
-        nodeFrame5.setOnClickListener(v -> navigateToLevel(R.id.action_LevelMapFragment_to_LevelFiveFragment));
-        nodeFrame6.setOnClickListener(v -> navigateToLevel(R.id.action_LevelMapFragment_to_LevelSixFragment));
-        nodeFrameAssessment.setOnClickListener(v -> navigateToLevel(R.id.AssessmentFragment));
+        nodeFrame1.setOnClickListener(v -> {
+            SoundManager.getInstance(requireContext()).playStart();
+            navigateToLevel(R.id.action_LevelMapFragment_to_LevelOneFragment);
+        });
+        nodeFrame2.setOnClickListener(v -> {
+            SoundManager.getInstance(requireContext()).playStart();
+            navigateToLevel(R.id.action_LevelMapFragment_to_LevelTwoFragment);
+        });
+        nodeFrame3.setOnClickListener(v -> {
+            SoundManager.getInstance(requireContext()).playStart();
+            navigateToLevel(R.id.action_LevelMapFragment_to_LevelThreeFragment);
+        });
+        nodeFrame4.setOnClickListener(v -> {
+            SoundManager.getInstance(requireContext()).playStart();
+            navigateToLevel(R.id.action_LevelMapFragment_to_LevelFourFragment);
+        });
+        nodeFrame5.setOnClickListener(v -> {
+            SoundManager.getInstance(requireContext()).playStart();
+            navigateToLevel(R.id.action_LevelMapFragment_to_LevelFiveFragment);
+        });
+        nodeFrame6.setOnClickListener(v -> {
+            SoundManager.getInstance(requireContext()).playStart();
+            navigateToLevel(R.id.action_LevelMapFragment_to_LevelSixFragment);
+        });
+        nodeFrameAssessment.setOnClickListener(v -> {
+            SoundManager.getInstance(requireContext()).playStart();
+            navigateToLevel(R.id.AssessmentFragment);
+        });
 
         // Navigation for mini-games
-        btnFlashcards.setOnClickListener(v -> navigateToLevel(R.id.FlashcardsFragment));
-        btnMixMatch.setOnClickListener(v -> navigateToLevel(R.id.MixAndMatchFragment));
+        btnFlashcards.setOnClickListener(v -> {
+            SoundManager.getInstance(requireContext()).playStart();
+            navigateToLevel(R.id.FlashcardsFragment);
+        });
+        btnMixMatch.setOnClickListener(v -> {
+            SoundManager.getInstance(requireContext()).playStart();
+            navigateToLevel(R.id.MixAndMatchFragment);
+        });
 
         return view;
     }
