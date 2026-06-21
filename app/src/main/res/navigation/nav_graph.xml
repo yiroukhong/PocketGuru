@@ -110,14 +110,15 @@
 
     <fragment android:id="@+id/AssessmentFragment" android:name="com.example.pocketguru.minigames.AssessmentFragment" android:label="Assessment" tools:layout="@layout/fragment_assessment">
         <argument android:name="isReview" app:argType="boolean" android:defaultValue="false" />
-        <argument android:name="userAnswers" app:argType="integer[]" app:nullable="true" android:defaultValue="@null" />
+        <argument android:name="userAnswers" app:argType="java.io.Serializable" app:nullable="true" android:defaultValue="@null" />
         <argument android:name="isCorrect" app:argType="boolean[]" app:nullable="true" android:defaultValue="@null" />
         <action android:id="@+id/action_AssessmentFragment_to_AssessmentResultFragment" app:destination="@id/AssessmentResultFragment" />
     </fragment>
 
     <fragment android:id="@+id/AssessmentResultFragment" android:name="com.example.pocketguru.minigames.AssessmentResultFragment" android:label="Assessment Result" tools:layout="@layout/fragment_assessment_result">
         <argument android:name="score" app:argType="integer" />
-        <argument android:name="userAnswers" app:argType="integer[]" app:nullable="true" />
+        <argument android:name="questions" app:argType="java.io.Serializable" />
+        <argument android:name="userAnswers" app:argType="java.io.Serializable" app:nullable="true" />
         <argument android:name="isCorrect" app:argType="boolean[]" app:nullable="true" />
         <action
             android:id="@+id/action_assessmentResult_to_reviewAnswers"

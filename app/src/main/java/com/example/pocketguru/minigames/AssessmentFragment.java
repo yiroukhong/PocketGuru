@@ -99,7 +99,7 @@ public class AssessmentFragment extends Fragment implements QuestionFragment.OnA
                 new String[]{"Into the leaves, up the stem and through the stomata", "In the leaves, up the stem, into the roots", "Up the stem, into the roots, into the leaves", "Into the roots, up the stem, and to the leaves"}, 
                 new int[]{3}, R.drawable.level2_plant));
 
-        questions.add(new Question("The small holes in the plant's leaves that take in carbon dioxide are called the", Question.QuestionType.IMAGE_OPTIONS, 
+        questions.add(new Question("The small holes in the plant's leaves that take in carbon dioxide are called the", Question.QuestionType.TEXT_OPTIONS,
                 new String[]{"Carbon Dioxide", "Stomata", "Chloroplasts", "Stem"}, 
                 new int[]{1}, R.drawable.stomata_diagram));
     }

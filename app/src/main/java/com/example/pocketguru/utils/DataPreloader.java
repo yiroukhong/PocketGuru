@@ -74,12 +74,12 @@ public class DataPreloader {
         SupabaseManager.INSTANCE.getKeywords(userId, new SupabaseManager.SupabaseCallback<List<KeywordItem>>() {
             @Override
             public void onSuccess(List<KeywordItem> result) {
-                cachedKeywords = result;
+                cachedKeywords = result; // empty list here is valid — user genuinely has no keywords
                 checkDone.run();
             }
             @Override
             public void onError(String error) {
-                cachedKeywords = new ArrayList<>(); // empty on error
+                cachedKeywords = null; // null = fetch failed, NOT empty keywords — forces retry
                 checkDone.run();
             }
         });
