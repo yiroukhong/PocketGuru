@@ -20,8 +20,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pocketguru.R;
 import com.example.pocketguru.models.KeywordItem;
-import com.example.pocketguru.supabase.SupabaseClient;
+import com.example.pocketguru.supabase.SupabaseManager;
 import com.example.pocketguru.utils.SessionManager;
+
+import kotlin.Unit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,23 +77,28 @@ public class KeywordsListFragment extends Fragment implements KeywordsAdapter.On
         progressLoading.setVisibility(View.VISIBLE);
         String userId = new SessionManager(requireContext()).getUserId();
 
-        SupabaseClient.getInstance().performQuery("keywords", userId, new SupabaseClient.DatabaseCallback() {
+        if (userId == null) {
+            progressLoading.setVisibility(View.GONE);
+            updateUI();
+            return;
+        }
+
+        SupabaseManager.INSTANCE.getKeywords(userId, new SupabaseManager.SupabaseCallback<List<SupabaseManager.Keyword>>() {
             @Override
-            public void onSuccess(Object data) {
-                mainHandler.post(() -> {
-                    progressLoading.setVisibility(View.GONE);
-                    // In a real app, 'data' would be the List<KeywordItem>
-                    // For this scaffold, we check the list size
-                    updateUI();
-                });
+            public void onSuccess(List<SupabaseManager.Keyword> result) {
+                keywordList.clear();
+                for (SupabaseManager.Keyword k : result) {
+                    keywordList.add(new KeywordItem(k.getId(), k.getWord(), k.getDefinition(), ""));
+                }
+                adapter.notifyDataSetChanged();
+                progressLoading.setVisibility(View.GONE);
+                updateUI();
             }
 
             @Override
-            public void onError(String message) {
-                mainHandler.post(() -> {
-                    progressLoading.setVisibility(View.GONE);
-                    Toast.makeText(requireContext(), "Error: " + message, Toast.LENGTH_SHORT).show();
-                });
+            public void onError(String error) {
+                progressLoading.setVisibility(View.GONE);
+                Toast.makeText(requireContext(), "Error: " + error, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -115,18 +122,17 @@ public class KeywordsListFragment extends Fragment implements KeywordsAdapter.On
 
     @Override
     public void onDelete(String keywordId, int position) {
-        // Implementation for Supabase delete
-        SupabaseClient.getInstance().getExecutor().execute(() -> {
-            // Real implementation: supabase.from("keywords").delete().filter("id", EQ, keywordId)
-            try {
-                Thread.sleep(500); // Simulate delete delay
-                mainHandler.post(() -> {
-                    adapter.removeItem(position);
-                    updateUI();
-                    Toast.makeText(requireContext(), "Keyword deleted", Toast.LENGTH_SHORT).show();
-                });
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        SupabaseManager.INSTANCE.deleteKeyword(keywordId, new SupabaseManager.SupabaseCallback<Unit>() {
+            @Override
+            public void onSuccess(Unit result) {
+                adapter.removeItem(position);
+                updateUI();
+                Toast.makeText(requireContext(), "Keyword deleted", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(String error) {
+                Toast.makeText(requireContext(), "Delete failed: " + error, Toast.LENGTH_SHORT).show();
             }
         });
     }

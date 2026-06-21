@@ -39,7 +39,7 @@ object SupabaseManager {
     data class LevelProgress(val user_id: String, val current_level: Int)
 
     @Serializable
-    data class Keyword(val user_id: String, val word: String, val definition: String)
+    data class Keyword(val user_id: String, val word: String, val definition: String, val id: String? = null)
 
     fun checkUsernameUnique(username: String, callback: SupabaseCallback<Boolean>) {
         scope.launch {
@@ -163,6 +163,38 @@ object SupabaseManager {
                 withContext(Dispatchers.Main) { callback.onSuccess(true) }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) { callback.onError(e.message ?: "Failed to save keyword") }
+            }
+        }
+    }
+
+    fun getKeywords(userId: String, callback: SupabaseCallback<List<Keyword>>) {
+        scope.launch {
+            try {
+                val response = client.postgrest.from("keywords")
+                    .select {
+                        filter {
+                            eq("user_id", userId)
+                        }
+                    }
+                val keywords = response.decodeList<Keyword>()
+                withContext(Dispatchers.Main) { callback.onSuccess(keywords) }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) { callback.onError(e.message ?: "Failed to fetch keywords") }
+            }
+        }
+    }
+
+    fun deleteKeyword(keywordId: String, callback: SupabaseCallback<Unit>) {
+        scope.launch {
+            try {
+                client.postgrest.from("keywords").delete {
+                    filter {
+                        eq("id", keywordId)
+                    }
+                }
+                withContext(Dispatchers.Main) { callback.onSuccess(Unit) }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) { callback.onError(e.message ?: "Failed to delete keyword") }
             }
         }
     }
