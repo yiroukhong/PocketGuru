@@ -23,6 +23,7 @@ import androidx.navigation.Navigation;
 import com.example.pocketguru.R;
 import com.example.pocketguru.utils.KeywordTooltipHelper;
 import com.example.pocketguru.utils.LevelProgressManager;
+import com.example.pocketguru.utils.SoundManager;
 import com.example.pocketguru.utils.SpannableHelper;
 
 import java.util.HashMap;
@@ -129,6 +130,7 @@ public class LevelFiveFragment extends Fragment {
                     return true;
 
                 case DragEvent.ACTION_DROP:
+                    SoundManager.getInstance(requireContext()).playPop();
                     String itemName = event.getClipData().getItemAt(0).getText().toString();
                     handleDrop(index, itemName);
                     return true;

@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.example.pocketguru.R;
+import com.example.pocketguru.utils.SoundManager;
 import com.example.pocketguru.views.LineOverlayView;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -141,6 +142,7 @@ public class MixAndMatchFragment extends Fragment {
     }
 
     private void handleMatch(View defView, View imgView) {
+        SoundManager.getInstance(requireContext()).playPop();
         matchedCount++;
         textCounter.setText(matchedCount + "/6");
 

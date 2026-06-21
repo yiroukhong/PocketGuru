@@ -22,6 +22,7 @@ import androidx.navigation.Navigation;
 import com.example.pocketguru.R;
 import com.example.pocketguru.utils.KeywordTooltipHelper;
 import com.example.pocketguru.utils.LevelProgressManager;
+import com.example.pocketguru.utils.SoundManager;
 import com.example.pocketguru.utils.SpannableHelper;
 
 public class LevelFourFragment extends Fragment {
@@ -54,6 +55,7 @@ public class LevelFourFragment extends Fragment {
                     return event.getClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN);
 
                 case DragEvent.ACTION_DROP:
+                    SoundManager.getInstance(requireContext()).playPop();
                     View draggedView = (View) event.getLocalState();
                     draggedView.setVisibility(View.INVISIBLE);
                     handleSunCollected();
