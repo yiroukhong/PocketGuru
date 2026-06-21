@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.pocketguru.R;
 import com.example.pocketguru.models.Question;
+import com.example.pocketguru.utils.SoundManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -203,6 +204,7 @@ public class QuestionFragment extends Fragment {
 
         textFeedback.setVisibility(View.VISIBLE);
         if (isFullyCorrect) {
+            SoundManager.getInstance(requireContext()).playCorrect();
             textFeedback.setText("Amazing!");
             textFeedback.setTextColor(Color.parseColor("#81C784"));
             textFeedback.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.checkbox_on_background, 0, 0, 0);
@@ -236,6 +238,7 @@ public class QuestionFragment extends Fragment {
         }
 
         if (correct) {
+            SoundManager.getInstance(requireContext()).playCorrect();
             textFeedback.setVisibility(View.VISIBLE);
         }
         btnNext.setVisibility(View.VISIBLE);
