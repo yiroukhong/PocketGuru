@@ -1,11 +1,13 @@
 package com.example.pocketguru.keywords;
 
 import android.speech.tts.TextToSpeech;
+import android.speech.tts.UtteranceProgressListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,7 +48,39 @@ public class KeywordsAdapter extends RecyclerView.Adapter<KeywordsAdapter.Keywor
 
         holder.btnSpeaker.setOnClickListener(v -> {
             if (tts != null) {
-                tts.speak(item.getDefinition(), TextToSpeech.QUEUE_FLUSH, null, null);
+                if (tts.isSpeaking()) {
+                    tts.stop();
+                }
+
+                // Visual feedback
+                holder.btnSpeaker.setColorFilter(
+                        android.graphics.Color.parseColor("#FFD93D"),
+                        android.graphics.PorterDuff.Mode.SRC_IN);
+
+                android.os.Bundle params = new android.os.Bundle();
+                params.putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "keyword_" + holder.getAdapterPosition());
+
+                tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
+                    @Override
+                    public void onStart(String utteranceId) {
+                    }
+
+                    @Override
+                    public void onDone(String utteranceId) {
+                        holder.btnSpeaker.post(() -> holder.btnSpeaker.clearColorFilter());
+                    }
+
+                    @Override
+                    public void onError(String utteranceId) {
+                        holder.btnSpeaker.post(() -> holder.btnSpeaker.clearColorFilter());
+                    }
+                });
+
+                tts.speak(item.getWord(), TextToSpeech.QUEUE_FLUSH, params,
+                        "keyword_" + holder.getAdapterPosition());
+            } else {
+                Toast.makeText(holder.itemView.getContext(),
+                        "Audio not ready yet", Toast.LENGTH_SHORT).show();
             }
         });
 
