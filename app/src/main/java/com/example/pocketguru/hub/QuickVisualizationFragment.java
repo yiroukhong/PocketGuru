@@ -17,11 +17,14 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
@@ -36,6 +39,7 @@ import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
 import com.example.pocketguru.R;
+import com.example.pocketguru.views.AnnotationLineView;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.opencv.android.OpenCVLoader;
@@ -60,6 +64,8 @@ public class QuickVisualizationFragment extends Fragment {
 
     private static final String TAG = "QuickVisHub";
     private ViewFlipper viewFlipper;
+    private RelativeLayout containerHubContent;
+    private AnnotationLineView annotationLine;
     private ImageView imageCapturedLeaf, imageStomataDiagram, gifGaseousExchange, imgChloroplast;
     private LinearLayout layoutChlorophyll;
     private Button btnAction, btnScan;
@@ -112,6 +118,8 @@ public class QuickVisualizationFragment extends Fragment {
         view.findViewById(R.id.btn_close_stage1).setOnClickListener(v -> Navigation.findNavController(v).navigateUp());
 
         // Stage 2 views
+        containerHubContent = view.findViewById(R.id.container_hub_content);
+        annotationLine = view.findViewById(R.id.annotation_line);
         imageCapturedLeaf = view.findViewById(R.id.image_captured_leaf);
         imageStomataDiagram = view.findViewById(R.id.image_stomata_diagram);
         gifGaseousExchange = view.findViewById(R.id.gif_gaseous_exchange);
@@ -268,10 +276,38 @@ public class QuickVisualizationFragment extends Fragment {
             Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath);
             imageCapturedLeaf.setImageBitmap(bitmap);
             viewFlipper.setDisplayedChild(1); // Transition to Stage 2
+            setupAnnotationLine();
         } else {
             btnScan.setEnabled(true);
             Snackbar.make(requireView(), "We couldn't find a leaf! Try in better lighting or move closer.", Snackbar.LENGTH_LONG).show();
         }
+    }
+
+    private void setupAnnotationLine() {
+        containerHubContent.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                containerHubContent.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                // Start point: left-ish portion of stomata diagram
+                int[] stomataLocation = new int[2];
+                imageStomataDiagram.getLocationInWindow(stomataLocation);
+                int[] lineLocation = new int[2];
+                annotationLine.getLocationInWindow(lineLocation);
+
+                float startX = (stomataLocation[0] - lineLocation[0]) + imageStomataDiagram.getWidth() * 0.2f;
+                float startY = (stomataLocation[1] - lineLocation[1]) + imageStomataDiagram.getHeight() * 0.8f;
+
+                // End point: top center of chloroplast ImageView
+                int[] chloroplastLocation = new int[2];
+                imgChloroplast.getLocationInWindow(chloroplastLocation);
+
+                float endX = (chloroplastLocation[0] - lineLocation[0]) + imgChloroplast.getWidth() / 2f;
+                float endY = (chloroplastLocation[1] - lineLocation[1]);
+
+                annotationLine.setCoordinates(startX, startY, endX, endY);
+            }
+        });
     }
 
     private void showLeafPopup(View anchor) {
