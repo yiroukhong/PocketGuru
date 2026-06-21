@@ -20,7 +20,11 @@
             android:id="@+id/action_SplashFragment_to_LevelMapFragment"
             app:destination="@id/LevelMapFragment"
             app:popUpTo="@id/SplashFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
     </fragment>
 
     <fragment
@@ -58,7 +62,11 @@
             android:id="@+id/action_LoginFragment_to_LevelMapFragment"
             app:destination="@id/LevelMapFragment"
             app:popUpTo="@id/nav_graph"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
     </fragment>
 
     <!-- Main Screens -->
@@ -67,15 +75,51 @@
         android:name="com.example.pocketguru.levels.LevelMapFragment"
         android:label="Level Map"
         tools:layout="@layout/fragment_level_map">
-        <action android:id="@+id/action_LevelMapFragment_to_LevelOneFragment" app:destination="@id/LevelOneHostFragment" />
-        <action android:id="@+id/action_LevelMapFragment_to_LevelTwoFragment" app:destination="@id/LevelTwoFragment" />
-        <action android:id="@+id/action_LevelMapFragment_to_LevelThreeFragment" app:destination="@id/LevelThreeFragment" />
-        <action android:id="@+id/action_LevelMapFragment_to_LevelFourFragment" app:destination="@id/LevelFourFragment" />
-        <action android:id="@+id/action_LevelMapFragment_to_LevelFiveFragment" app:destination="@id/LevelFiveFragment" />
-        <action android:id="@+id/action_LevelMapFragment_to_LevelSixFragment" app:destination="@id/LevelSixFragment" />
-        <action android:id="@+id/action_LevelMapFragment_to_FlashcardsFragment" app:destination="@id/FlashcardsFragment" />
-        <action android:id="@+id/action_LevelMapFragment_to_MixAndMatchFragment" app:destination="@id/MixAndMatchFragment" />
-        <action android:id="@+id/action_LevelMapFragment_to_AssessmentFragment" app:destination="@id/AssessmentFragment" />
+        <action android:id="@+id/action_LevelMapFragment_to_LevelOneFragment" app:destination="@id/LevelOneHostFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action android:id="@+id/action_LevelMapFragment_to_LevelTwoFragment" app:destination="@id/LevelTwoFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action android:id="@+id/action_LevelMapFragment_to_LevelThreeFragment" app:destination="@id/LevelThreeFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action android:id="@+id/action_LevelMapFragment_to_LevelFourFragment" app:destination="@id/LevelFourFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action android:id="@+id/action_LevelMapFragment_to_LevelFiveFragment" app:destination="@id/LevelFiveFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action android:id="@+id/action_LevelMapFragment_to_LevelSixFragment" app:destination="@id/LevelSixFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action android:id="@+id/action_LevelMapFragment_to_FlashcardsFragment" app:destination="@id/FlashcardsFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action android:id="@+id/action_LevelMapFragment_to_MixAndMatchFragment" app:destination="@id/MixAndMatchFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action android:id="@+id/action_LevelMapFragment_to_AssessmentFragment" app:destination="@id/AssessmentFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
     </fragment>
 
     <fragment
@@ -124,7 +168,11 @@
             android:id="@+id/action_assessmentResult_to_reviewAnswers"
             app:destination="@id/ReviewAnswersFragment"
             app:popUpTo="@id/LevelMapFragment"
-            app:popUpToInclusive="false"/>
+            app:popUpToInclusive="false"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
     </fragment>
 
     <fragment
