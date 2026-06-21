@@ -3,6 +3,7 @@ package com.example.pocketguru.utils;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.speech.tts.TextToSpeech;
+import android.speech.tts.UtteranceProgressListener;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,7 +45,7 @@ public class KeywordTooltipHelper {
         textName.setText(keyword);
         textDefinition.setText(definition);
 
-        btnSpeak.setOnClickListener(v -> speak(definition));
+        btnSpeak.setOnClickListener(v -> speak(keyword, btnSpeak));
         
         btnBookmark.setOnClickListener(v -> saveKeyword(keyword, definition, btnBookmark));
 
@@ -119,16 +120,54 @@ public class KeywordTooltipHelper {
         }
     }
 
-    private void speak(String text) {
+    private void speak(String text, ImageView btnSpeak) {
         if (tts == null) {
             tts = new TextToSpeech(context, status -> {
                 if (status == TextToSpeech.SUCCESS) {
                     tts.setLanguage(Locale.US);
-                    tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
+                    tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
+                        @Override
+                        public void onStart(String utteranceId) {
+                            // Tint speaker icon yellow while speaking
+                            if (btnSpeak != null) {
+                                btnSpeak.post(() ->
+                                        btnSpeak.setColorFilter(
+                                                android.graphics.Color.parseColor("#FFD93D"),
+                                                android.graphics.PorterDuff.Mode.SRC_IN));
+                            }
+                        }
+
+                        @Override
+                        public void onDone(String utteranceId) {
+                            // Reset speaker icon color when done
+                            if (btnSpeak != null) {
+                                btnSpeak.post(() -> btnSpeak.clearColorFilter());
+                            }
+                        }
+
+                        @Override
+                        public void onError(String utteranceId) {
+                            if (btnSpeak != null) {
+                                btnSpeak.post(() -> btnSpeak.clearColorFilter());
+                            }
+                        }
+                    });
+
+                    if (tts.isSpeaking()) {
+                        tts.stop();
+                    }
+                    android.os.Bundle params = new android.os.Bundle();
+                    params.putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "keyword");
+                    tts.speak(text, TextToSpeech.QUEUE_FLUSH, params, "keyword");
                 }
             });
         } else {
-            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
+            if (tts.isSpeaking()) {
+                tts.stop();
+            }
+            android.os.Bundle params = new android.os.Bundle();
+            params.putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "keyword");
+            tts.speak(text, TextToSpeech.QUEUE_FLUSH, params, "keyword");
         }
     }
 }
