@@ -52,9 +52,8 @@ public class KeywordsListFragment extends Fragment implements KeywordsAdapter.On
             Navigation.findNavController(v).popBackStack(R.id.LevelMapFragment, false)
         );
 
-        setupTTS();
         setupRecyclerView();
-        loadKeywords();
+        setupTTS();
 
         return view;
     }
@@ -63,14 +62,19 @@ public class KeywordsListFragment extends Fragment implements KeywordsAdapter.On
         tts = new TextToSpeech(requireContext(), status -> {
             if (status == TextToSpeech.SUCCESS) {
                 tts.setLanguage(Locale.ENGLISH);
+                // Create adapter only after TTS is ready
+                adapter = new KeywordsAdapter(keywordList, tts, this);
+            } else {
+                // TTS failed — create adapter without TTS
+                adapter = new KeywordsAdapter(keywordList, null, this);
             }
+            recyclerKeywords.setAdapter(adapter);
+            loadKeywords();
         });
     }
 
     private void setupRecyclerView() {
-        adapter = new KeywordsAdapter(keywordList, tts, this);
         recyclerKeywords.setLayoutManager(new LinearLayoutManager(requireContext()));
-        recyclerKeywords.setAdapter(adapter);
     }
 
     private void loadKeywords() {
