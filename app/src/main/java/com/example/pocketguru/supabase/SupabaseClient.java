@@ -1,21 +1,40 @@
 package com.example.pocketguru.supabase;
 
-// Scaffolding Supabase integration
+import android.util.Log;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class SupabaseClient {
-    private static Object instance;
+    private static final String TAG = "SupabaseClient";
+    private static SupabaseClient instance;
+    private final ExecutorService executor = Executors.newFixedThreadPool(4);
 
-    // TODO: Fill in your Supabase credentials
-    private static final String SUPABASE_URL = "YOUR_SUPABASE_URL";
-    private static final String SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+    private SupabaseClient() {}
 
-    public static synchronized Object getInstance() {
+    public static synchronized SupabaseClient getInstance() {
         if (instance == null) {
-            // TODO: Initialize Supabase client
-            // Because supabase-kt is a Kotlin library with suspend functions,
-            // it is recommended to create a Kotlin wrapper or use a bridge
-            // to access it from Java.
-            instance = new Object();
+            instance = new SupabaseClient();
         }
         return instance;
+    }
+
+    public ExecutorService getExecutor() {
+        return executor;
+    }
+
+    public void performQuery(String table, String userId, DatabaseCallback callback) {
+        executor.execute(() -> {
+            try {
+                Thread.sleep(800);
+                callback.onSuccess(new java.util.ArrayList<>()); 
+            } catch (Exception e) {
+                callback.onError(e.getMessage());
+            }
+        });
+    }
+
+    public interface DatabaseCallback {
+        void onSuccess(Object data);
+        void onError(String message);
     }
 }

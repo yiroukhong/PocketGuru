@@ -1,1 +1,109 @@
-<?xml version="1.0" encoding="utf-8"?><androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent" android:layout_height="match_parent"><TextView android:id="@+id/text_title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Mix and Match" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" /></androidx.constraintlayout.widget.ConstraintLayout>
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <!-- Close Button -->
+        <ImageButton
+            android:id="@+id/btn_close"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Close"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/dark_text" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mix-and-Match"
+            android:textColor="@color/dark_purple"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/btn_close"
+            app:layout_constraintEnd_toStartOf="@id/text_counter"
+            app:layout_constraintStart_toEndOf="@id/btn_close"
+            app:layout_constraintTop_toTopOf="@id/btn_close" />
+
+        <!-- Counter -->
+        <TextView
+            android:id="@+id/text_counter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0/6"
+            android:textColor="@color/salmon_pink"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/btn_close"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/btn_close" />
+
+        <!-- Two Column Layout -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_close">
+
+            <!-- Left Column: Definitions -->
+            <LinearLayout
+                android:id="@+id/column_definitions"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.2"
+                android:gravity="center"
+                android:orientation="vertical">
+                <!-- Definitions will be added programmatically or placeholder here -->
+                <include layout="@layout/item_match_definition" />
+                <include layout="@layout/item_match_definition" />
+                <include layout="@layout/item_match_definition" />
+                <include layout="@layout/item_match_definition" />
+                <include layout="@layout/item_match_definition" />
+                <include layout="@layout/item_match_definition" />
+            </LinearLayout>
+
+            <!-- Middle space for LineOverlayView -->
+            <View
+                android:layout_width="40dp"
+                android:layout_height="match_parent" />
+
+            <!-- Right Column: Images -->
+            <LinearLayout
+                android:id="@+id/column_images"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+                <include layout="@layout/item_match_image" />
+                <include layout="@layout/item_match_image" />
+                <include layout="@layout/item_match_image" />
+                <include layout="@layout/item_match_image" />
+                <include layout="@layout/item_match_image" />
+                <include layout="@layout/item_match_image" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Overlay for connecting lines -->
+    <com.example.pocketguru.views.LineOverlayView
+        android:id="@+id/line_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</FrameLayout>

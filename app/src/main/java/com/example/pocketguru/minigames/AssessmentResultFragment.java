@@ -1,0 +1,115 @@
+package com.example.pocketguru.minigames;
+
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+
+import com.airbnb.lottie.LottieAnimationView;
+import com.example.pocketguru.R;
+import com.example.pocketguru.utils.LevelProgressManager;
+import com.example.pocketguru.utils.SoundManager;
+import com.example.pocketguru.utils.ToastHelper;
+
+import java.io.Serializable;
+
+public class AssessmentResultFragment extends Fragment {
+
+    public static final String ARG_SCORE = "score";
+    public static final String ARG_QUESTIONS = "questions";
+    public static final String ARG_USER_ANSWERS = "userAnswers";
+    public static final String ARG_IS_CORRECT = "isCorrect";
+
+    private int score;
+    private java.util.List<com.example.pocketguru.models.Question> questions;
+    private int[][] userAnswers;
+    private boolean[] isCorrect;
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_assessment_result, container, false);
+
+        if (getArguments() != null) {
+            score = getArguments().getInt(ARG_SCORE);
+            questions = (java.util.List<com.example.pocketguru.models.Question>) getArguments().getSerializable(ARG_QUESTIONS);
+            userAnswers = (int[][]) getArguments().getSerializable(ARG_USER_ANSWERS);
+            isCorrect = getArguments().getBooleanArray(ARG_IS_CORRECT);
+        }
+
+        setupUI(view);
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (score >= 7) {
+            SoundManager.getInstance(requireContext()).playLevelComplete();
+        }
+    }
+
+    private void setupUI(View view) {
+        LottieAnimationView lottieResult = view.findViewById(R.id.image_result);
+        ImageView imageFail = view.findViewById(R.id.image_result_fail);
+        TextView textStatus = view.findViewById(R.id.text_status);
+        TextView textScore = view.findViewById(R.id.text_score);
+        Button btnContinue = view.findViewById(R.id.btn_continue);
+        Button btnReview = view.findViewById(R.id.btn_review);
+
+        boolean passed = score >= 7;
+
+        if (passed) {
+            lottieResult.setVisibility(View.VISIBLE);
+            imageFail.setVisibility(View.GONE);
+            lottieResult.setAnimation("confetti.json");
+            lottieResult.playAnimation();
+            textStatus.setText("You rock!");
+            btnContinue.setText("Continue");
+            btnReview.setText("Review assessment");
+        } else {
+            lottieResult.setVisibility(View.GONE);
+            imageFail.setVisibility(View.VISIBLE);
+            imageFail.setImageResource(R.drawable.level_complete_icon);
+            textStatus.setText("So close!");
+            btnContinue.setText("Try again");
+            btnReview.setText("Review answers");
+        }
+
+        textScore.setText("You got " + score + "/8 correct");
+
+        btnContinue.setOnClickListener(v -> {
+            if (passed) {
+                handleAssessmentPass();
+            } else {
+                Navigation.findNavController(v).popBackStack(R.id.AssessmentFragment, false);
+            }
+        });
+
+        btnReview.setOnClickListener(v -> {
+            Bundle args = new Bundle();
+            args.putSerializable(ReviewAnswersFragment.ARG_QUESTIONS, (java.io.Serializable) questions);
+            args.putSerializable(ReviewAnswersFragment.ARG_USER_ANSWERS, userAnswers);
+            args.putBooleanArray(ReviewAnswersFragment.ARG_IS_CORRECT, isCorrect);
+            Navigation.findNavController(v).navigate(R.id.action_assessmentResult_to_reviewAnswers, args);
+        });
+    }
+
+    private void handleAssessmentPass() {
+        LevelProgressManager.completeLevel(requireContext(), 7, () -> {
+            if (isAdded()) {
+                Navigation.findNavController(requireView()).popBackStack(R.id.LevelMapFragment, false);
+            }
+        }, () ->             ToastHelper.show(getContext(),"Failed to save progress", ToastHelper.ToastType.ERROR));
+    }
+}

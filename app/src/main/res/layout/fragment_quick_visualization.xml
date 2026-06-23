@@ -1,1 +1,294 @@
-<?xml version="1.0" encoding="utf-8"?><androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent" android:layout_height="match_parent"><TextView android:id="@+id/text_title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Quick Visualization" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" /></androidx.constraintlayout.widget.ConstraintLayout>
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true">
+
+    <ViewFlipper
+        android:id="@+id/view_flipper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Stage 1: Leaf Scan Gate -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/stage1_scan_gate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="24dp">
+
+            <TextView
+                android:id="@+id/text_title_stage1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quick Visualization"
+                android:textColor="@color/dark_purple"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/btn_close_stage1"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Close"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/dark_text" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/scan_placeholder"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginVertical="64dp"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="#F5F5F5"
+                app:layout_constraintBottom_toTopOf="@id/btn_scan"
+                app:layout_constraintTop_toBottomOf="@id/text_title_stage1">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="32dp">
+
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/ic_camera"
+                         />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:gravity="center"
+                        android:text="Point your camera at a real leaf to unlock the Hub!"
+                        android:textColor="@color/dark_text"
+                        android:textSize="18sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <ProgressBar
+                android:id="@+id/progress_scanning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/scan_placeholder"
+                app:layout_constraintEnd_toEndOf="@id/scan_placeholder"
+                app:layout_constraintStart_toStartOf="@id/scan_placeholder"
+                app:layout_constraintTop_toTopOf="@id/scan_placeholder" />
+
+            <Button
+                android:id="@+id/btn_scan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
+                android:backgroundTint="@color/yellow_primary"
+                android:text="Scan a Leaf"
+                android:textAllCaps="false"
+                android:textColor="@android:color/black"
+                app:cornerRadius="24dp"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Stage 2: Hub Content -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/stage2_hub_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/text_title_stage2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quick Visualization"
+                android:textColor="@color/dark_purple"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/btn_close_stage2"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Close"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/dark_text" />
+
+            <!-- Interactive Container with Annotation Line -->
+            <RelativeLayout
+                android:id="@+id/container_hub_content"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintBottom_toTopOf="@id/text_hint"
+                app:layout_constraintTop_toBottomOf="@id/text_title_stage2">
+
+                <!-- Leaf + stomata overlapping frame -->
+                <FrameLayout
+                    android:id="@+id/frame_leaf_hub"
+                    android:layout_width="match_parent"
+                    android:layout_height="280dp"
+                    android:layout_alignParentTop="true">
+
+                    <!-- Real leaf photo fills the frame -->
+                    <ImageView
+                        android:id="@+id/image_captured_leaf"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        tools:src="@drawable/ic_leaf" />
+
+                    <!-- Stomata diagram overlaid on top right portion of the leaf -->
+                    <ImageView
+                        android:id="@+id/image_stomata_diagram"
+                        android:layout_width="200dp"
+                        android:layout_height="200dp"
+                        android:layout_gravity="end|center_vertical"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/stomata"
+                        android:background="@android:color/transparent" />
+
+                    <!-- GIF overlay shown after stomata is tapped, same position as stomata diagram -->
+                    <ImageView
+                        android:id="@+id/gif_gaseous_exchange"
+                        android:layout_width="200dp"
+                        android:layout_height="200dp"
+                        android:layout_gravity="end|center_vertical"
+                        android:layout_marginEnd="8dp"
+                        android:visibility="gone" />
+
+                </FrameLayout>
+
+                <!-- Chloroplast section -->
+                <LinearLayout
+                    android:id="@+id/layout_chloroplast_row"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_below="@id/frame_leaf_hub"
+                    android:layout_marginTop="16dp"
+                    android:paddingHorizontal="16dp">
+
+                    <!-- Left: chloroplast image + label stacked vertically -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal">
+
+                        <ImageView
+                            android:id="@+id/img_chloroplast"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:src="@drawable/chloroplast"
+                            android:scaleType="fitCenter"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Chloroplast"
+                            android:textStyle="bold"
+                            android:textSize="14sp"
+                            android:textColor="#1A1A1A"
+                            android:layout_marginTop="4dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="The location inside a plant cell where photosynthesis happens"
+                            android:textSize="11sp"
+                            android:textColor="#666666"
+                            android:gravity="center"
+                            android:layout_marginTop="2dp"/>
+                    </LinearLayout>
+
+                    <!-- Right: chlorophyll explanation — hidden until chloroplast tapped -->
+                    <LinearLayout
+                        android:id="@+id/layout_chlorophyll_label"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="start"
+                        android:paddingStart="12dp"
+                        android:visibility="invisible">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Chlorophyll"
+                            android:textStyle="bold"
+                            android:textSize="14sp"
+                            android:textColor="#1A1A1A"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="reflects green light to give the green colour of plants"
+                            android:textSize="11sp"
+                            android:textColor="#444444"
+                            android:layout_marginTop="2dp"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!-- Annotation line overlay spanning the full container -->
+                <com.example.pocketguru.views.AnnotationLineView
+                    android:id="@+id/annotation_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true"
+                    android:clickable="false"
+                    android:focusable="false" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/text_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="Tap on chloroplast"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@id/btn_action"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/btn_action"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
+                android:backgroundTint="@color/yellow_primary"
+                android:text="Watch photosynthesis in action"
+                android:textAllCaps="false"
+                android:textColor="@android:color/black"
+                android:visibility="gone"
+                app:cornerRadius="24dp"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ViewFlipper>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

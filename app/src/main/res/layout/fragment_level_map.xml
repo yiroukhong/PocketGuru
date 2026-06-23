@@ -1,1 +1,297 @@
-<?xml version="1.0" encoding="utf-8"?><androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent" android:layout_height="match_parent"><TextView android:id="@+id/text_title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Level Map" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" /></androidx.constraintlayout.widget.ConstraintLayout>
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <!-- Top Header -->
+    <FrameLayout
+        android:id="@+id/header_top"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="#FFD93D"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/image_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="15dp"
+            android:src="@drawable/logo_transparent_bg"
+            tools:ignore="ContentDescription" />
+    </FrameLayout>
+
+    <!-- Secondary Header -->
+    <FrameLayout
+        android:id="@+id/header_secondary"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/dusty_pink"
+        app:layout_constraintTop_toBottomOf="@id/header_top">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="24dp"
+            android:text="Chapter 1: Photosynthesis"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </FrameLayout>
+
+    <!-- Level Map Content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header_secondary">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="32dp">
+
+            <!-- Level 1 (Introduction) -->
+            <FrameLayout
+                android:id="@+id/nodeFrame1"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/nodeBg1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/circle_node_bg"
+                    app:tint="#FFD93D" />
+
+                <ImageView
+                    android:id="@+id/nodeIcon1"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_node_plant" />
+            </FrameLayout>
+
+            <!-- Level 2 (Get the water) -->
+            <FrameLayout
+                android:id="@+id/nodeFrame2"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="80dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/nodeFrame1">
+
+                <ImageView
+                    android:id="@+id/nodeBg2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/circle_node_bg"
+                    app:tint="#CCCCCC" />
+
+                <ImageView
+                    android:id="@+id/nodeIcon2"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_node_water" />
+            </FrameLayout>
+
+            <!-- Level 3 (Get the CO2) -->
+            <FrameLayout
+                android:id="@+id/nodeFrame3"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginStart="80dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/nodeFrame2">
+
+                <ImageView
+                    android:id="@+id/nodeBg3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/circle_node_bg"
+                    app:tint="#CCCCCC" />
+
+                <ImageView
+                    android:id="@+id/nodeIcon3"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_node_cloud" />
+            </FrameLayout>
+
+            <!-- Mix-and-Match -->
+            <LinearLayout
+                android:id="@+id/container_mix_match"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="60dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@id/nodeFrame3"
+                app:layout_constraintEnd_toStartOf="@id/nodeFrame3"
+                app:layout_constraintTop_toTopOf="@id/nodeFrame3">
+
+                <ImageButton
+                    android:id="@+id/btn_mix_match"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/mix_and_match_icon"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mix-and-Match"
+                    android:textColor="@color/yellow_primary"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Level 4 (Get the sunlight) -->
+            <FrameLayout
+                android:id="@+id/nodeFrame4"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginTop="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/nodeFrame3">
+
+                <ImageView
+                    android:id="@+id/nodeBg4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/circle_node_bg"
+                    app:tint="#CCCCCC" />
+
+                <ImageView
+                    android:id="@+id/nodeIcon4"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_node_sun" />
+            </FrameLayout>
+
+            <!-- Level 5 (Let the magic begin) -->
+            <FrameLayout
+                android:id="@+id/nodeFrame5"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="80dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/nodeFrame4">
+
+                <ImageView
+                    android:id="@+id/nodeBg5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/circle_node_bg"
+                    app:tint="#CCCCCC" />
+
+                <ImageView
+                    android:id="@+id/nodeIcon5"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_node_magic" />
+            </FrameLayout>
+
+            <!-- Flashcards -->
+            <LinearLayout
+                android:id="@+id/container_flashcards"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@id/nodeFrame5"
+                app:layout_constraintStart_toEndOf="@id/nodeFrame5"
+                app:layout_constraintTop_toTopOf="@id/nodeFrame5">
+
+                <ImageButton
+                    android:id="@+id/btn_flashcards"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/flashcard_icon"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Flashcards"
+                    android:textColor="@color/yellow_primary"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Level 6 (What's next?) -->
+            <FrameLayout
+                android:id="@+id/nodeFrame6"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginStart="80dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/nodeFrame5">
+
+                <ImageView
+                    android:id="@+id/nodeBg6"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/circle_node_bg"
+                    app:tint="#CCCCCC" />
+
+                <ImageView
+                    android:id="@+id/nodeIcon6"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_node_tree" />
+            </FrameLayout>
+
+            <!-- Assessment -->
+            <FrameLayout
+                android:id="@+id/nodeFrameAssessment"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginTop="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/nodeFrame6">
+
+                <ImageView
+                    android:id="@+id/nodeBgAssessment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/circle_node_bg"
+                    app:tint="#CCCCCC" />
+
+                <ImageView
+                    android:id="@+id/nodeIconAssessment"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_node_trophy" />
+            </FrameLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

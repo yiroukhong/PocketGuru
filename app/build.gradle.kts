@@ -1,5 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -23,9 +25,12 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
         isCoreLibraryDesugaringEnabled = true
+    }
+    kotlinOptions {
+        jvmTarget = "21"
     }
     buildFeatures {
         viewBinding = true
@@ -47,12 +52,19 @@ dependencies {
     // OpenCV
     implementation("org.opencv:opencv:4.9.0")
 
+    // Lottie
+    implementation("com.airbnb.android:lottie:6.4.0")
+
     // Glide
     implementation(libs.glide)
     annotationProcessor(libs.glide.compiler)
 
     // Java 8+ API desugaring
     coreLibraryDesugaring(libs.desugar)
+
+    // Kotlin
+    implementation(libs.kotlin.coroutines)
+    implementation(libs.kotlin.serialization)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

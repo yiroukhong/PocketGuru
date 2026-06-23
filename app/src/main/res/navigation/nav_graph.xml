@@ -20,7 +20,11 @@
             android:id="@+id/action_SplashFragment_to_LevelMapFragment"
             app:destination="@id/LevelMapFragment"
             app:popUpTo="@id/SplashFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
     </fragment>
 
     <fragment
@@ -52,10 +56,17 @@
         android:label="Login"
         tools:layout="@layout/fragment_login">
         <action
+            android:id="@+id/action_LoginFragment_to_RegisterFragment"
+            app:destination="@id/RegisterFragment" />
+        <action
             android:id="@+id/action_LoginFragment_to_LevelMapFragment"
             app:destination="@id/LevelMapFragment"
             app:popUpTo="@id/nav_graph"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
     </fragment>
 
     <!-- Main Screens -->
@@ -64,15 +75,51 @@
         android:name="com.example.pocketguru.levels.LevelMapFragment"
         android:label="Level Map"
         tools:layout="@layout/fragment_level_map">
-        <action android:id="@+id/action_LevelMapFragment_to_LevelOneFragment" app:destination="@id/LevelOneFragment" />
-        <action android:id="@+id/action_LevelMapFragment_to_LevelTwoFragment" app:destination="@id/LevelTwoFragment" />
-        <action android:id="@+id/action_LevelMapFragment_to_LevelThreeFragment" app:destination="@id/LevelThreeFragment" />
-        <action android:id="@+id/action_LevelMapFragment_to_LevelFourFragment" app:destination="@id/LevelFourFragment" />
-        <action android:id="@+id/action_LevelMapFragment_to_LevelFiveFragment" app:destination="@id/LevelFiveFragment" />
-        <action android:id="@+id/action_LevelMapFragment_to_LevelSixFragment" app:destination="@id/LevelSixFragment" />
-        <action android:id="@+id/action_LevelMapFragment_to_FlashcardsFragment" app:destination="@id/FlashcardsFragment" />
-        <action android:id="@+id/action_LevelMapFragment_to_MixAndMatchFragment" app:destination="@id/MixAndMatchFragment" />
-        <action android:id="@+id/action_LevelMapFragment_to_AssessmentFragment" app:destination="@id/AssessmentFragment" />
+        <action android:id="@+id/action_LevelMapFragment_to_LevelOneFragment" app:destination="@id/LevelOneHostFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action android:id="@+id/action_LevelMapFragment_to_LevelTwoFragment" app:destination="@id/LevelTwoFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action android:id="@+id/action_LevelMapFragment_to_LevelThreeFragment" app:destination="@id/LevelThreeFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action android:id="@+id/action_LevelMapFragment_to_LevelFourFragment" app:destination="@id/LevelFourFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action android:id="@+id/action_LevelMapFragment_to_LevelFiveFragment" app:destination="@id/LevelFiveFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action android:id="@+id/action_LevelMapFragment_to_LevelSixFragment" app:destination="@id/LevelSixFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action android:id="@+id/action_LevelMapFragment_to_FlashcardsFragment" app:destination="@id/FlashcardsFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action android:id="@+id/action_LevelMapFragment_to_MixAndMatchFragment" app:destination="@id/MixAndMatchFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action android:id="@+id/action_LevelMapFragment_to_AssessmentFragment" app:destination="@id/AssessmentFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
     </fragment>
 
     <fragment
@@ -87,17 +134,64 @@
         android:label="Keywords"
         tools:layout="@layout/fragment_keywords_list" />
 
+    <fragment
+        android:id="@+id/VideoPlayerFragment"
+        android:name="com.example.pocketguru.hub.VideoPlayerFragment"
+        android:label="Video Player"
+        tools:layout="@layout/fragment_video_player" />
+
     <!-- Levels -->
-    <fragment android:id="@+id/LevelOneFragment" android:name="com.example.pocketguru.levels.LevelOneFragment" android:label="Level One" tools:layout="@layout/fragment_level_one" />
+    <fragment android:id="@+id/LevelOneHostFragment" android:name="com.example.pocketguru.levels.LevelOneFragment" android:label="Level One" tools:layout="@layout/fragment_level_one_host" />
     <fragment android:id="@+id/LevelTwoFragment" android:name="com.example.pocketguru.levels.LevelTwoFragment" android:label="Level Two" tools:layout="@layout/fragment_level_two" />
     <fragment android:id="@+id/LevelThreeFragment" android:name="com.example.pocketguru.levels.LevelThreeFragment" android:label="Level Three" tools:layout="@layout/fragment_level_three" />
     <fragment android:id="@+id/LevelFourFragment" android:name="com.example.pocketguru.levels.LevelFourFragment" android:label="Level Four" tools:layout="@layout/fragment_level_four" />
     <fragment android:id="@+id/LevelFiveFragment" android:name="com.example.pocketguru.levels.LevelFiveFragment" android:label="Level Five" tools:layout="@layout/fragment_level_five" />
-    <fragment android:id="@+id/LevelSixFragment" android:name="com.example.pocketguru.levels.LevelSixFragment" android:label="Level Six" tools:layout="@layout/fragment_level_six" />
+    <fragment android:id="@+id/LevelSixFragment" android:name="com.example.pocketguru.levels.LevelSixFragment" android:label="Level Six" tools:layout="@layout/fragment_level_six_host" />
 
     <!-- Mini-games & Assessment -->
     <fragment android:id="@+id/FlashcardsFragment" android:name="com.example.pocketguru.minigames.FlashcardsFragment" android:label="Flashcards" tools:layout="@layout/fragment_flashcards" />
     <fragment android:id="@+id/MixAndMatchFragment" android:name="com.example.pocketguru.minigames.MixAndMatchFragment" android:label="Mix and Match" tools:layout="@layout/fragment_mix_and_match" />
-    <fragment android:id="@+id/AssessmentFragment" android:name="com.example.pocketguru.assessment.AssessmentFragment" android:label="Assessment" tools:layout="@layout/fragment_assessment" />
+
+    <fragment android:id="@+id/AssessmentFragment" android:name="com.example.pocketguru.minigames.AssessmentFragment" android:label="Assessment" tools:layout="@layout/fragment_assessment">
+        <argument android:name="isReview" app:argType="boolean" android:defaultValue="false" />
+        <argument android:name="userAnswers" app:argType="java.io.Serializable" app:nullable="true" android:defaultValue="@null" />
+        <argument android:name="isCorrect" app:argType="boolean[]" app:nullable="true" android:defaultValue="@null" />
+        <action android:id="@+id/action_AssessmentFragment_to_AssessmentResultFragment" app:destination="@id/AssessmentResultFragment" />
+    </fragment>
+
+    <fragment android:id="@+id/AssessmentResultFragment" android:name="com.example.pocketguru.minigames.AssessmentResultFragment" android:label="Assessment Result" tools:layout="@layout/fragment_assessment_result">
+        <argument android:name="score" app:argType="integer" />
+        <argument android:name="questions" app:argType="java.io.Serializable" />
+        <argument android:name="userAnswers" app:argType="java.io.Serializable" app:nullable="true" />
+        <argument android:name="isCorrect" app:argType="boolean[]" app:nullable="true" />
+        <action
+            android:id="@+id/action_assessmentResult_to_reviewAnswers"
+            app:destination="@id/ReviewAnswersFragment"
+            app:popUpTo="@id/LevelMapFragment"
+            app:popUpToInclusive="false"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/ReviewAnswersFragment"
+        android:name="com.example.pocketguru.minigames.ReviewAnswersFragment"
+        android:label="Review Answers"
+        tools:layout="@layout/fragment_review_answers" />
+
+    <fragment
+        android:id="@+id/LevelCompleteFragment"
+        android:name="com.example.pocketguru.levels.LevelCompleteFragment"
+        android:label="Level Complete"
+        tools:layout="@layout/fragment_level_complete">
+        <argument
+            android:name="chapterName"
+            app:argType="string" />
+        <argument
+            android:name="levelName"
+            app:argType="string" />
+    </fragment>
 
 </navigation>
