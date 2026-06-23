@@ -169,11 +169,11 @@ app/src/main/
 
 | Splash | Level Map | Level 2 | Quick Vis Hub |
 |---|---|---|---|
-| ![](app/src/main/assets/screenshots/splash.jpg) | ![](app/src/main/assets/screenshots/level_map.jpg) | ![](app/src/main/assets/screenshots/level2.jpg) | ![](app/src/main/assets/screenshots/hub.jpg) |
+| ![](screenshots/splash.jpg) | ![](screenshots/level_map.jpg) | ![](screenshots/level2.jpg) | ![](screenshots/hub.jpg) |
 
 | Flashcards | Mix and Match | Assessment | Keywords |
 |---|---|---|---|
-| ![](app/src/main/assets/screenshots/flashcards.jpg) | ![](app/src/main/assets/screenshots/mix_match.jpg) | ![](app/src/main/assets/screenshots/assessment.jpg) | ![](app/src/main/assets/screenshots/keywords.jpg) |
+| ![](screenshots/flashcards.jpg) | ![](screenshots/mix_match.jpg) | ![](screenshots/assessment.jpg) | ![](screenshots/keywords.jpg) |
 
 ---
 
