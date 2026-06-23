@@ -120,23 +120,26 @@ public class KeywordTooltipHelper {
             return;
         }
 
-        SupabaseManager.INSTANCE.saveKeyword(userId, keyword, definition, new SupabaseManager.SupabaseCallback<Boolean>() {
+        SupabaseManager.INSTANCE.saveKeyword(userId, keyword, definition, new SupabaseManager.SupabaseCallback<KeywordItem>() {
             @Override
-            public void onSuccess(Boolean inserted) {
-                if (inserted) {
+            public void onSuccess(KeywordItem newItem) {
+                if (newItem != null) {
                     btnBookmark.setImageResource(R.drawable.ic_bookmark_filled);
                     ToastHelper.show(context,"Keyword saved!", ToastHelper.ToastType.SUCCESS);
 
-                    // Add to cache immediately
+                    // Update cache immediately so other screens are in sync
                     List<KeywordItem> cached = DataPreloader.getCachedKeywords();
                     if (cached != null) {
-                        cached.add(0, new KeywordItem("", keyword, definition, ""));
+                        cached.add(0, newItem);
+                    } else {
+                        // If no cache exists, create one with the new item
+                        List<KeywordItem> newList = new java.util.ArrayList<>();
+                        newList.add(newItem);
+                        DataPreloader.setCachedKeywords(newList);
                     }
-                    // Invalidate so list refreshes next open
-                    DataPreloader.setCachedKeywords(null);
                     
                     // Notify KeywordsListFragment if visible
-                    notifyKeywordsFragment(keyword, definition);
+                    notifyKeywordsFragment(newItem);
                 } else {
                     ToastHelper.show(context,"Already saved!", ToastHelper.ToastType.INFO);
                 }
@@ -150,7 +153,7 @@ public class KeywordTooltipHelper {
         });
     }
 
-    private void notifyKeywordsFragment(String word, String definition) {
+    private void notifyKeywordsFragment(KeywordItem item) {
         if (context instanceof AppCompatActivity) {
             FragmentManager fm = ((AppCompatActivity) context).getSupportFragmentManager();
             Fragment navHostFragment = fm.findFragmentById(R.id.nav_host_fragment);
@@ -158,7 +161,7 @@ public class KeywordTooltipHelper {
                 List<Fragment> fragments = navHostFragment.getChildFragmentManager().getFragments();
                 for (Fragment f : fragments) {
                     if (f instanceof KeywordsListFragment && f.isVisible()) {
-                        ((KeywordsListFragment) f).onKeywordAdded(word, definition);
+                        ((KeywordsListFragment) f).onKeywordAdded(item);
                     }
                 }
             }

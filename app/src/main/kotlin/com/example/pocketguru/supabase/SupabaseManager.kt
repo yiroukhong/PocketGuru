@@ -158,7 +158,7 @@ object SupabaseManager {
         }
     }
 
-    fun saveKeyword(userId: String, word: String, definition: String, callback: SupabaseCallback<Boolean>) {
+    fun saveKeyword(userId: String, word: String, definition: String, callback: SupabaseCallback<KeywordItem?>) {
         scope.launch {
             try {
                 // Get userId directly from active session, ignore passed-in value
@@ -177,12 +177,18 @@ object SupabaseManager {
                     }
 
                 if (existing.data != "[]") {
-                    withContext(Dispatchers.Main) { callback.onSuccess(false) }
+                    withContext(Dispatchers.Main) { callback.onSuccess(null) } // null = already exists
                     return@launch
                 }
 
-                client.postgrest.from("keywords").insert(Keyword(currentUserId, word, definition))
-                withContext(Dispatchers.Main) { callback.onSuccess(true) }
+                val response = client.postgrest.from("keywords").insert(Keyword(currentUserId, word, definition)) {
+                    select()
+                }
+                
+                val newKeyword = response.decodeSingle<Keyword>()
+                val item = KeywordItem(newKeyword.id ?: "", newKeyword.word, newKeyword.definition, newKeyword.created_at ?: "")
+                
+                withContext(Dispatchers.Main) { callback.onSuccess(item) }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) { callback.onError(e.message ?: "Failed to save keyword") }
             }
