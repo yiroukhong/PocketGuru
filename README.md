@@ -1,8 +1,6 @@
 <p align="center">
-  <img src="res/logo_transparent_bg.png" alt="PocketGuru Logo" width="300"/>
+  <img src="app/src/main/res/drawable/logo_transparent_bg.png" alt="PocketGuru Logo" width="300"/>
 </p>
-
-<h1 align="center">PocketGuru</h1>
 
 <p align="center">
   An interactive Android learning app that teaches primary school students photosynthesis through multimedia, gamification, and real-world exploration.
@@ -171,11 +169,11 @@ app/src/main/
 
 | Splash | Level Map | Level 2 | Quick Vis Hub |
 |---|---|---|---|
-| ![](assets/screenshots/splash.png) | ![](assets/screenshots/level_map.png) | ![](assets/screenshots/level2.png) | ![](assets/screenshots/hub.png) |
+| ![](app/src/main/assets/screenshots/splash.jpg) | ![](app/src/main/assets/screenshots/level_map.jpg) | ![](app/src/main/assets/screenshots/level2.jpg) | ![](app/src/main/assets/screenshots/hub.jpg) |
 
 | Flashcards | Mix and Match | Assessment | Keywords |
 |---|---|---|---|
-| ![](assets/screenshots/flashcards.png) | ![](assets/screenshots/mix_match.png) | ![](assets/screenshots/assessment.png) | ![](assets/screenshots/keywords.png) |
+| ![](app/src/main/assets/screenshots/flashcards.jpg) | ![](app/src/main/assets/screenshots/mix_match.jpg) | ![](app/src/main/assets/screenshots/assessment.jpg) | ![](app/src/main/assets/screenshots/keywords.jpg) |
 
 ---
 
