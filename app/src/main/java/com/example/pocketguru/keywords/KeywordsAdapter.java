@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pocketguru.R;
 import com.example.pocketguru.models.KeywordItem;
+import com.example.pocketguru.utils.ToastHelper;
 
 import java.util.List;
 
@@ -85,8 +86,7 @@ public class KeywordsAdapter extends RecyclerView.Adapter<KeywordsAdapter.Keywor
                 tts.speak(item.getWord(), TextToSpeech.QUEUE_FLUSH, params,
                         "keyword_" + holder.getAdapterPosition());
             } else {
-                Toast.makeText(holder.itemView.getContext(),
-                        "Audio not ready yet", Toast.LENGTH_SHORT).show();
+                ToastHelper.show(holder.itemView.getContext(),"Can't play audio at the moment.", ToastHelper.ToastType.ERROR);
             }
         });
 

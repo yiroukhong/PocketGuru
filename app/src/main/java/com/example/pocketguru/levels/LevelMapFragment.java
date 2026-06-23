@@ -22,6 +22,7 @@ import com.example.pocketguru.supabase.SupabaseManager;
 import com.example.pocketguru.utils.DataPreloader;
 import com.example.pocketguru.utils.SessionManager;
 import com.example.pocketguru.utils.SoundManager;
+import com.example.pocketguru.utils.ToastHelper;
 
 public class LevelMapFragment extends Fragment {
 
@@ -29,6 +30,16 @@ public class LevelMapFragment extends Fragment {
     private ImageView nodeBg1, nodeBg2, nodeBg3, nodeBg4, nodeBg5, nodeBg6, nodeBgAssessment;
     private ImageView nodeIcon1, nodeIcon2, nodeIcon3, nodeIcon4, nodeIcon5, nodeIcon6, nodeIconAssessment;
     private ImageButton btnFlashcards, btnMixMatch;
+
+    private void handleNodeClick(int levelNumber, int actionId) {
+        int currentLevel = DataPreloader.getCachedCurrentLevel();
+        if (levelNumber <= currentLevel) {
+            SoundManager.getInstance(requireContext()).playStart();
+            navigateToLevel(actionId);
+        } else {
+            ToastHelper.show(requireContext(), "This level is locked! Complete previous levels to unlock.", ToastHelper.ToastType.INFO);
+        }
+    }
 
     @Nullable
     @Override
@@ -75,34 +86,13 @@ public class LevelMapFragment extends Fragment {
         btnMixMatch = view.findViewById(R.id.btn_mix_match);
 
         // Navigation logic for levels
-        nodeFrame1.setOnClickListener(v -> {
-            SoundManager.getInstance(requireContext()).playStart();
-            navigateToLevel(R.id.action_LevelMapFragment_to_LevelOneFragment);
-        });
-        nodeFrame2.setOnClickListener(v -> {
-            SoundManager.getInstance(requireContext()).playStart();
-            navigateToLevel(R.id.action_LevelMapFragment_to_LevelTwoFragment);
-        });
-        nodeFrame3.setOnClickListener(v -> {
-            SoundManager.getInstance(requireContext()).playStart();
-            navigateToLevel(R.id.action_LevelMapFragment_to_LevelThreeFragment);
-        });
-        nodeFrame4.setOnClickListener(v -> {
-            SoundManager.getInstance(requireContext()).playStart();
-            navigateToLevel(R.id.action_LevelMapFragment_to_LevelFourFragment);
-        });
-        nodeFrame5.setOnClickListener(v -> {
-            SoundManager.getInstance(requireContext()).playStart();
-            navigateToLevel(R.id.action_LevelMapFragment_to_LevelFiveFragment);
-        });
-        nodeFrame6.setOnClickListener(v -> {
-            SoundManager.getInstance(requireContext()).playStart();
-            navigateToLevel(R.id.action_LevelMapFragment_to_LevelSixFragment);
-        });
-        nodeFrameAssessment.setOnClickListener(v -> {
-            SoundManager.getInstance(requireContext()).playStart();
-            navigateToLevel(R.id.AssessmentFragment);
-        });
+        nodeFrame1.setOnClickListener(v -> handleNodeClick(1, R.id.action_LevelMapFragment_to_LevelOneFragment));
+        nodeFrame2.setOnClickListener(v -> handleNodeClick(2, R.id.action_LevelMapFragment_to_LevelTwoFragment));
+        nodeFrame3.setOnClickListener(v -> handleNodeClick(3, R.id.action_LevelMapFragment_to_LevelThreeFragment));
+        nodeFrame4.setOnClickListener(v -> handleNodeClick(4, R.id.action_LevelMapFragment_to_LevelFourFragment));
+        nodeFrame5.setOnClickListener(v -> handleNodeClick(5, R.id.action_LevelMapFragment_to_LevelFiveFragment));
+        nodeFrame6.setOnClickListener(v -> handleNodeClick(6, R.id.action_LevelMapFragment_to_LevelSixFragment));
+        nodeFrameAssessment.setOnClickListener(v -> handleNodeClick(7, R.id.AssessmentFragment));
 
         // Navigation for mini-games
         btnFlashcards.setOnClickListener(v -> {
@@ -168,16 +158,15 @@ public class LevelMapFragment extends Fragment {
                 nodeBgs[i].setColorFilter(Color.parseColor("#FFD93D"), PorterDuff.Mode.SRC_IN);
                 nodeIcons[i].setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
                 nodeFrames[i].setAlpha(1.0f);
-                nodeFrames[i].setClickable(true);
-                nodeFrames[i].setEnabled(true);
             } else {
                 // Grey background, grey icon
                 nodeBgs[i].setColorFilter(Color.parseColor("#CCCCCC"), PorterDuff.Mode.SRC_IN);
                 nodeIcons[i].setColorFilter(Color.parseColor("#999999"), PorterDuff.Mode.SRC_IN);
                 nodeFrames[i].setAlpha(0.6f);
-                nodeFrames[i].setClickable(false);
-                nodeFrames[i].setEnabled(false);
             }
+            // Always keep clickable to show "Locked" toast
+            nodeFrames[i].setClickable(true);
+            nodeFrames[i].setEnabled(true);
         }
     }
 

@@ -116,7 +116,7 @@ public class KeywordTooltipHelper {
         
         if (userId == null) {
             Log.e("PocketGuru", "Save keyword failed: userId is null");
-            Toast.makeText(context, "Error: User not logged in", Toast.LENGTH_SHORT).show();
+            ToastHelper.show(context,"You are not logged in yet!", ToastHelper.ToastType.ERROR);
             return;
         }
 
@@ -125,7 +125,7 @@ public class KeywordTooltipHelper {
             public void onSuccess(Boolean inserted) {
                 if (inserted) {
                     btnBookmark.setImageResource(R.drawable.ic_bookmark_filled);
-                    Toast.makeText(context, "Saved to Keywords List!", Toast.LENGTH_SHORT).show();
+                    ToastHelper.show(context,"Keyword saved!", ToastHelper.ToastType.SUCCESS);
 
                     // Add to cache immediately
                     List<KeywordItem> cached = DataPreloader.getCachedKeywords();
@@ -138,14 +138,14 @@ public class KeywordTooltipHelper {
                     // Notify KeywordsListFragment if visible
                     notifyKeywordsFragment(keyword, definition);
                 } else {
-                    Toast.makeText(context, "Already in your Keywords List", Toast.LENGTH_SHORT).show();
+                    ToastHelper.show(context,"Already saved!", ToastHelper.ToastType.INFO);
                 }
             }
 
             @Override
             public void onError(String error) {
                 Log.e("PocketGuru", "Save keyword failed: " + error);
-                Toast.makeText(context, "Error: " + error, Toast.LENGTH_SHORT).show();
+                ToastHelper.show(context,"Couldn't save keyword", ToastHelper.ToastType.ERROR);
             }
         });
     }

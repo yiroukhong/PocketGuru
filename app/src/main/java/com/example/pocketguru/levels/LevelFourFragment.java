@@ -24,6 +24,7 @@ import com.example.pocketguru.utils.KeywordTooltipHelper;
 import com.example.pocketguru.utils.LevelProgressManager;
 import com.example.pocketguru.utils.SoundManager;
 import com.example.pocketguru.utils.SpannableHelper;
+import com.example.pocketguru.utils.ToastHelper;
 
 public class LevelFourFragment extends Fragment {
 
@@ -136,6 +137,6 @@ public class LevelFourFragment extends Fragment {
                 args.putString(LevelCompleteFragment.ARG_LEVEL_NAME, "Level 4: Get the sunlight");
                 Navigation.findNavController(requireView()).navigate(R.id.LevelCompleteFragment, args);
             }
-        }, () -> Toast.makeText(getContext(), "Failed to save progress", Toast.LENGTH_SHORT).show());
+        }, () ->ToastHelper.show(getContext(),"Failed to save progress", ToastHelper.ToastType.ERROR));
     }
 }

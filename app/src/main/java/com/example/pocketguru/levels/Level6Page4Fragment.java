@@ -13,6 +13,7 @@ import androidx.navigation.Navigation;
 
 import com.example.pocketguru.R;
 import com.example.pocketguru.utils.LevelProgressManager;
+import com.example.pocketguru.utils.ToastHelper;
 
 public class Level6Page4Fragment extends Fragment {
 
@@ -30,7 +31,7 @@ public class Level6Page4Fragment extends Fragment {
                     Navigation.findNavController(v).navigate(R.id.LevelCompleteFragment, args);
                 }
             }, () -> {
-                Toast.makeText(getContext(), "Failed to save progress", Toast.LENGTH_SHORT).show();
+                ToastHelper.show(getContext(),"Failed to save progress", ToastHelper.ToastType.ERROR);
             });
         });
 

@@ -18,6 +18,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.example.pocketguru.R;
 import com.example.pocketguru.utils.LevelProgressManager;
 import com.example.pocketguru.utils.SoundManager;
+import com.example.pocketguru.utils.ToastHelper;
 
 import java.io.Serializable;
 
@@ -109,6 +110,6 @@ public class AssessmentResultFragment extends Fragment {
             if (isAdded()) {
                 Navigation.findNavController(requireView()).popBackStack(R.id.LevelMapFragment, false);
             }
-        }, () -> Toast.makeText(getContext(), "Failed to save progress", Toast.LENGTH_SHORT).show());
+        }, () ->             ToastHelper.show(getContext(),"Failed to save progress", ToastHelper.ToastType.ERROR));
     }
 }

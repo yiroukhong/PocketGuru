@@ -23,6 +23,7 @@ import com.example.pocketguru.models.KeywordItem;
 import com.example.pocketguru.supabase.SupabaseManager;
 import com.example.pocketguru.utils.DataPreloader;
 import com.example.pocketguru.utils.SessionManager;
+import com.example.pocketguru.utils.ToastHelper;
 
 import kotlin.Unit;
 
@@ -122,7 +123,7 @@ public class KeywordsListFragment extends Fragment implements KeywordsAdapter.On
             @Override
             public void onError(String error) {
                 progressLoading.setVisibility(View.GONE);
-                Toast.makeText(requireContext(), "Error: " + error, Toast.LENGTH_SHORT).show();
+                ToastHelper.show(getContext(),"Couldn't load keywords at the moment.", ToastHelper.ToastType.ERROR);
             }
         });
     }
@@ -152,12 +153,12 @@ public class KeywordsListFragment extends Fragment implements KeywordsAdapter.On
                 DataPreloader.setCachedKeywords(null); // Invalidate cache
                 adapter.removeItem(position);
                 updateUI();
-                Toast.makeText(requireContext(), "Keyword deleted", Toast.LENGTH_SHORT).show();
+                ToastHelper.show(getContext(),"Keyword removed", ToastHelper.ToastType.INFO);
             }
 
             @Override
             public void onError(String error) {
-                Toast.makeText(requireContext(), "Delete failed: " + error, Toast.LENGTH_SHORT).show();
+                ToastHelper.show(getContext(),"Couldn't remove keyword", ToastHelper.ToastType.ERROR);
             }
         });
     }

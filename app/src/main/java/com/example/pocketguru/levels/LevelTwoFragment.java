@@ -20,6 +20,7 @@ import com.example.pocketguru.utils.KeywordTooltipHelper;
 import com.example.pocketguru.utils.LevelProgressManager;
 import com.example.pocketguru.utils.SoundManager;
 import com.example.pocketguru.utils.SpannableHelper;
+import com.example.pocketguru.utils.ToastHelper;
 import com.example.pocketguru.views.DrawingView;
 
 public class LevelTwoFragment extends Fragment {
@@ -57,7 +58,7 @@ public class LevelTwoFragment extends Fragment {
         drawingView.setOnLineCompleteListener(() -> {
             drawingView.lockDrawing();
             btnAction.setEnabled(true);
-            Toast.makeText(getContext(), "Success! Water reached the leaves.", Toast.LENGTH_SHORT).show();
+            ToastHelper.show(getContext(),"Success! Water reached the leaves.", ToastHelper.ToastType.SUCCESS);
         });
 
 
@@ -88,7 +89,7 @@ public class LevelTwoFragment extends Fragment {
                 Navigation.findNavController(requireView()).navigate(R.id.LevelCompleteFragment, args);
             }
         }, () -> {
-            Toast.makeText(getContext(), "Failed to save progress", Toast.LENGTH_SHORT).show();
+            ToastHelper.show(getContext(),"Failed to save progress", ToastHelper.ToastType.ERROR);
         });
     }
 }

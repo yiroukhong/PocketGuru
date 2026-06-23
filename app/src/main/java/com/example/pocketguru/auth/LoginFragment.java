@@ -17,6 +17,7 @@ import androidx.navigation.Navigation;
 import com.example.pocketguru.R;
 import com.example.pocketguru.supabase.SupabaseManager;
 import com.example.pocketguru.utils.SessionManager;
+import com.example.pocketguru.utils.ToastHelper;
 
 public class LoginFragment extends Fragment {
 
@@ -49,7 +50,7 @@ public class LoginFragment extends Fragment {
         String password = editPassword.getText().toString().trim();
 
         if (username.isEmpty() || password.isEmpty()) {
-            Toast.makeText(getContext(), "Username and password cannot be empty", Toast.LENGTH_SHORT).show();
+            ToastHelper.show(getContext(),"Username and password cannot be empty", ToastHelper.ToastType.ERROR);
             return;
         }
 
@@ -70,13 +71,13 @@ public class LoginFragment extends Fragment {
                         .build();
 
                 Navigation.findNavController(btnLogin).navigate(R.id.LevelMapFragment, null, navOptions);
-                Toast.makeText(getContext(), "Login successful", Toast.LENGTH_SHORT).show();
+                ToastHelper.show(getContext(),"Login successful", ToastHelper.ToastType.SUCCESS);
             }
 
             @Override
             public void onError(String error) {
                 setLoading(false);
-                Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+                ToastHelper.show(getContext(), error, ToastHelper.ToastType.ERROR);
             }
         });
     }

@@ -25,6 +25,7 @@ import com.example.pocketguru.utils.KeywordTooltipHelper;
 import com.example.pocketguru.utils.LevelProgressManager;
 import com.example.pocketguru.utils.SoundManager;
 import com.example.pocketguru.utils.SpannableHelper;
+import com.example.pocketguru.utils.ToastHelper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -162,7 +163,7 @@ public class LevelFiveFragment extends Fragment {
             // Reset after animation
             slotView.postDelayed(() -> slotView.setBackgroundResource(R.drawable.bg_equation_slot), 500);
 
-            Toast.makeText(getContext(), "Not quite! Try another item.", Toast.LENGTH_SHORT).show();
+            ToastHelper.show(getContext(),"Not quite! Try another item.", ToastHelper.ToastType.INFO);
             return;
         }
 
@@ -199,7 +200,7 @@ public class LevelFiveFragment extends Fragment {
 
         if (reactantsCorrect && productsCorrect) {
             btnComplete.setEnabled(true);
-            Toast.makeText(getContext(), "Magic! The equation is balanced.", Toast.LENGTH_SHORT).show();
+            ToastHelper.show(getContext(),"Great job! The equation is balanced.", ToastHelper.ToastType.SUCCESS);
             // Brief success indicator could be added here
         } else {
             btnComplete.setEnabled(false);
@@ -215,6 +216,7 @@ public class LevelFiveFragment extends Fragment {
                 args.putString(LevelCompleteFragment.ARG_LEVEL_NAME, "Level 5: Let the magic begin!");
                 Navigation.findNavController(requireView()).navigate(R.id.LevelCompleteFragment, args);
             }
-        }, () -> Toast.makeText(getContext(), "Failed to save progress", Toast.LENGTH_SHORT).show());
+        }, () ->
+                ToastHelper.show(getContext(),"Failed to save progress", ToastHelper.ToastType.ERROR));
     }
 }

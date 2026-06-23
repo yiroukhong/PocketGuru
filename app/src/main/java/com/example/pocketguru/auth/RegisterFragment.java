@@ -17,6 +17,7 @@ import androidx.navigation.Navigation;
 import com.example.pocketguru.R;
 import com.example.pocketguru.supabase.SupabaseManager;
 import com.example.pocketguru.utils.SessionManager;
+import com.example.pocketguru.utils.ToastHelper;
 
 import kotlin.Unit;
 
@@ -53,7 +54,7 @@ public class RegisterFragment extends Fragment {
         String password = editPassword.getText().toString().trim();
 
         if (username.isEmpty() || password.isEmpty()) {
-            Toast.makeText(getContext(), "Username and password cannot be empty", Toast.LENGTH_SHORT).show();
+            ToastHelper.show(getContext(),"Username and password cannot be empty", ToastHelper.ToastType.ERROR);
             return;
         }
 
@@ -76,7 +77,7 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onError(String error) {
                 setLoading(false);
-                Toast.makeText(getContext(), "Error: " + error, Toast.LENGTH_SHORT).show();
+                ToastHelper.show(getContext(),"Failed to register", ToastHelper.ToastType.ERROR);
             }
         });
     }
@@ -92,14 +93,14 @@ public class RegisterFragment extends Fragment {
                 String userId = parts.length > 1 ? parts[1] : null;
                 sessionManager.saveSession(token, userId);
 
-                Toast.makeText(getContext(), "Registration successful!", Toast.LENGTH_SHORT).show();
+                ToastHelper.show(getContext(),"Registration successfull!", ToastHelper.ToastType.SUCCESS);
                 Navigation.findNavController(btnRegister).navigate(R.id.LevelMapFragment);
             }
 
             @Override
             public void onError(String error) {
                 setLoading(false);
-                Toast.makeText(getContext(), "Sign up failed: " + error, Toast.LENGTH_SHORT).show();
+                ToastHelper.show(getContext(),error, ToastHelper.ToastType.ERROR);
             }
         });
     }

@@ -56,113 +56,80 @@
             android:paddingVertical="32dp">
 
             <!-- Level 1 (Introduction) -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_node1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="32dp"
-                app:cardElevation="8dp"
-                app:cardBackgroundColor="@android:color/transparent"
-                android:layout_margin="8dp"
+            <FrameLayout
+                android:id="@+id/nodeFrame1"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <FrameLayout
-                    android:id="@+id/nodeFrame1"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:background="@drawable/node_shadow_wrapper">
+                <ImageView
+                    android:id="@+id/nodeBg1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/circle_node_bg"
+                    app:tint="#FFD93D" />
 
-                    <ImageView
-                        android:id="@+id/nodeBg1"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/circle_node_bg"
-                        app:tint="#FFD93D" />
-
-                    <ImageView
-                        android:id="@+id/nodeIcon1"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_node_plant" />
-                </FrameLayout>
-            </androidx.cardview.widget.CardView>
+                <ImageView
+                    android:id="@+id/nodeIcon1"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_node_plant" />
+            </FrameLayout>
 
             <!-- Level 2 (Get the water) -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_node2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="32dp"
-                app:cardElevation="8dp"
-                app:cardBackgroundColor="@android:color/transparent"
-                android:layout_margin="8dp"
+            <FrameLayout
+                android:id="@+id/nodeFrame2"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
                 android:layout_marginTop="40dp"
                 android:layout_marginEnd="80dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/card_node1">
+                app:layout_constraintTop_toBottomOf="@id/nodeFrame1">
 
-                <FrameLayout
-                    android:id="@+id/nodeFrame2"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:background="@drawable/node_shadow_wrapper">
+                <ImageView
+                    android:id="@+id/nodeBg2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/circle_node_bg"
+                    app:tint="#CCCCCC" />
 
-                    <ImageView
-                        android:id="@+id/nodeBg2"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/circle_node_bg"
-                        app:tint="#CCCCCC" />
-
-                    <ImageView
-                        android:id="@+id/nodeIcon2"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_node_water" />
-                </FrameLayout>
-            </androidx.cardview.widget.CardView>
+                <ImageView
+                    android:id="@+id/nodeIcon2"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_node_water" />
+            </FrameLayout>
 
             <!-- Level 3 (Get the CO2) -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_node3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="32dp"
-                app:cardElevation="8dp"
-                app:cardBackgroundColor="@android:color/transparent"
-                android:layout_margin="8dp"
+            <FrameLayout
+                android:id="@+id/nodeFrame3"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
                 android:layout_marginTop="40dp"
                 android:layout_marginStart="80dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/card_node2">
+                app:layout_constraintTop_toBottomOf="@id/nodeFrame2">
 
-                <FrameLayout
-                    android:id="@+id/nodeFrame3"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:background="@drawable/node_shadow_wrapper">
+                <ImageView
+                    android:id="@+id/nodeBg3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/circle_node_bg"
+                    app:tint="#CCCCCC" />
 
-                    <ImageView
-                        android:id="@+id/nodeBg3"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/circle_node_bg"
-                        app:tint="#CCCCCC" />
-
-                    <ImageView
-                        android:id="@+id/nodeIcon3"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_node_cloud" />
-                </FrameLayout>
-            </androidx.cardview.widget.CardView>
+                <ImageView
+                    android:id="@+id/nodeIcon3"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_node_cloud" />
+            </FrameLayout>
 
             <!-- Mix-and-Match -->
             <LinearLayout
@@ -172,9 +139,9 @@
                 android:layout_marginEnd="60dp"
                 android:gravity="center"
                 android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="@id/card_node3"
-                app:layout_constraintEnd_toStartOf="@id/card_node3"
-                app:layout_constraintTop_toTopOf="@id/card_node3">
+                app:layout_constraintBottom_toBottomOf="@id/nodeFrame3"
+                app:layout_constraintEnd_toStartOf="@id/nodeFrame3"
+                app:layout_constraintTop_toTopOf="@id/nodeFrame3">
 
                 <ImageButton
                     android:id="@+id/btn_mix_match"
@@ -194,77 +161,55 @@
             </LinearLayout>
 
             <!-- Level 4 (Get the sunlight) -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_node4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="32dp"
-                app:cardElevation="8dp"
-                app:cardBackgroundColor="@android:color/transparent"
-                android:layout_margin="8dp"
+            <FrameLayout
+                android:id="@+id/nodeFrame4"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
                 android:layout_marginTop="40dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/card_node3">
+                app:layout_constraintTop_toBottomOf="@id/nodeFrame3">
 
-                <FrameLayout
-                    android:id="@+id/nodeFrame4"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:background="@drawable/node_shadow_wrapper">
+                <ImageView
+                    android:id="@+id/nodeBg4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/circle_node_bg"
+                    app:tint="#CCCCCC" />
 
-                    <ImageView
-                        android:id="@+id/nodeBg4"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/circle_node_bg"
-                        app:tint="#CCCCCC" />
-
-                    <ImageView
-                        android:id="@+id/nodeIcon4"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_node_sun" />
-                </FrameLayout>
-            </androidx.cardview.widget.CardView>
+                <ImageView
+                    android:id="@+id/nodeIcon4"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_node_sun" />
+            </FrameLayout>
 
             <!-- Level 5 (Let the magic begin) -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_node5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="32dp"
-                app:cardElevation="8dp"
-                app:cardBackgroundColor="@android:color/transparent"
-                android:layout_margin="8dp"
+            <FrameLayout
+                android:id="@+id/nodeFrame5"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
                 android:layout_marginTop="40dp"
                 android:layout_marginEnd="80dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/card_node4">
+                app:layout_constraintTop_toBottomOf="@id/nodeFrame4">
 
-                <FrameLayout
-                    android:id="@+id/nodeFrame5"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:background="@drawable/node_shadow_wrapper">
+                <ImageView
+                    android:id="@+id/nodeBg5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/circle_node_bg"
+                    app:tint="#CCCCCC" />
 
-                    <ImageView
-                        android:id="@+id/nodeBg5"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/circle_node_bg"
-                        app:tint="#CCCCCC" />
-
-                    <ImageView
-                        android:id="@+id/nodeIcon5"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_node_magic" />
-                </FrameLayout>
-            </androidx.cardview.widget.CardView>
+                <ImageView
+                    android:id="@+id/nodeIcon5"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_node_magic" />
+            </FrameLayout>
 
             <!-- Flashcards -->
             <LinearLayout
@@ -274,9 +219,9 @@
                 android:layout_marginStart="60dp"
                 android:gravity="center"
                 android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="@id/card_node5"
-                app:layout_constraintStart_toEndOf="@id/card_node5"
-                app:layout_constraintTop_toTopOf="@id/card_node5">
+                app:layout_constraintBottom_toBottomOf="@id/nodeFrame5"
+                app:layout_constraintStart_toEndOf="@id/nodeFrame5"
+                app:layout_constraintTop_toTopOf="@id/nodeFrame5">
 
                 <ImageButton
                     android:id="@+id/btn_flashcards"
@@ -296,77 +241,55 @@
             </LinearLayout>
 
             <!-- Level 6 (What's next?) -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_node6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="32dp"
-                app:cardElevation="8dp"
-                app:cardBackgroundColor="@android:color/transparent"
-                android:layout_margin="8dp"
+            <FrameLayout
+                android:id="@+id/nodeFrame6"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
                 android:layout_marginTop="40dp"
                 android:layout_marginStart="80dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/card_node5">
+                app:layout_constraintTop_toBottomOf="@id/nodeFrame5">
 
-                <FrameLayout
-                    android:id="@+id/nodeFrame6"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:background="@drawable/node_shadow_wrapper">
+                <ImageView
+                    android:id="@+id/nodeBg6"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/circle_node_bg"
+                    app:tint="#CCCCCC" />
 
-                    <ImageView
-                        android:id="@+id/nodeBg6"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/circle_node_bg"
-                        app:tint="#CCCCCC" />
-
-                    <ImageView
-                        android:id="@+id/nodeIcon6"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_node_tree" />
-                </FrameLayout>
-            </androidx.cardview.widget.CardView>
+                <ImageView
+                    android:id="@+id/nodeIcon6"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_node_tree" />
+            </FrameLayout>
 
             <!-- Assessment -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_node_assessment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="32dp"
-                app:cardElevation="8dp"
-                app:cardBackgroundColor="@android:color/transparent"
-                android:layout_margin="8dp"
+            <FrameLayout
+                android:id="@+id/nodeFrameAssessment"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
                 android:layout_marginTop="40dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/card_node6">
+                app:layout_constraintTop_toBottomOf="@id/nodeFrame6">
 
-                <FrameLayout
-                    android:id="@+id/nodeFrameAssessment"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:background="@drawable/node_shadow_wrapper">
+                <ImageView
+                    android:id="@+id/nodeBgAssessment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/circle_node_bg"
+                    app:tint="#CCCCCC" />
 
-                    <ImageView
-                        android:id="@+id/nodeBgAssessment"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/circle_node_bg"
-                        app:tint="#CCCCCC" />
-
-                    <ImageView
-                        android:id="@+id/nodeIconAssessment"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_node_trophy" />
-                </FrameLayout>
-            </androidx.cardview.widget.CardView>
+                <ImageView
+                    android:id="@+id/nodeIconAssessment"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_node_trophy" />
+            </FrameLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
